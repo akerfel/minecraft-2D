@@ -5,12 +5,12 @@ public class Chunk {
     color colorScheme;
     
     public Chunk(PVector coords) {
-        blocks = new Block[16][16];
+        blocks = new Block[blocksPerChunk][blocksPerChunk];
         long chunkSeed = gameSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);
         color colorScheme = color(random(0, 80), random(0, 80), random(0, 80));
-        for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 16; j++) {
+        for (int i = 0; i < blocksPerChunk; i++) {
+            for (int j = 0; j < blocksPerChunk; j++) {
                 color baseColorStone = color(112, 112, 112);
                 color baseColorGrass = color(127, 178, 56);
                 

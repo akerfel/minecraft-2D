@@ -7,40 +7,42 @@ Chunk[] visibleChunks;    // atm just one, later will be at least 9
 int pixelCount;    // pixels per side of block
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
+int blocksPerChunk;
 
 void setup() {
     size(1200, 1200);
+    blocksPerChunk = 32;
     chanceGrass = 0.80;
     pixelCount = 25;
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(256, 256);
+    player = new Player(1000, 1000);
     gameSeed = 1000000;
     loadInitalVisibleChunks();
 }
 
 void loadInitalVisibleChunks() {
     visibleChunks = new Chunk[9];
-    
+    println(new PVector(int(player.coords.x / blocksPerChunk), int(player.coords.y / blocksPerChunk)));
     // Top row
-    visibleChunks[0] = getChunkForPlayerCoords(new PVector(player.coords.x - 16, player.coords.y - 16));
-    visibleChunks[1] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y - 16));
-    visibleChunks[2] = getChunkForPlayerCoords(new PVector(player.coords.x + 16, player.coords.y - 16));
+    visibleChunks[0] = getChunkForPlayerCoords(new PVector(player.coords.x - blocksPerChunk, player.coords.y - blocksPerChunk));
+    visibleChunks[1] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y - blocksPerChunk));
+    visibleChunks[2] = getChunkForPlayerCoords(new PVector(player.coords.x + blocksPerChunk, player.coords.y - blocksPerChunk));
     
     // Middle row
-    visibleChunks[3] = getChunkForPlayerCoords(new PVector(player.coords.x - 16, player.coords.y));
+    visibleChunks[3] = getChunkForPlayerCoords(new PVector(player.coords.x - blocksPerChunk, player.coords.y));
     visibleChunks[4] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y));
-    visibleChunks[5] = getChunkForPlayerCoords(new PVector(player.coords.x + 16, player.coords.y));
+    visibleChunks[5] = getChunkForPlayerCoords(new PVector(player.coords.x + blocksPerChunk, player.coords.y));
     
     // Bottom row
-    visibleChunks[6] = getChunkForPlayerCoords(new PVector(player.coords.x - 16, player.coords.y + 16));
-    visibleChunks[7] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y + 16));
-    visibleChunks[8] = getChunkForPlayerCoords(new PVector(player.coords.x + 16, player.coords.y + 16));
+    visibleChunks[6] = getChunkForPlayerCoords(new PVector(player.coords.x - blocksPerChunk, player.coords.y + blocksPerChunk));
+    visibleChunks[7] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y + blocksPerChunk));
+    visibleChunks[8] = getChunkForPlayerCoords(new PVector(player.coords.x + blocksPerChunk, player.coords.y + blocksPerChunk));
 }
 
 
 
 Chunk getChunkForPlayerCoords(PVector playerCoords) {
-    PVector chunkCoords = new PVector(int(playerCoords.x / 16), int(playerCoords.y / 16));
+    PVector chunkCoords = new PVector(int(playerCoords.x / blocksPerChunk), int(playerCoords.y / blocksPerChunk));
     // The next two if statements ensure that the same chunk wont be loaded
     // for playerCoords [0, 0] and [0, -1].
     if (playerCoords.x < 0) {
@@ -63,8 +65,8 @@ void draw() {
 
 void drawVisibleChunks() {
     
-    int xPlayerOffset = int(player.coords.x) % 16;
-    int yPlayerOffset = int(player.coords.y) % 16;
+    int xPlayerOffset = int(player.coords.x) % blocksPerChunk;
+    int yPlayerOffset = int(player.coords.y) % blocksPerChunk;
     
     // Top row
     drawChunk(visibleChunks[0], 0, 0, xPlayerOffset, yPlayerOffset);
@@ -84,10 +86,10 @@ void drawVisibleChunks() {
 
 void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset, int xPlayerOffset, int yPlayerOffset) {
     
-    for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < 16; j++) {
+    for (int i = 0; i < blocksPerChunk; i++) {
+        for (int j = 0; j < blocksPerChunk; j++) {
             fill(chunk.blocks[i][j].c);
-            square(xChunkOffset * pixelCount * 16 + i * pixelCount - xPlayerOffset * pixelCount, yChunkOffset * pixelCount * 16  + j * pixelCount - yPlayerOffset * pixelCount, pixelCount);
+            square(pixelCount * (- 16 + xChunkOffset * blocksPerChunk + i - xPlayerOffset), pixelCount * (- 16 + yChunkOffset * blocksPerChunk  + j - yPlayerOffset), pixelCount);
         }
     }
 }
