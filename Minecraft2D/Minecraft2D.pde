@@ -59,7 +59,7 @@ Chunk getChunkForPlayerCoords(PVector playerCoords) {
 
 void draw() {
     background(0, 0, 0);
-    player.updatePosition();
+    player.move();
     loadInitalVisibleChunks();
     drawVisibleChunks();
     drawPlayer();
