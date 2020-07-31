@@ -13,7 +13,7 @@ void setup() {
     size(1200, 1200);
     blocksPerChunk = 32;
     chanceGrass = 0.80;
-    pixelsPerBlock = 10;
+    pixelsPerBlock = 6;
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(1024 + blocksPerChunk / 2, 1024 + blocksPerChunk / 2);
     gameSeed = 1000000;
