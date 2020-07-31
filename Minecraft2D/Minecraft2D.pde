@@ -49,7 +49,6 @@ Chunk getChunkForPlayerCoords(PVector playerCoords) {
     if (playerCoords.y < 0) {
         chunkCoords.y--;    
     }
-    println("Chunk coords: " + chunkCoords.x + ", " + chunkCoords.y);
     if (!generatedChunks.containsKey(chunkCoords)) {
         generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
     }
@@ -82,10 +81,7 @@ void drawVisibleChunks() {
 void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset) {
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 16; j++) {
-            fill(112, 112, 112);       // Stone color
-            if (chunk.blocks[i][j].isGrass) {
-                fill(127, 178, 56);    // Grass color
-            }
+            fill(chunk.blocks[i][j].c);
             square(xChunkOffset * pixelCount * 16 + i * pixelCount, yChunkOffset * pixelCount * 16  + j * pixelCount, pixelCount);
         }
     }
@@ -94,6 +90,6 @@ void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset) {
 void drawPlayer() {
     rectMode(CENTER);
     fill(216, 127, 51);
-    square(player.coords.x * pixelCount + pixelCount / 2, player.coords.y * pixelCount + pixelCount / 2, pixelCount / 2);    
+    square(width/2, height/2, pixelCount / 2);    
     rectMode(CORNER);
 }
