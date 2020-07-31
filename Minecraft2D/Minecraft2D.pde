@@ -9,11 +9,11 @@ HashMap<PVector, Chunk> generatedChunks;
 Player player;
 
 void setup() {
-    size(1000, 1000);
+    size(1200, 1200);
     chanceGrass = 0.80;
-    pixelCount = 10;
+    pixelCount = 25;
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(4, 4);
+    player = new Player(256, 256);
     gameSeed = 1000000;
     loadInitalVisibleChunks();
 }
@@ -62,34 +62,37 @@ void draw() {
 }
 
 void drawVisibleChunks() {
+    
+    int xPlayerOffset = int(player.coords.x) % 16;
+    int yPlayerOffset = int(player.coords.y) % 16;
+    
     // Top row
-    drawChunk(visibleChunks[0], 0, 0);
-    drawChunk(visibleChunks[1], 1, 0);
-    drawChunk(visibleChunks[2], 2, 0);
+    drawChunk(visibleChunks[0], 0, 0, xPlayerOffset, yPlayerOffset);
+    drawChunk(visibleChunks[1], 1, 0, xPlayerOffset, yPlayerOffset);
+    drawChunk(visibleChunks[2], 2, 0, xPlayerOffset, yPlayerOffset);
     
     // Middle row
-    drawChunk(visibleChunks[3], 0, 1);
-    drawChunk(visibleChunks[4], 1, 1);
-    drawChunk(visibleChunks[5], 2, 1);
+    drawChunk(visibleChunks[3], 0, 1, xPlayerOffset, yPlayerOffset);
+    drawChunk(visibleChunks[4], 1, 1, xPlayerOffset, yPlayerOffset);
+    drawChunk(visibleChunks[5], 2, 1, xPlayerOffset, yPlayerOffset);
     
     // Bottom row
-    drawChunk(visibleChunks[6], 0, 2);
-    drawChunk(visibleChunks[7], 1, 2);
-    drawChunk(visibleChunks[8], 2, 2);
+    drawChunk(visibleChunks[6], 0, 2, xPlayerOffset, yPlayerOffset);
+    drawChunk(visibleChunks[7], 1, 2, xPlayerOffset, yPlayerOffset);
+    drawChunk(visibleChunks[8], 2, 2, xPlayerOffset, yPlayerOffset);
 }
 
-void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset) {
+void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset, int xPlayerOffset, int yPlayerOffset) {
+    
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 16; j++) {
             fill(chunk.blocks[i][j].c);
-            square(xChunkOffset * pixelCount * 16 + i * pixelCount, yChunkOffset * pixelCount * 16  + j * pixelCount, pixelCount);
+            square(xChunkOffset * pixelCount * 16 + i * pixelCount - xPlayerOffset * pixelCount, yChunkOffset * pixelCount * 16  + j * pixelCount - yPlayerOffset * pixelCount, pixelCount);
         }
     }
 }
 
 void drawPlayer() {
-    rectMode(CENTER);
     fill(216, 127, 51);
-    square(width/2, height/2, pixelCount / 2);    
-    rectMode(CORNER);
+    square(width/2 + pixelCount / 4, height/2 + pixelCount / 4, pixelCount / 2);    
 }
