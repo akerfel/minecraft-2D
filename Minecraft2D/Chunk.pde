@@ -8,7 +8,7 @@ public class Chunk {
         blocks = new Block[blocksPerChunk][blocksPerChunk];
         long chunkSeed = gameSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);
-        color colorScheme = color(random(0, 80), random(0, 80), random(0, 80));
+        color colorScheme = color(random(0, 180), random(0, 180), random(0, 180));
         for (int i = 0; i < blocksPerChunk; i++) {
             for (int j = 0; j < blocksPerChunk; j++) {
                 color baseColorStone = color(112, 112, 112);
