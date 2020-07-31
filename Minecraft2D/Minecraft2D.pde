@@ -11,11 +11,11 @@ int blocksPerChunk;
 
 void setup() {
     size(1200, 1200);
-    blocksPerChunk = 32;
+    blocksPerChunk = 16;
     chanceGrass = 0.80;
     pixelCount = 25;
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(1000, 1000);
+    player = new Player(1024, 1024);
     gameSeed = 1000000;
     loadInitalVisibleChunks();
 }
@@ -89,7 +89,7 @@ void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset, int xPlayerOffse
     for (int i = 0; i < blocksPerChunk; i++) {
         for (int j = 0; j < blocksPerChunk; j++) {
             fill(chunk.blocks[i][j].c);
-            square(pixelCount * (- 16 + xChunkOffset * blocksPerChunk + i - xPlayerOffset), pixelCount * (- 16 + yChunkOffset * blocksPerChunk  + j - yPlayerOffset), pixelCount);
+            square(pixelCount * (8 + xChunkOffset * blocksPerChunk + i - xPlayerOffset), pixelCount * (8 + yChunkOffset * blocksPerChunk  + j - yPlayerOffset), pixelCount);
         }
     }
 }
