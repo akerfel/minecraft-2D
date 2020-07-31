@@ -13,7 +13,7 @@ void setup() {
     size(1200, 1200);
     blocksPerChunk = 32;
     chanceGrass = 0.80;
-    pixelsPerBlock = 12;
+    pixelsPerBlock = 10;
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(1024 + blocksPerChunk / 2, 1024 + blocksPerChunk / 2);
     gameSeed = 1000000;
@@ -59,52 +59,54 @@ Chunk getChunkForPlayerCoords(PVector playerCoords) {
 
 void draw() {
     background(0, 0, 0);
+    player.updatePosition();
+    loadInitalVisibleChunks();
     drawVisibleChunks();
     drawPlayer();
 }
 
 void drawVisibleChunks() {
-    int xPlayerOffset = int(player.coords.x) % blocksPerChunk;
-    int yPlayerOffset = int(player.coords.y) % blocksPerChunk;
+    float xPlayerOffset = player.coords.x % blocksPerChunk;
+    float yPlayerOffset = player.coords.y % blocksPerChunk;
     
-    int pixelsPerChunk = pixelsPerBlock * blocksPerChunk;
+    float pixelsPerChunk = pixelsPerBlock * blocksPerChunk;
     
     // "x and y" = pixel position of upper left corner of chunk
     // The start positions of all chunks are calculated in relation to the middle chunks start position
-    int xCenterChunk = width / 2 - xPlayerOffset * pixelsPerBlock;
-    int yCenterChunk = height / 2 - yPlayerOffset * pixelsPerBlock;
+    float xCenterChunk = width / 2 - xPlayerOffset * pixelsPerBlock;
+    float yCenterChunk = height / 2 - yPlayerOffset * pixelsPerBlock;
     
     // North chunk
-    int xNorthChunk = xCenterChunk; 
-    int yNorthChunk = yCenterChunk - pixelsPerChunk;
+    float xNorthChunk = xCenterChunk; 
+    float yNorthChunk = yCenterChunk - pixelsPerChunk;
     
     // South chunk
-    int xSouthChunk = xCenterChunk; 
-    int ySouthChunk = yCenterChunk + pixelsPerChunk;
+    float xSouthChunk = xCenterChunk; 
+    float ySouthChunk = yCenterChunk + pixelsPerChunk;
     
     // West chunk
-    int xWestChunk = xCenterChunk - pixelsPerChunk;
-    int yWestChunk = yCenterChunk;
+    float xWestChunk = xCenterChunk - pixelsPerChunk;
+    float yWestChunk = yCenterChunk;
     
     // East chunk
-    int xEastChunk = xCenterChunk + pixelsPerChunk;
-    int yEastChunk = yCenterChunk;
+    float xEastChunk = xCenterChunk + pixelsPerChunk;
+    float yEastChunk = yCenterChunk;
     
     // Northwest chunk
-    int xNorthWestChunk = xWestChunk;
-    int yNorthWestChunk = yNorthChunk;
+    float xNorthWestChunk = xWestChunk;
+    float yNorthWestChunk = yNorthChunk;
     
     // Northeast chunk
-    int xNorthEastChunk = xEastChunk;
-    int yNorthEastChunk = yNorthChunk;
+    float xNorthEastChunk = xEastChunk;
+    float yNorthEastChunk = yNorthChunk;
     
     // Southwest chunk
-    int xSouthWestChunk = xWestChunk;
-    int ySouthWestChunk = ySouthChunk;
+    float xSouthWestChunk = xWestChunk;
+    float ySouthWestChunk = ySouthChunk;
     
     // Southeast chunk
-    int xSouthEastChunk = xEastChunk;
-    int ySouthEastChunk = ySouthChunk;
+    float xSouthEastChunk = xEastChunk;
+    float ySouthEastChunk = ySouthChunk;
     
     // Draw upper row of chunks
     drawChunk(visibleChunks[0], xNorthWestChunk, yNorthWestChunk);
@@ -123,7 +125,7 @@ void drawVisibleChunks() {
     
 }
 
-void drawChunk(Chunk chunk, int xStart, int yStart) {
+void drawChunk(Chunk chunk, float xStart, float yStart) {
     for (int i = 0; i < blocksPerChunk; i++) {
         for (int j = 0; j < blocksPerChunk; j++) {
             drawBlock(chunk.blocks[i][j], xStart + i * pixelsPerBlock, yStart + j * pixelsPerBlock);
@@ -131,24 +133,9 @@ void drawChunk(Chunk chunk, int xStart, int yStart) {
     }
 }
 
-void drawBlock(Block block, int x, int y) {
+void drawBlock(Block block, float x, float y) {
     fill(block.c);
     square(x, y, pixelsPerBlock);
-}
-
-// OLD ONE
-void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset, int xPlayerOffset, int yPlayerOffset) {
-    int pixelWidthChunk = pixelsPerBlock * blocksPerChunk;
-    
-    int xUpperLeftCornerMiddleChunk = width / 2 - pixelWidthChunk / 2;
-    int yUpperLeftCornerMiddleChunk = height / 2 - pixelWidthChunk / 2;
-    
-    for (int i = 0; i < blocksPerChunk; i++) {
-        for (int j = 0; j < blocksPerChunk; j++) {
-            fill(chunk.blocks[i][j].c);
-            square(pixelsPerBlock * (8 + xChunkOffset * blocksPerChunk + i - xPlayerOffset), pixelsPerBlock * (8 + yChunkOffset * blocksPerChunk  + j - yPlayerOffset), pixelsPerBlock);
-        }
-    }
 }
 
 void drawPlayer() {
