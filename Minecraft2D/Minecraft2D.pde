@@ -3,7 +3,7 @@ import java.util.HashMap;
 int gameSeed;
 //HashMap<PVector, Chunk> visibleChunks = new HashMap<>();
 float chanceGrass;
-Chunk visibleChunk;    // atm just one, later will be at least 9
+Chunk[] visibleChunks;    // atm just one, later will be at least 9
 int pixelCount;    // pixels per side of block
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
@@ -11,7 +11,7 @@ Player player;
 void setup() {
     size(1000, 1000);
     chanceGrass = 0.80;
-    pixelCount = 50;
+    pixelCount = 10;
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(4, 4);
     gameSeed = 1000000;
@@ -19,8 +19,25 @@ void setup() {
 }
 
 void loadInitalVisibleChunks() {
-    visibleChunk = getChunkForPlayerCoords(player.coords);
+    visibleChunks = new Chunk[9];
+    
+    // Top row
+    visibleChunks[0] = getChunkForPlayerCoords(new PVector(player.coords.x - 16, player.coords.y - 16));
+    visibleChunks[1] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y - 16));
+    visibleChunks[2] = getChunkForPlayerCoords(new PVector(player.coords.x + 16, player.coords.y - 16));
+    
+    // Middle row
+    visibleChunks[3] = getChunkForPlayerCoords(new PVector(player.coords.x - 16, player.coords.y));
+    visibleChunks[4] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y));
+    visibleChunks[5] = getChunkForPlayerCoords(new PVector(player.coords.x + 16, player.coords.y));
+    
+    // Bottom row
+    visibleChunks[6] = getChunkForPlayerCoords(new PVector(player.coords.x - 16, player.coords.y + 16));
+    visibleChunks[7] = getChunkForPlayerCoords(new PVector(player.coords.x, player.coords.y + 16));
+    visibleChunks[8] = getChunkForPlayerCoords(new PVector(player.coords.x + 16, player.coords.y + 16));
 }
+
+
 
 Chunk getChunkForPlayerCoords(PVector playerCoords) {
     PVector chunkCoords = new PVector(int(playerCoords.x / 16), int(playerCoords.y / 16));
@@ -41,22 +58,35 @@ Chunk getChunkForPlayerCoords(PVector playerCoords) {
 
 void draw() {
     background(0, 0, 0);
-    drawVisibleChunk();
+    drawVisibleChunks();
     drawPlayer();
 }
 
-void drawVisibleChunk() {
-    drawChunk(visibleChunk);
+void drawVisibleChunks() {
+    // Top row
+    drawChunk(visibleChunks[0], 0, 0);
+    drawChunk(visibleChunks[1], 1, 0);
+    drawChunk(visibleChunks[2], 2, 0);
+    
+    // Middle row
+    drawChunk(visibleChunks[3], 0, 1);
+    drawChunk(visibleChunks[4], 1, 1);
+    drawChunk(visibleChunks[5], 2, 1);
+    
+    // Bottom row
+    drawChunk(visibleChunks[6], 0, 2);
+    drawChunk(visibleChunks[7], 1, 2);
+    drawChunk(visibleChunks[8], 2, 2);
 }
 
-void drawChunk(Chunk chunk) {
+void drawChunk(Chunk chunk, int xChunkOffset, int yChunkOffset) {
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 16; j++) {
             fill(112, 112, 112);       // Stone color
             if (chunk.blocks[i][j].isGrass) {
                 fill(127, 178, 56);    // Grass color
             }
-            square(0 + i * pixelCount, 0 + j * pixelCount, pixelCount);
+            square(xChunkOffset * pixelCount * 16 + i * pixelCount, yChunkOffset * pixelCount * 16  + j * pixelCount, pixelCount);
         }
     }
 }
