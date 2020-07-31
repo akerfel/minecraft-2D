@@ -13,9 +13,7 @@ void setup() {
     chanceGrass = 0.80;
     pixelCount = 50;
     generatedChunks = new HashMap<PVector, Chunk>();
-    println("ey");
     player = new Player(4, 4);
-    println("lmao");
     gameSeed = 1000000;
     loadInitalVisibleChunks();
 }
@@ -25,7 +23,16 @@ void loadInitalVisibleChunks() {
 }
 
 Chunk getChunkForPlayerCoords(PVector playerCoords) {
-    PVector chunkCoords = new PVector(playerCoords.x / 16, playerCoords.y / 16);
+    PVector chunkCoords = new PVector(int(playerCoords.x / 16), int(playerCoords.y / 16));
+    // The next two if statements ensure that the same chunk wont be loaded
+    // for playerCoords [0, 0] and [0, -1].
+    if (playerCoords.x < 0) {
+        chunkCoords.x--;    
+    }
+    if (playerCoords.y < 0) {
+        chunkCoords.y--;    
+    }
+    println("Chunk coords: " + chunkCoords.x + ", " + chunkCoords.y);
     if (!generatedChunks.containsKey(chunkCoords)) {
         generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
     }
