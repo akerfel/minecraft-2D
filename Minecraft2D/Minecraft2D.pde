@@ -13,20 +13,28 @@ HashMap<PVector, Chunk> generatedChunks;
 Player player;
 Chunk[] visibleChunks;   
 
+// Other
+PVector currentChunkCoords;
+
 void setup() {
     size(1200, 1200);
     
     // Settings
-    pixelsPerBlock = 30;
+    pixelsPerBlock = 32;
     blocksPerChunk = 32;
     playerWidth = pixelsPerBlock / 2;
     chanceGrass = 0.80;
     gameSeed = 1337;
     
+    // Other
+    
+    
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(8000, 8000);
-    loadVisibleChunks();
+    currentChunkCoords = calcChunkCoords(player.coords);
+    visibleChunks = new Chunk[9];
+    initalLoadChunks();
 }
 
 void draw() {

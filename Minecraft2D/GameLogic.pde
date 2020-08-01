@@ -1,6 +1,6 @@
 void updateLogic() {
     player.move();
-    loadVisibleChunks();    
+    loadVisibleChunksIfNeeded();    
 }
 
 void setFireCenterChunk() {
@@ -13,8 +13,23 @@ void setFireCenterChunk() {
     }    
 }
 
+void initalLoadChunks() {
+    loadVisibleChunks();
+}
+
+void loadVisibleChunksIfNeeded() {
+    PVector previousChunkCoords = currentChunkCoords;
+    currentChunkCoords = calcChunkCoords(player.coords);
+    
+    if (!(currentChunkCoords.x == previousChunkCoords.x && currentChunkCoords.y == previousChunkCoords.y)) {
+        println("Loading new chunks");
+        println("Previous: " + previousChunkCoords);
+        println("Current: " + currentChunkCoords);
+        loadVisibleChunks();
+    }
+}
+
 void loadVisibleChunks() {
-    visibleChunks = new Chunk[9];
 
     // Top row
     visibleChunks[0] = getChunk(new PVector(player.coords.x - blocksPerChunk, player.coords.y - blocksPerChunk));
@@ -29,13 +44,13 @@ void loadVisibleChunks() {
     // Bottom row
     visibleChunks[6] = getChunk(new PVector(player.coords.x - blocksPerChunk, player.coords.y + blocksPerChunk));
     visibleChunks[7] = getChunk(new PVector(player.coords.x, player.coords.y + blocksPerChunk));
-    visibleChunks[8] = getChunk(new PVector(player.coords.x + blocksPerChunk, player.coords.y + blocksPerChunk));
+    visibleChunks[8] = getChunk(new PVector(player.coords.x + blocksPerChunk, player.coords.y + blocksPerChunk));    
 }
 
 // Takes player coords, converts them into chunkCoords and loads that chunk from generatedChunks. 
 // If chunk has not yet been generated, create it and it to generatedChunks (chunkCoords is key).
 Chunk getChunk(PVector coords) {
-    PVector chunkCoords = new PVector(int(coords.x / blocksPerChunk), int(coords.y / blocksPerChunk));
+    PVector chunkCoords = calcChunkCoords(coords);
     // The next two if statements ensure that the same chunk wont be loaded
     // for playerCoords [0, 0] and [0, -1].
     if (coords.x < 0) {
@@ -49,6 +64,10 @@ Chunk getChunk(PVector coords) {
         generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
     }
     return generatedChunks.get(chunkCoords);
+}
+
+PVector calcChunkCoords(PVector coords) {
+    return new PVector(int(coords.x / blocksPerChunk), int(coords.y / blocksPerChunk));
 }
 
 void playerBlockChangeColor() {
