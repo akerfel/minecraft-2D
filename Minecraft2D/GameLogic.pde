@@ -15,8 +15,6 @@ void setFireCenterChunk() {
 
 void loadVisibleChunks() {
     visibleChunks = new Chunk[9];
-    println("Chunk coords: " + (int(player.coords.x / blocksPerChunk)) + ", " + int(player.coords.y / blocksPerChunk));
-    println("Player coords: " + player.coords.x + ", " + player.coords.y);
 
     // Top row
     visibleChunks[0] = getChunkForPlayerCoords(new PVector(player.coords.x - blocksPerChunk, player.coords.y - blocksPerChunk));
@@ -57,11 +55,11 @@ void playerBlockChangeColor() {
     getPlayerBlock().c = color(0, 0, 255);
 }
 
-Block getBlock(PVector coords) {
-    Chunk chunk = getChunkForPlayerCoords(player.coords);
-    return chunk.blocks[int(coords.x) % blocksPerChunk][int(coords.y) % blocksPerChunk];
+Block getBlock(float x, float y) {
+    Chunk chunk = getChunkForPlayerCoords(new PVector(x, y));
+    return chunk.blocks[int(x) % blocksPerChunk][int(y) % blocksPerChunk];
 }
 
 Block getPlayerBlock() {
-    return getBlock(player.coords);
+    return getBlock(player.coords.x, player.coords.y);
 }

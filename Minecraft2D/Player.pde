@@ -7,7 +7,7 @@ public class Player {
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
-        v = 0.1;
+        v = 0.03;
     }
     
     void move() {
@@ -18,10 +18,18 @@ public class Player {
         coords.x += v*(int(isRight) - int(isLeft));
         coords.y += v*(int(isDown)  - int(isUp));
         // If new coords are inside wall, go back to old coords
-        if (getPlayerBlock().isWall) {
+        float playerWidthInBlocks = playerWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
+        
+        if (getBlock(coords.x, coords.y).isWall 
+            || getBlock(coords.x + playerWidthInBlocks, coords.y).isWall 
+            || getBlock(coords.x, coords.y + playerWidthInBlocks).isWall 
+            || getBlock(coords.x + playerWidthInBlocks, coords.y + playerWidthInBlocks).isWall)
+            {
             coords.x = xPrevious;
             coords.y = yPrevious;
         }
+        
+        
     }
     
     boolean setMove(final int k, final boolean b) {

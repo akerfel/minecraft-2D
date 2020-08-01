@@ -3,8 +3,10 @@ import java.util.HashMap;
 // Settings
 int pixelsPerBlock;    // pixels per side of block
 int blocksPerChunk;    // blocks per side of chunk
+float playerWidth;
 float chanceGrass;
 int gameSeed;
+
 
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
@@ -17,6 +19,7 @@ void setup() {
     // Settings
     pixelsPerBlock = 30;
     blocksPerChunk = 32;
+    playerWidth = pixelsPerBlock / 2;
     chanceGrass = 0.80;
     gameSeed = 1337;
     
