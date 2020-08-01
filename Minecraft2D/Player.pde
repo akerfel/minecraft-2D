@@ -5,10 +5,9 @@ public class Player {
     float v;
     boolean isLeft, isRight, isUp, isDown;
     
-    
     public Player(float x, float y) {
         coords = new PVector(x, y);
-        v = 0.5;
+        v = 0.06;
     }
     
     void move() {
@@ -37,5 +36,5 @@ public class Player {
             default:
                   return b;
         }
-  }
+    }
 }

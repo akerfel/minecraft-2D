@@ -16,9 +16,8 @@ public class Chunk {
                 
                 color finalColor = baseColorStone;
                 if (random(0, 1) < chanceGrass) {
-                    finalColor = baseColorGrass;
                     // Each chunk has its own grass color
-                    finalColor = finalColor + colorScheme;
+                    finalColor = baseColorGrass + colorScheme;
                 }
                 
                 blocks[i][j] = new Block(finalColor);
