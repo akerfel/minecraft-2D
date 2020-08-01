@@ -11,20 +11,17 @@ public class Player {
     }
     
     void move() {
-        float xMove = v*(int(isRight) - int(isLeft));
-        float yMove = v*(int(isDown)  - int(isUp));
-        float xNewPos = coords.x + xMove;
-        float yNewPos = coords.y + yMove;
-        
-        if (!getBlock(new PVector(xNewPos, yNewPos)).isWall) {
-            coords.x = xNewPos;
-            coords.y = yNewPos;
-        }
+        // Save previous coords
+        float xPrevious = coords.x;
+        float yPrevious = coords.y;
+        // Change coords
+        coords.x += v*(int(isRight) - int(isLeft));
+        coords.y += v*(int(isDown)  - int(isUp));
+        // If new coords are inside wall, go back to old coords
         if (getPlayerBlock().isWall) {
-            coords.x -= xMove;
-            coords.y -= yMove;
+            coords.x = xPrevious;
+            coords.y = yPrevious;
         }
-        println("New pos: " + xNewPos + ", " + yNewPos);
     }
     
     boolean setMove(final int k, final boolean b) {

@@ -59,7 +59,7 @@ void playerBlockChangeColor() {
 
 Block getBlock(PVector coords) {
     Chunk chunk = getChunkForPlayerCoords(player.coords);
-    return chunk.blocks[int(player.coords.x) % blocksPerChunk][int(player.coords.y) % blocksPerChunk];
+    return chunk.blocks[int(coords.x) % blocksPerChunk][int(coords.y) % blocksPerChunk];
 }
 
 Block getPlayerBlock() {
