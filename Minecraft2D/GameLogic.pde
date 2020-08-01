@@ -52,3 +52,12 @@ Chunk getChunkForPlayerCoords(PVector playerCoords) {
     }
     return generatedChunks.get(chunkCoords);
 }
+
+void playerBlockChangeColor() {
+    getPlayerBlock().c = color(0, 0, 255);
+}
+
+Block getPlayerBlock() {
+    Chunk playerChunk = getChunkForPlayerCoords(player.coords);
+    return playerChunk.blocks[int(player.coords.x) % blocksPerChunk][int(player.coords.y) % blocksPerChunk];
+}

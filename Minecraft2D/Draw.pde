@@ -78,5 +78,5 @@ void drawBlock(Block block, float x, float y) {
 
 void drawPlayer() {
     fill(216, 127, 51);
-    square(width/2 + pixelsPerBlock / 4, height/2 + pixelsPerBlock / 4, pixelsPerBlock / 2);    
+    square(width/2, height/2, pixelsPerBlock / 2);    
 }

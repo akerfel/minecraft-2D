@@ -15,7 +15,7 @@ void setup() {
     size(1200, 1200);
     
     // Settings
-    pixelsPerBlock = 20;
+    pixelsPerBlock = 30;
     blocksPerChunk = 32;
     chanceGrass = 0.80;
     gameSeed = 1337;

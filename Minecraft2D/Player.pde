@@ -7,7 +7,7 @@ public class Player {
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
-        v = 0.06;
+        v = 0.03;
     }
     
     void move() {

@@ -4,6 +4,9 @@ void keyPressed() {
     if (key == 'f') {
         setFireCenterChunk();
     }
+    if (key == 'c') {
+        playerBlockChangeColor();
+    }
 }
  
 void keyReleased() {
