@@ -22,7 +22,7 @@ void setup() {
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(8192, 8192);
+    player = new Player(8000, 8000);
     loadVisibleChunks();
 }
 

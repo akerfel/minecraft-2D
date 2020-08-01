@@ -15,12 +15,14 @@ public class Chunk {
                 color baseColorGrass = color(127, 178, 56);
                 
                 color finalColor = baseColorStone;
+                boolean isWall = true;
                 if (random(0, 1) < chanceGrass) {
                     // Each chunk has its own grass color
                     finalColor = baseColorGrass + colorScheme;
+                    isWall = false;
                 }
                 
-                blocks[i][j] = new Block(finalColor);
+                blocks[i][j] = new Block(finalColor, isWall);
             }
         }
     }
