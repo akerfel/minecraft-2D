@@ -7,6 +7,7 @@ public class Player {
     boolean isRunningLikeUsainBolt;
     float runningFactor;    // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
+    int hotbarSlotSelected;
    
     
     public Player(float x, float y) {
@@ -15,6 +16,7 @@ public class Player {
         runningFactor = 2;
         isRunning = false;
         isRunningLikeUsainBolt = false;
+        hotbarSlotSelected = 1;
     }
     
     void move() {

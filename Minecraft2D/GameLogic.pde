@@ -10,7 +10,14 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
-        setMouseBlock("Stone");
+        switch (player.hotbarSlotSelected) {
+            case 1:
+                setMouseBlock("Stone");
+                break;
+            case 2:
+                setMouseBlock("Planks");
+                break;
+        }
     }
     if (leftMouseButtonDown) {
         setMouseBlock("Grass");
@@ -28,9 +35,13 @@ void setMouseBlock(String typeOfBlock) {
             case "Stone":
                 clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Stone();
                 break;
+            case "Planks":
+                clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Planks();
+                break;
             case "Grass":
                 clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Grass(getChunk(player.coords).grassColorScheme);
-        }
+                break;
+            }
     }
 }
 
