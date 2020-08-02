@@ -4,6 +4,7 @@ public class Chunk {
     int y;
     public color grassColorScheme; // Each chunk has a special color for grass
     float chanceStone;
+    float chanceTree;
     
     public Chunk(PVector coords) {
         blocks = new Block[blocksPerChunk][blocksPerChunk];
@@ -11,10 +12,14 @@ public class Chunk {
         randomSeed(chunkSeed);
         grassColorScheme = color(random(0, 70), random(0, 70), random(0, 70));
         chanceStone = baseChanceStone * random(0.1, 1.3);
+        chanceTree = baseChanceStone * random(0.1, 1.3);
         for (int i = 0; i < blocksPerChunk; i++) {
             for (int j = 0; j < blocksPerChunk; j++) {
                 if (random(0, 1) < chanceStone) {
                     blocks[i][j] = new Stone();
+                }
+                else if (random(0, 1) < chanceTree) {
+                    blocks[i][j] = new Planks();
                 }
                 else {
                     blocks[i][j] = new Grass(grassColorScheme);

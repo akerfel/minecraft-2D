@@ -19,6 +19,9 @@ void placeBlocksWithMouse() {
         }
     }
     if (leftMouseButtonDown) {
+        if (!getMouseBlock().toString().equals("Grass")) {
+            player.addBlockToInventory(getMouseBlock());
+        }
         setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
     }
 }
@@ -33,7 +36,16 @@ boolean setMouseBlock(String blockName) {
     return false;
 }
 
-
+Block getMouseBlock() {
+    float xPixelsFromPlayerToMouse = width / 2 - mouseX;
+    float yPixelsFromPlayerToMouse = width / 2 - mouseY;
+    float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
+    float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
+    Chunk clickedChunk = getChunk(new PVector(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse)));
+    int xInChunk = int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
+    int yInChunk = int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
+    return clickedChunk.blocks[xInChunk][yInChunk];
+}
 
 boolean setMouseBlock(Block block) {
     float xPixelsFromPlayerToMouse = width / 2 - mouseX;

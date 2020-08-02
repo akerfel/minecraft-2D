@@ -5,6 +5,7 @@ int pixelsPerBlock;    // pixels per side of block
 int blocksPerChunk;    // blocks per side of chunk
 float playerWidth;
 float baseChanceStone;
+float baseChanceTree;
 int gameSeed;
 
 // Game objects
@@ -24,7 +25,8 @@ void setup() {
     pixelsPerBlock = 25;
     blocksPerChunk = 40;
     resetObjectsDependingOnPixelsPerBlock();
-    baseChanceStone = 0.08;
+    baseChanceStone = 0.05;
+    baseChanceStone = 0.02;
     gameSeed = 1337;
     
     // Game objects
