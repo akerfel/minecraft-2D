@@ -4,6 +4,10 @@ void updateLogic() {
     placeBlocksWithMouse();
 }
 
+void resetObjectsDependingOnPixelsPerBlock() {
+    playerWidth = pixelsPerBlock / 2;
+}
+
 void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
         setMouseBlock("Stone");

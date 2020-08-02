@@ -4,15 +4,17 @@ public class Player {
     PVector coords;
     float speed;
     boolean isRunning;
+    boolean isRunningLikeUsainBolt;
     float runningFactor;    // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
    
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
-        speed = 0.02;
+        speed = 0.07;
         runningFactor = 2;
         isRunning = false;
+        isRunningLikeUsainBolt = false;
     }
     
     void move() {
@@ -20,6 +22,9 @@ public class Player {
         float v = speed;
         if (isRunning) {
             v *= runningFactor; 
+        }
+        if (isRunningLikeUsainBolt) {
+            v *= 5;
         }
         
         // Save previous coords

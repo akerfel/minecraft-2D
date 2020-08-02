@@ -29,7 +29,20 @@ void keyPressed() {
         if (keyCode == SHIFT) {
             player.isRunning = true;    
         }
+        if (keyCode == CONTROL) {
+            player.isRunningLikeUsainBolt = true;    
+        }
     }
+}
+
+void mouseWheel(MouseEvent event) {
+  if (event.getCount() > 0) {
+      pixelsPerBlock -= 2;
+  }
+  else {
+      pixelsPerBlock += 2;
+  }
+  resetObjectsDependingOnPixelsPerBlock();
 }
  
 void keyReleased() {
@@ -37,6 +50,9 @@ void keyReleased() {
     if (key == CODED) {
         if (keyCode == SHIFT) {
             player.isRunning = false;    
+        }
+        if (keyCode == CONTROL) {
+            player.isRunningLikeUsainBolt = false;    
         }
     }
 }

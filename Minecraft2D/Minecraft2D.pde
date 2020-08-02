@@ -21,9 +21,9 @@ void setup() {
     size(1200, 1200);
     
     // Settings
-    pixelsPerBlock = 64;
-    blocksPerChunk = 16;
-    playerWidth = pixelsPerBlock / 2;
+    pixelsPerBlock = 25;
+    blocksPerChunk = 40;
+    resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.08;
     gameSeed = 1337;
     
