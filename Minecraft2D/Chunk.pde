@@ -2,14 +2,14 @@ public class Chunk {
     public Block[][] blocks;
     int x;
     int y;
-    color grassColorScheme; // Each chunk has a special color for grass
+    public color grassColorScheme; // Each chunk has a special color for grass
     float chanceStone;
     
     public Chunk(PVector coords) {
         blocks = new Block[blocksPerChunk][blocksPerChunk];
         long chunkSeed = gameSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);
-        color grassColorScheme = color(random(0, 70), random(0, 70), random(0, 70));
+        grassColorScheme = color(random(0, 70), random(0, 70), random(0, 70));
         chanceStone = baseChanceStone * random(0.1, 1.3);
         for (int i = 0; i < blocksPerChunk; i++) {
             for (int j = 0; j < blocksPerChunk; j++) {

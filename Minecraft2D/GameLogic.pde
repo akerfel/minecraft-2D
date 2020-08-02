@@ -25,9 +25,9 @@ void loadVisibleChunksIfNeeded() {
     currentChunkCoords = calcChunkCoords(player.coords);
     
     if (!(currentChunkCoords.x == previousChunkCoords.x && currentChunkCoords.y == previousChunkCoords.y)) {
-        println("Showing different chunks");
-        println("Previous: " + previousChunkCoords);
-        println("Current: " + currentChunkCoords);
+        //println("Showing different chunks");
+        //println("Previous: " + previousChunkCoords);
+        //println("Current: " + currentChunkCoords);
         loadVisibleChunks();
     }
 }
@@ -76,7 +76,6 @@ PVector calcChunkCoords(PVector coords) {
 void placeStoneAbovePlayer() {
     Block[][] blocksInRelevantChunk = getChunk(new PVector(player.coords.x, player.coords.y - 1)).blocks;
     blocksInRelevantChunk[int(player.coords.x) % blocksPerChunk][int(player.coords.y - 1) % blocksPerChunk] = new Stone();
-    println("made stone?");
 }
 
 Block getBlock(float x, float y) {
