@@ -17,7 +17,7 @@ void setup() {
     size(1200, 1200);
     
     // Settings
-    pixelsPerBlock = 16;
+    pixelsPerBlock = 64;
     blocksPerChunk = 16;
     playerWidth = pixelsPerBlock / 2;
     baseChanceStone = 0.08;
