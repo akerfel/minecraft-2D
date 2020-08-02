@@ -2,6 +2,17 @@ void drawEverything() {
     background(0, 0, 0);
     drawVisibleChunks();
     drawPlayer();
+    drawHotbar();
+}
+
+void drawHotbar() {
+    fill(200, 200, 200);
+    rectMode(CENTER);
+    int pixelsPerCell = 60;
+    for (int xOffset = -4; xOffset < 5; xOffset++) {
+        square(width/2 + xOffset * pixelsPerCell, height - pixelsPerCell / 2, pixelsPerCell);
+    }
+    rectMode(CORNER);
 }
 
 void drawVisibleChunks() {
