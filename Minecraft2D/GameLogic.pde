@@ -1,6 +1,32 @@
 void updateLogic() {
     player.move();
     loadVisibleChunksIfNeeded();    
+    placeBlocksWithMouse();
+}
+
+void placeBlocksWithMouse() {
+    if (rightMouseButtonDown) {
+        setMouseBlock("Stone");
+    }
+    if (leftMouseButtonDown) {
+        setMouseBlock("Grass");
+    }
+}
+
+void setMouseBlock(String typeOfBlock) {
+    float xPixelsFromPlayerToMouse = width / 2 - mouseX;
+    float yPixelsFromPlayerToMouse = width / 2 - mouseY;
+    float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
+    float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
+    Chunk clickedChunk = getChunk(new PVector(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse)));
+    
+    switch(typeOfBlock) {
+        case "Stone":
+            clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Stone();
+            break;
+        case "Grass":
+            clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Grass(getChunk(player.coords).grassColorScheme);
+    }
 }
 
 void setFireCenterChunk() {

@@ -1,18 +1,18 @@
 void mousePressed() {
-    float xPixelsFromPlayerToMouse = width / 2 - mouseX;
-    float yPixelsFromPlayerToMouse = width / 2 - mouseY;
-    float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
-    float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
-    println("Blocks from player to mouse in x: " + xBlocksFromPlayerToMouse);
-    println("Blocks from player to mouse in y: " + yBlocksFromPlayerToMouse);
-    Chunk clickedChunk = getChunk(new PVector(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse)));
-    if (clickedChunk == getChunk(player.coords)) {
-        if (mouseButton == RIGHT) {
-            clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Stone();
-        }
-        else if (mouseButton == LEFT) {
-            clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Grass(getChunk(player.coords).grassColorScheme);
-        }
+    if (mouseButton == RIGHT) {
+        rightMouseButtonDown = true;
+    }
+    else if (mouseButton == LEFT) {
+        leftMouseButtonDown = true;
+    }
+}
+
+void mouseReleased() {
+    if (mouseButton == RIGHT) {
+        rightMouseButtonDown = false;
+    }
+    else if (mouseButton == LEFT) {
+        leftMouseButtonDown = false;
     }
 }
 

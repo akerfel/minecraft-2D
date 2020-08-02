@@ -13,6 +13,10 @@ Player player;
 PVector currentChunkCoords; // Used to check if player has entered new chunk (shows new chunks around player)
 Chunk[] visibleChunks;   
 
+// Other
+boolean rightMouseButtonDown;
+boolean leftMouseButtonDown;
+
 void setup() {
     size(1200, 1200);
     
@@ -29,6 +33,10 @@ void setup() {
     currentChunkCoords = calcChunkCoords(player.coords);
     visibleChunks = new Chunk[9];
     initalLoadChunks();
+    
+    // Other
+    rightMouseButtonDown = false;
+    leftMouseButtonDown = false;
 }
 
 void draw() {
