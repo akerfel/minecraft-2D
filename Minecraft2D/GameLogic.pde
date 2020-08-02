@@ -10,39 +10,50 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
-        switch (player.hotbarSlotSelected) {
-            case 1:
-                setMouseBlock("Stone");
-                break;
-            case 2:
-                setMouseBlock("Planks");
-                break;
+        HotbarCell cell = player.hotbar[player.hotbarCellSelected];
+        if (cell.amount != 0) {
+            if (setMouseBlock(cell.block.toString())) {
+                println("Placed " + cell.block.toString() + "        " + random(0, 100));
+                cell.amount--;
+            }
         }
     }
     if (leftMouseButtonDown) {
-        setMouseBlock("Grass");
+        setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
     }
 }
 
-void setMouseBlock(String typeOfBlock) {
+boolean setMouseBlock(String blockName) {
+    switch (blockName) {
+        case "Stone":
+            return setMouseBlock(new Stone());
+        case "Planks":
+            return setMouseBlock(new Planks());
+    }
+    return false;
+}
+
+
+
+boolean setMouseBlock(Block block) {
     float xPixelsFromPlayerToMouse = width / 2 - mouseX;
     float yPixelsFromPlayerToMouse = width / 2 - mouseY;
     float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
     float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
     Chunk clickedChunk = getChunk(new PVector(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse)));
-    if (clickedChunk == getChunk(player.coords)) {
-        switch(typeOfBlock) {
-            case "Stone":
-                clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Stone();
-                break;
-            case "Planks":
-                clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Planks();
-                break;
-            case "Grass":
-                clickedChunk.blocks[int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Grass(getChunk(player.coords).grassColorScheme);
-                break;
-            }
+    int xInChunk = int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
+    int yInChunk = int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
+    
+    if (clickedChunk == getChunk(player.coords) && !block.toString().equals(clickedChunk.blocks[xInChunk][yInChunk].toString())) {
+        if (block.toString().equals("Grass")) { // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
+            clickedChunk.blocks[xInChunk][yInChunk] = new Grass(getChunk(player.coords).grassColorScheme);
+        }
+        else {
+            clickedChunk.blocks[xInChunk][yInChunk] = block;
+        }
+        return true;
     }
+    return false;
 }
 
 void setFireCenterChunk() {

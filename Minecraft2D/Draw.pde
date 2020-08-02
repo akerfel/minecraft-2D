@@ -9,11 +9,17 @@ void drawHotbar() {
     rectMode(CENTER);
     int pixelsPerCell = 60;
     for (int i = 0; i < 9; i++) {
-        fill(150, 150, 150);
+        if (i == player.hotbarCellSelected) {
+            fill(210, 210, 210);
+        }
+        else {
+            fill(150, 150, 150);
+        }
         int x = width/2 + (i - 4) * pixelsPerCell;
         int y = height - pixelsPerCell / 2;
         square(x, y, pixelsPerCell);
         if (!(player.hotbar[i].amount == 0)) {
+            
             drawBlock(player.hotbar[i].block, x, y);
             
             // Draw amount (text)

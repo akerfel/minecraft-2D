@@ -13,10 +13,10 @@ void keyPressed() {
     if (key == 'f') {
         setFireCenterChunk();
     }
-    int numberKeyClicked = int(key) - 48;
-    if (numberKeyClicked >= 1 && numberKeyClicked <= 9) {
-        player.hotbarSlotSelected = numberKeyClicked;
-        println("Selected hotbar slot " + player.hotbarSlotSelected);
+    int numberKeyClicked = int(key) - 49;
+    if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
+        player.hotbarCellSelected = numberKeyClicked;
+        println("Selected hotbar slot " + player.hotbarCellSelected);
     }
     
     if (key == CODED) {
