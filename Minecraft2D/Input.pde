@@ -7,8 +7,18 @@ void keyPressed() {
     if (key == 'c') {
         playerBlockChangeColor();
     }
+    if (key == CODED) {
+        if (keyCode == SHIFT) {
+            player.isRunning = true;    
+        }
+    }
 }
  
 void keyReleased() {
     player.setMove(keyCode, false);
+    if (key == CODED) {
+        if (keyCode == SHIFT) {
+            player.isRunning = false;    
+        }
+    }
 }

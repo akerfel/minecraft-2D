@@ -2,18 +2,30 @@
 
 public class Player {
     PVector coords;
-    float v;
+    float speed;
+    boolean isRunning;
+    float runningFactor;    // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
+   
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
-        v = 0.03;
+        speed = 0.03;
+        runningFactor = 2;
+        isRunning = false;
     }
     
     void move() {
+        // 
+        float v = speed;
+        if (isRunning) {
+            v *= runningFactor; 
+        }
+        
         // Save previous coords
         float xPrevious = coords.x;
         float yPrevious = coords.y;
+        
         // Change coords
         coords.x += v*(int(isRight) - int(isLeft));
         coords.y += v*(int(isDown)  - int(isUp));
