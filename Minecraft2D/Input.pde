@@ -2,13 +2,13 @@ void mousePressed() {
     if (mouseButton == RIGHT) {
         float xPixelsFromPlayerToMouse = width / 2 - mouseX;
         float yPixelsFromPlayerToMouse = width / 2 - mouseY;
-        int xBlocksFromPlayerToMouse = int(xPixelsFromPlayerToMouse) / pixelsPerBlock;
-        int yBlocksFromPlayerToMouse = int(yPixelsFromPlayerToMouse) / pixelsPerBlock;
+        float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
+        float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
         println("Blocks from player to mouse in x: " + xBlocksFromPlayerToMouse);
         println("Blocks from player to mouse in y: " + yBlocksFromPlayerToMouse);
-        Chunk clickedChunk = getChunk(new PVector(player.coords.x - xBlocksFromPlayerToMouse, player.coords.y - yBlocksFromPlayerToMouse));
+        Chunk clickedChunk = getChunk(new PVector(int(player.coords.x) - xBlocksFromPlayerToMouse, int(player.coords.y) - yBlocksFromPlayerToMouse));
         if (clickedChunk == getChunk(player.coords) && (abs(xBlocksFromPlayerToMouse) > 0 || abs(yBlocksFromPlayerToMouse) > 0)) {
-            clickedChunk.blocks[constrain(int(player.coords.x % blocksPerChunk) - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1)][constrain(int(player.coords.y % blocksPerChunk) - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1)] = new Stone();
+            clickedChunk.blocks[int(constrain(int(player.coords.x % blocksPerChunk) - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))][int(constrain(int(player.coords.y % blocksPerChunk) - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1))] = new Stone();
         }
         //blocksInRelevantChunk[int(player.coords.x) % blocksPerChunk][int(player.coords.y - 1) % blocksPerChunk] = new Stone();
         //println("made stone?");    
