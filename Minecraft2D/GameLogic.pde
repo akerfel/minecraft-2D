@@ -74,6 +74,7 @@ void loadVisibleChunksIfNeeded() {
     }
 }
 
+
 void loadVisibleChunks() {
 
     // Top row

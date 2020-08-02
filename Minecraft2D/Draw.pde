@@ -6,11 +6,22 @@ void drawEverything() {
 }
 
 void drawHotbar() {
-    fill(200, 200, 200);
     rectMode(CENTER);
     int pixelsPerCell = 60;
-    for (int xOffset = -4; xOffset < 5; xOffset++) {
-        square(width/2 + xOffset * pixelsPerCell, height - pixelsPerCell / 2, pixelsPerCell);
+    for (int i = 0; i < 9; i++) {
+        fill(150, 150, 150);
+        int x = width/2 + (i - 4) * pixelsPerCell;
+        int y = height - pixelsPerCell / 2;
+        square(x, y, pixelsPerCell);
+        if (!(player.hotbar[i].amount == 0)) {
+            drawBlock(player.hotbar[i].block, x, y);
+            
+            // Draw amount (text)
+            textSize(24);
+            textAlign(CENTER, BOTTOM);
+            fill(255, 255, 255);
+            text(player.hotbar[i].amount, x, height);
+        }
     }
     rectMode(CORNER);
 }

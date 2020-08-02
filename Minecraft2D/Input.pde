@@ -1,4 +1,13 @@
 void keyPressed() {
+    
+    if (key == 'x') {
+        player.addBlockToInventory(new Stone());
+    }
+    
+    if (key == 'c') {
+        player.addBlockToInventory(new Planks());
+    }
+    
     player.setMove(keyCode, true);
     
     if (key == 'f') {
