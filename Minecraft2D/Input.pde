@@ -4,8 +4,8 @@ void keyPressed() {
     if (key == 'f') {
         setFireCenterChunk();
     }
-    if (key == 'c') {
-        playerBlockChangeColor();
+    if (key == ' ') {
+        placeStoneAbovePlayer();
     }
     if (key == CODED) {
         if (keyCode == SHIFT) {

@@ -7,7 +7,10 @@ void setFireCenterChunk() {
     for (int x = 0; x < blocksPerChunk; x++) {
         for (int y = 0; y < blocksPerChunk; y++) {
             if (random(0, 1) < 0.05) {
-                visibleChunks[4].blocks[x][y].c = color(200, 0, 0);
+                Block block = visibleChunks[4].blocks[x][y];
+                if (block.toString() == "Grass") {
+                    visibleChunks[4].blocks[x][y].c = color(200, 0, 0);
+                }
             }
         }
     }    
@@ -22,7 +25,7 @@ void loadVisibleChunksIfNeeded() {
     currentChunkCoords = calcChunkCoords(player.coords);
     
     if (!(currentChunkCoords.x == previousChunkCoords.x && currentChunkCoords.y == previousChunkCoords.y)) {
-        println("Loading new chunks");
+        println("Showing different chunks");
         println("Previous: " + previousChunkCoords);
         println("Current: " + currentChunkCoords);
         loadVisibleChunks();
@@ -70,8 +73,10 @@ PVector calcChunkCoords(PVector coords) {
     return new PVector(int(coords.x / blocksPerChunk), int(coords.y / blocksPerChunk));
 }
 
-void playerBlockChangeColor() {
-    getPlayerBlock().c = color(0, 0, 255);
+void placeStoneAbovePlayer() {
+    Block[][] blocksInRelevantChunk = getChunk(new PVector(player.coords.x, player.coords.y - 1)).blocks;
+    blocksInRelevantChunk[int(player.coords.x) % blocksPerChunk][int(player.coords.y - 1) % blocksPerChunk] = new Stone();
+    println("made stone?");
 }
 
 Block getBlock(float x, float y) {

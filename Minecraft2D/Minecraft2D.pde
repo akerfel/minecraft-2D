@@ -4,34 +4,28 @@ import java.util.HashMap;
 int pixelsPerBlock;    // pixels per side of block
 int blocksPerChunk;    // blocks per side of chunk
 float playerWidth;
-float chanceGrass;
+float baseChanceStone;
 int gameSeed;
-
 
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
+PVector currentChunkCoords; // Used to check if player has entered new chunk (shows new chunks around player)
 Chunk[] visibleChunks;   
-
-// Other
-PVector currentChunkCoords;
 
 void setup() {
     size(1200, 1200);
     
     // Settings
-    pixelsPerBlock = 32;
-    blocksPerChunk = 32;
+    pixelsPerBlock = 16;
+    blocksPerChunk = 16;
     playerWidth = pixelsPerBlock / 2;
-    chanceGrass = 0.80;
+    baseChanceStone = 0.08;
     gameSeed = 1337;
-    
-    // Other
-    
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(8000, 8000);
+    player = new Player(8004, 8004);
     currentChunkCoords = calcChunkCoords(player.coords);
     visibleChunks = new Chunk[9];
     initalLoadChunks();

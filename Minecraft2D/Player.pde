@@ -10,7 +10,7 @@ public class Player {
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
-        speed = 0.03;
+        speed = 0.1;
         runningFactor = 2;
         isRunning = false;
     }
