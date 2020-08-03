@@ -55,7 +55,7 @@ PVector calcBlocksFromPlayerToMouse() {
 }
 
 // Returns true if actually changed the block.
-// Example: if you try to place stone on stone, the block did not change, so function returns false
+// Example: if you try to replace a stone block with stone, the block will not change, so function returns false
 boolean setBlock(Block block, float x, float y) {
     Chunk chunk = getChunk(new PVector(x, y));
     int xInChunk = int(x) % blocksPerChunk;
