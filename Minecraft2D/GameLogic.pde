@@ -37,19 +37,21 @@ boolean setMouseBlock(String blockName) {
 }
 
 Block getMouseBlock() {
-    float xPixelsFromPlayerToMouse = width / 2 - mouseX;
-    float yPixelsFromPlayerToMouse = width / 2 - mouseY;
-    float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
-    float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
-    return getBlock(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse));
+    PVector distancePlayerToMouse = calcBlocksFromPlayerToMouse();
+    return getBlock(int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));
 }
 
 boolean setMouseBlock(Block block) {
+    PVector distancePlayerToMouse = calcBlocksFromPlayerToMouse();
+    return setBlock(block, int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));
+}
+
+PVector calcBlocksFromPlayerToMouse() {
     float xPixelsFromPlayerToMouse = width / 2 - mouseX;
     float yPixelsFromPlayerToMouse = width / 2 - mouseY;
     float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
     float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
-    return setBlock(block, int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse));
+    return new PVector(xBlocksFromPlayerToMouse, yBlocksFromPlayerToMouse);
 }
 
 // Returns true if actually changed the block.
