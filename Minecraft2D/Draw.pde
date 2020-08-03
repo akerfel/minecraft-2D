@@ -20,7 +20,9 @@ void drawHotbar() {
         square(x, y, pixelsPerCell);
         if (!(player.hotbar[i].amount == 0)) {
             
-            drawBlock(player.hotbar[i].block, x, y);
+            // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
+            fill(player.hotbar[i].block.c);
+            square(x, y, pixelsPerCell / 2);
             
             // Draw amount (text)
             textSize(24);

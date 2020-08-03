@@ -144,11 +144,6 @@ PVector calcChunkCoords(PVector coords) {
     return new PVector(int(coords.x / blocksPerChunk), int(coords.y / blocksPerChunk));
 }
 
-void placeStoneAbovePlayer() {
-    Block[][] blocksInRelevantChunk = getChunk(new PVector(player.coords.x, player.coords.y - 1)).blocks;
-    blocksInRelevantChunk[int(player.coords.x) % blocksPerChunk][int(player.coords.y - 1) % blocksPerChunk] = new Stone();
-}
-
 Block getBlock(float x, float y) {
     Chunk chunk = getChunk(new PVector(x, y));
     return chunk.blocks[int(x) % blocksPerChunk][int(y) % blocksPerChunk];
