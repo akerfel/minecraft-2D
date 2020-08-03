@@ -41,10 +41,7 @@ Block getMouseBlock() {
     float yPixelsFromPlayerToMouse = width / 2 - mouseY;
     float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
     float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
-    Chunk clickedChunk = getChunk(new PVector(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse)));
-    int xInChunk = int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
-    int yInChunk = int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
-    return clickedChunk.blocks[xInChunk][yInChunk];
+    return getBlock(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse));
 }
 
 boolean setMouseBlock(Block block) {
@@ -52,16 +49,22 @@ boolean setMouseBlock(Block block) {
     float yPixelsFromPlayerToMouse = width / 2 - mouseY;
     float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
     float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
-    Chunk clickedChunk = getChunk(new PVector(int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse)));
-    int xInChunk = int(constrain(player.coords.x % blocksPerChunk - xBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
-    int yInChunk = int(constrain(player.coords.y % blocksPerChunk - yBlocksFromPlayerToMouse, 0, blocksPerChunk - 1));
-    
-    if (clickedChunk == getChunk(player.coords) && !block.toString().equals(clickedChunk.blocks[xInChunk][yInChunk].toString())) {
-        if (block.toString().equals("Grass")) { // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
-            clickedChunk.blocks[xInChunk][yInChunk] = new Grass(getChunk(player.coords).grassColorScheme);
+    return setBlock(block, int(player.coords.x - xBlocksFromPlayerToMouse), int(player.coords.y - yBlocksFromPlayerToMouse));
+}
+
+// Returns true if actually changed the block.
+// Example: if you try to place stone on stone, the block did not change, so function returns false
+boolean setBlock(Block block, float x, float y) {
+    Chunk chunk = getChunk(new PVector(x, y));
+    int xInChunk = int(x) % blocksPerChunk;
+    int yInChunk = int(y) % blocksPerChunk;
+    if (!block.toString().equals(chunk.blocks[xInChunk][yInChunk].toString())) {
+        // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
+        if (block.toString().equals("Grass")) { 
+            chunk.blocks[xInChunk][yInChunk] = new Grass(getChunk(new PVector(x, y)).grassColorScheme);
         }
         else {
-            clickedChunk.blocks[xInChunk][yInChunk] = block;
+            chunk.blocks[xInChunk][yInChunk] = block;
         }
         return true;
     }
