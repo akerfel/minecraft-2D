@@ -2,6 +2,7 @@ void updateLogic() {
     player.move();
     loadVisibleChunksIfNeeded();    
     placeBlocksWithMouse();
+    destroyBlocksWithMouse();
     maybeSpawnMob();
     removeFarMobs();
     updateMobs();
@@ -48,6 +49,9 @@ void placeBlocksWithMouse() {
             }
         }
     }
+}
+
+void destroyBlocksWithMouse() {
     if (leftMouseButtonDown) {
         if (!getMouseBlock().toString().equals("Grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
             if (getMouseBlock().prcntBroken >= 1) {
