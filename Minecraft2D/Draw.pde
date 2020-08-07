@@ -168,8 +168,8 @@ void drawToolInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
     circle(x, y, pixelsPerCell / 2);
     
     // Draw letter for tool type (Temporary solution, before I add specific images for tools) 
-    textSize(24);
+    textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(tool.toolType.toUpperCase().charAt(0), x, height);
+    text(tool.toolType, x, height);
 }
