@@ -42,7 +42,7 @@ void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
         HotbarCell cell = player.hotbar[player.hotbarCellSelected];
         if (cell.amount != 0) {
-            if (setMouseBlock(cell.block.toString()) && getDistance_BlocksFromPlayerToMouse() < player.reach) {
+            if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock(cell.block.toString())) {
                 println("Placed " + cell.block.toString() + "        " + random(0, 100));
                 cell.amount--;
             }
