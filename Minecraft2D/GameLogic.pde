@@ -12,17 +12,17 @@ void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
         HotbarCell cell = player.hotbar[player.hotbarCellSelected];
         if (cell.amount != 0) {
-            if (setMouseBlock(cell.block.toString())) {
+            if (setMouseBlock(cell.block.toString()) && getDistance_BlocksFromPlayerToMouse() < player.reach) {
                 println("Placed " + cell.block.toString() + "        " + random(0, 100));
                 cell.amount--;
             }
         }
     }
     if (leftMouseButtonDown) {
-        if (!getMouseBlock().toString().equals("Grass")) {
+        if (!getMouseBlock().toString().equals("Grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
             player.addBlockToInventory(getMouseBlock());
+            setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
         }
-        setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
     }
 }
 
@@ -37,21 +37,27 @@ boolean setMouseBlock(String blockName) {
 }
 
 Block getMouseBlock() {
-    PVector distancePlayerToMouse = calcBlocksFromPlayerToMouse();
+    PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
     return getBlock(int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));
 }
 
 boolean setMouseBlock(Block block) {
-    PVector distancePlayerToMouse = calcBlocksFromPlayerToMouse();
+    PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
     return setBlock(block, int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));
 }
 
-PVector calcBlocksFromPlayerToMouse() {
+PVector getVector_BlocksFromPlayerToMouse() {
     float xPixelsFromPlayerToMouse = width / 2 - mouseX;
     float yPixelsFromPlayerToMouse = width / 2 - mouseY;
     float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
     float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
     return new PVector(xBlocksFromPlayerToMouse, yBlocksFromPlayerToMouse);
+}
+
+// Returns a float, total distance (in block lengths) from mouse to player
+float getDistance_BlocksFromPlayerToMouse() {
+    PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
+    return distancePlayerToMouse.dist(new PVector(0, 0));    // simply pyth. theorem
 }
 
 // Returns true if actually changed the block.

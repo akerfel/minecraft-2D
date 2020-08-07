@@ -9,6 +9,7 @@ public class Player {
     boolean isLeft, isRight, isUp, isDown;
     int hotbarCellSelected;
     HotbarCell[] hotbar;
+    int reach;
    
     
     public Player(float x, float y) {
@@ -20,6 +21,7 @@ public class Player {
         hotbarCellSelected = 0;
         hotbar = new HotbarCell[9];
         setHotbarEmpty();
+        reach = 7;
     }
     
     void addBlockToInventory(Block block) {
