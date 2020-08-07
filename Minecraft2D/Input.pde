@@ -1,11 +1,16 @@
 void keyPressed() {
     
     if (key == 'x') {
-        player.addBlockToInventory(new Stone());
+        for (int i = 0; i < 5; i++) {
+            player.addBlockToInventory(new Stone());
+        }
+        
     }
     
     if (key == 'c') {
-        player.addBlockToInventory(new Planks());
+        for (int i = 0; i < 5; i++) {
+            player.addBlockToInventory(new Planks());
+        }
     }
     
     player.setMove(keyCode, true);

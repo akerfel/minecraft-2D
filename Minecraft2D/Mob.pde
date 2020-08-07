@@ -10,10 +10,10 @@ public class Mob {
     public Mob(float x, float y) {
         coords = new PVector(x, y);
         direction = new PVector(0, 0);
-        speedFactor = 0.1;
+        speedFactor = 0.06;
         isMoving = false;
         chanceStartMoving = 0.01;
-        chanceStopMoving = 0.005;
+        chanceStopMoving = 0.01;
         c = color(255, 192, 203);
         println("made mob at " + coords.x + ", " + coords.y);
     }
@@ -36,6 +36,8 @@ public class Mob {
                 {
                 coords.x = xPrevious;
                 coords.y = yPrevious;
+                direction.x *= -1;
+                direction.y *= -1;
             }
         }
         else {
