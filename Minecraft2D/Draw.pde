@@ -5,6 +5,8 @@ void drawEverything() {
     drawHotbar();
 }
 
+
+
 void drawHotbar() {
     rectMode(CENTER);
     int pixelsPerCell = 60;
@@ -99,7 +101,26 @@ void drawChunk(Chunk chunk, float xStart, float yStart) {
             drawBlock(chunk.blocks[i][j], xStart + i * pixelsPerBlock, yStart + j * pixelsPerBlock);
         }
     }
+    
+    drawAnimalsInChunk(chunk, xStart, yStart);
 }
+
+void drawAnimalsInChunk(Chunk chunk, float xStart, float yStart) {
+    for (Animal animal : animals) {
+        if (getChunk(animal.coords) == chunk) {
+            float xInChunk = animal.coords.x % blocksPerChunk;
+            float yInChunk = animal.coords.y % blocksPerChunk;
+            drawAnimal(animal, xStart + xInChunk * pixelsPerBlock, yStart + yInChunk * pixelsPerBlock);
+        }
+    }
+}
+
+void drawAnimal(Animal animal, float x, float y) {
+    fill(animal.c);
+    square(x, y, pixelsPerBlock / 2);
+}
+
+
 
 void drawBlock(Block block, float x, float y) {
     fill(block.c);
