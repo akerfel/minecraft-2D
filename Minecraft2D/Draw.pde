@@ -80,12 +80,14 @@ void drawChunk(Chunk chunk, float xStart, float yStart) {
 void drawBlock(Block block, float x, float y) {
     fill(block.c);
     square(x, y, pixelsPerBlock);
-    drawBlockBreakingTexture(block, x, y);
+    if (block.prcntBroken > 0) {
+        drawBlockBreakingTexture(block, x, y);
+    }
 }
 
 void drawBlockBreakingTexture(Block block, float x, float y) {
-    fill(180, 0, 0);
-    square(x, y, (block.prcntBroken * pixelsPerBlock));
+    fill(block.prcntBroken * 255);
+    circle(x + pixelsPerBlock/2, y + pixelsPerBlock/2, (block.prcntBroken * pixelsPerBlock));
 }
 
 void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {

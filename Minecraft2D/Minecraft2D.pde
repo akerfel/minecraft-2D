@@ -20,6 +20,7 @@ Player player;
 PVector currentChunkCoords; // Used to check if player has entered new chunk (shows new chunks around player)
 Chunk[] visibleChunks;   
 ArrayList<Mob> mobs; 
+ArrayList<Block> damagedBlocks;
 
 // Other
 boolean rightMouseButtonDown;
@@ -47,6 +48,7 @@ void setup() {
     visibleChunks = new Chunk[9];
     initalLoadChunks();
     mobs = new ArrayList<Mob>();
+    damagedBlocks = new ArrayList<Block>();
     
     // Other
     rightMouseButtonDown = false;

@@ -3,6 +3,7 @@ void updateLogic() {
     loadVisibleChunksIfNeeded();    
     placeBlocksWithMouse();
     destroyBlocksWithMouse();
+    removeBlockDamageIfNotMining();
     maybeSpawnMob();
     removeFarMobs();
     updateMobs();
@@ -12,6 +13,14 @@ void updateLogic() {
 void updateMobs() {
     for (Mob mob : mobs) {
         mob.update();    
+    }
+}
+
+void removeBlockDamageIfNotMining() {
+    if (!leftMouseButtonDown) {
+        for (Block block : damagedBlocks) {
+            block.removeDamage();    
+        }
     }
 }
 
@@ -53,13 +62,15 @@ void placeBlocksWithMouse() {
 
 void destroyBlocksWithMouse() {
     if (leftMouseButtonDown) {
-        if (!getMouseBlock().toString().equals("Grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
-            if (getMouseBlock().prcntBroken >= 1) {
-                player.addBlockToInventory(getMouseBlock());
+        Block mouseBlock = getMouseBlock();
+        if (!mouseBlock.toString().equals("Grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
+            if (mouseBlock.prcntBroken >= 1) {
+                player.addBlockToInventory(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
             }
             else {
-                getMouseBlock().damage();    
+                mouseBlock.damage();  
+                damagedBlocks.add(mouseBlock);
             }
         }
     }
