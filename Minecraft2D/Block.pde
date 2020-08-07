@@ -14,17 +14,30 @@ public class Block extends Item{
         this.toolTypeForMining = toolTypeForMining;
     }
     
-    public void damage() {
+    boolean isHoldingCorrectToolType() {
+        println("held tool type: " + ((Tool) player.getHeldItem()).toolType);
+        println("toolType for block: " + toolTypeForMining);
+        return (toolTypeForMining.equals(((Tool) player.getHeldItem()).toolType));
+    }
+    
+    public void mineBlock() {
         if (prcntBroken == 0) {
             timeDamagedLastTime = millis();
             prcntBroken = 0.1;
         }
         else {
-            float correctToolMult = 5;
+            float toolTypeMult = 5;            // Higher = slower. 1.5 longer timer for correct tool type, 5 for incorrect tool type
+            float toolMaterialMult = 1;        // Higher = faster. wood/stone/iron
+            if (isHoldingCorrectToolType()) {
+                toolTypeMult = 1.5;
+                toolMaterialMult = ((Tool) player.getHeldItem()).mult;
+                println("ye");
+            }
+            
             // ODD BEHAVIOR: Increasing numBreakingStages also increases breaking time.
             // Especially for high values. Keep numBreakingStages at <= 10 for now.
             float numBreakingStages = 10;    
-            if (millis() - timeDamagedLastTime > hardness * 1.5 * correctToolMult * (1000.0 / numBreakingStages)) {
+            if (millis() - timeDamagedLastTime > hardness * 1.5 * toolTypeMult / toolMaterialMult * (1000.0 / numBreakingStages)) {
                 if (prcntBroken < 1) {
                     timeDamagedLastTime = millis();
                     prcntBroken += 1.0 / numBreakingStages;

@@ -4,6 +4,6 @@ public class Dirt extends Block {
     }
     
     public String toString() {
-        return "Dirt";    
+        return "dirt";    
     }
 }

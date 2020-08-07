@@ -8,6 +8,6 @@ public class Grass extends Block {
     }
     
     public String toString() {
-        return "Grass";    
+        return "grass";    
     }
 }

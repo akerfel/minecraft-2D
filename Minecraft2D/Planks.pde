@@ -4,6 +4,6 @@ public class Planks extends Block {
     }
     
     public String toString() {
-        return "Planks";    
+        return "planks";    
     }
 }

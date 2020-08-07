@@ -56,6 +56,7 @@ void setup() {
     
     // Testing atm
     player.addItemToInventory(new Tool("diamond", "pick"));
+    player.addItemToInventory(new Tool("stone", "axe"));
 }
 
 void draw() {

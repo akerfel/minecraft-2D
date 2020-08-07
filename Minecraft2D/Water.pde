@@ -4,6 +4,6 @@ public class Water extends Block {
     }
     
     public String toString() {
-        return "Water";    
+        return "water";    
     }
 }

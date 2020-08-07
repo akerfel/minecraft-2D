@@ -2,7 +2,7 @@ void updateLogic() {
     player.move();
     loadVisibleChunksIfNeeded();    
     placeBlocksWithMouse();
-    destroyBlocksWithMouse();
+    mineBlocksWithMouse();
     removeBlockDamageIfNotMining();
     maybeSpawnMob();
     removeFarMobs();
@@ -51,7 +51,7 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
-        HotbarCell cell = player.hotbar[player.hotbarCellSelected];
+        HotbarCell cell = player.hotbar[player.hotbarIndexSelected];
         if (cell.item.type.equals("block")) {
             if (cell.amount != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock(cell.item.toString())) {
@@ -62,16 +62,16 @@ void placeBlocksWithMouse() {
     }
 }
 
-void destroyBlocksWithMouse() {
+void mineBlocksWithMouse() {
     if (leftMouseButtonDown) {
         Block mouseBlock = getMouseBlock();
-        if (!mouseBlock.toString().equals("Grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
+        if (!mouseBlock.toString().equals("grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
             if (mouseBlock.prcntBroken >= 1) {
                 player.addBlockToInventory(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
             }
             else {
-                mouseBlock.damage();  
+                mouseBlock.mineBlock();  
                 damagedBlocks.add(mouseBlock);
             }
         }
@@ -80,9 +80,9 @@ void destroyBlocksWithMouse() {
 
 boolean setMouseBlock(String blockName) {
     switch (blockName) {
-        case "Stone":
+        case "stone":
             return setMouseBlock(new Stone());
-        case "Planks":
+        case "planks":
             return setMouseBlock(new Planks());
     }
     return false;
@@ -120,7 +120,7 @@ boolean setBlock(Block block, float x, float y) {
     int yInChunk = int(y) % blocksPerChunk;
     if (!block.toString().equals(chunk.blocks[xInChunk][yInChunk].toString())) {
         // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
-        if (block.toString().equals("Grass")) { 
+        if (block.toString().equals("grass")) { 
             chunk.blocks[xInChunk][yInChunk] = new Grass(getChunk(new PVector(x, y)).grassColorScheme);
         }
         else {
@@ -136,7 +136,7 @@ void setFireCenterChunk() {
         for (int y = 0; y < blocksPerChunk; y++) {
             if (random(0, 1) < 0.05) {
                 Block block = visibleChunks[4].blocks[x][y];
-                if (block.toString() == "Grass") {
+                if (block.toString() == "grass") {
                     visibleChunks[4].blocks[x][y].c = color(200, 0, 0);
                 }
             }

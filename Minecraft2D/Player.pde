@@ -8,7 +8,7 @@ public class Player {
     float runningFactor;    // 1.5 gives 50% speed increase when running
     float usainBoltRunningFactor;    // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
-    int hotbarCellSelected;
+    int hotbarIndexSelected;
     HotbarCell[] hotbar;
     int reach;
    
@@ -20,10 +20,14 @@ public class Player {
         isRunningLikeUsainBolt = false;
         runningFactor = 1.5;
         usainBoltRunningFactor = 20;
-        hotbarCellSelected = 0;
+        hotbarIndexSelected = 0;
         hotbar = new HotbarCell[9];
         setHotbarEmpty();
         reach = 7;
+    }
+    
+    Item getHeldItem() {
+        return hotbar[hotbarIndexSelected].item;
     }
     
     void addItemToInventory(Item item) {

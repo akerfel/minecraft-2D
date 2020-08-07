@@ -9,7 +9,7 @@ public class HotbarCell {
     
     String toString() {
         if (item == null) {
-            return "Empty";    
+            return "empty";    
         }
         return item.toString();    
     }

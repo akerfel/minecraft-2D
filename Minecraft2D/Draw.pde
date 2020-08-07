@@ -121,7 +121,7 @@ void drawHotbar() {
 }
 
 void drawHotbarCell(int pixelsPerCell, int hotbarIndex) {
-    if (hotbarIndex == player.hotbarCellSelected) {
+    if (hotbarIndex == player.hotbarIndexSelected) {
         fill(210, 210, 210);
     }
     else {
@@ -148,7 +148,7 @@ void drawItemInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
 }
 
 void drawBlockInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
-    Item block = player.hotbar[hotbarIndex].item;
+    Block block = (Block) player.hotbar[hotbarIndex].item;
     
     // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
     fill(block.c);
@@ -162,8 +162,14 @@ void drawBlockInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
 }
 
 void drawToolInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
-    Item tool = player.hotbar[hotbarIndex].item;
+    Tool tool = (Tool) player.hotbar[hotbarIndex].item;
     
     fill(tool.c);
     circle(x, y, pixelsPerCell / 2);
+    
+    // Draw letter for tool type (Temporary solution, before I add specific images for tools) 
+    textSize(24);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    text(tool.toolType.toUpperCase().charAt(0), x, height);
 }
