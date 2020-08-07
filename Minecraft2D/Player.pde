@@ -6,6 +6,7 @@ public class Player {
     boolean isRunning;
     boolean isRunningLikeUsainBolt;
     float runningFactor;    // 1.5 gives 50% speed increase when running
+    float usainBoltRunningFactor;    // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
     int hotbarCellSelected;
     HotbarCell[] hotbar;
@@ -15,9 +16,10 @@ public class Player {
     public Player(float x, float y) {
         coords = new PVector(x, y);
         speed = 0.07;
-        runningFactor = 1.5;
         isRunning = false;
         isRunningLikeUsainBolt = false;
+        runningFactor = 1.5;
+        usainBoltRunningFactor = 20;
         hotbarCellSelected = 0;
         hotbar = new HotbarCell[9];
         setHotbarEmpty();
@@ -57,7 +59,7 @@ public class Player {
             v *= runningFactor; 
         }
         if (isRunningLikeUsainBolt) {
-            v *= 5;
+            v *= usainBoltRunningFactor;
         }
         
         // Save previous coords

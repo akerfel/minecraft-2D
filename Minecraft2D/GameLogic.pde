@@ -7,8 +7,12 @@ void updateLogic() {
 }
 
 void removeFarMobs() {
-    for (Mob mob : mobs) {
-            
+    Iterator<Mob> it = mobs.iterator();
+    while (it.hasNext()) {
+        Mob mob = it.next();
+        if (player.coords.dist(mob.coords) > mobDespawnRange) {
+            it.remove();
+        }
     }
 }
 
@@ -19,7 +23,7 @@ void maybeSpawnMob() {
 }
 
 void spawnMob() {
-    mobs.add(new Mob(player.coords.x + random(-blocksPerChunk / 2, blocksPerChunk / 2), player.coords.y + random(-blocksPerChunk / 2, blocksPerChunk / 2)));
+    mobs.add(new Mob(player.coords.x + random(-mobSpawnRange, mobSpawnRange), player.coords.y + random(-mobSpawnRange, mobSpawnRange)));
 }
 
 void resetObjectsDependingOnPixelsPerBlock() {
