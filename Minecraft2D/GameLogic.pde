@@ -2,17 +2,24 @@ void updateLogic() {
     player.move();
     loadVisibleChunksIfNeeded();    
     placeBlocksWithMouse();
-    maybeSpawnAnimal();
+    maybeSpawnMob();
+    removeFarMobs();
 }
 
-void maybeSpawnAnimal() {
-    if (animals.size() < maxAnimals && random(0, 1) < animalSpaceChance) {
-        spawnAnimal();    
+void removeFarMobs() {
+    for (Mob mob : mobs) {
+            
     }
 }
 
-void spawnAnimal() {
-    animals.add(new Animal(player.coords.x + random(-blocksPerChunk / 2, blocksPerChunk / 2), player.coords.y + random(-blocksPerChunk / 2, blocksPerChunk / 2)));
+void maybeSpawnMob() {
+    if (mobs.size() < maxMobs && random(0, 1) < mobSpaceChance) {
+        spawnMob();    
+    }
+}
+
+void spawnMob() {
+    mobs.add(new Mob(player.coords.x + random(-blocksPerChunk / 2, blocksPerChunk / 2), player.coords.y + random(-blocksPerChunk / 2, blocksPerChunk / 2)));
 }
 
 void resetObjectsDependingOnPixelsPerBlock() {

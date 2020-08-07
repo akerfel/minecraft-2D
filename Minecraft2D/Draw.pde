@@ -102,21 +102,21 @@ void drawChunk(Chunk chunk, float xStart, float yStart) {
         }
     }
     
-    drawAnimalsInChunk(chunk, xStart, yStart);
+    drawMobsInChunk(chunk, xStart, yStart);
 }
 
-void drawAnimalsInChunk(Chunk chunk, float xStart, float yStart) {
-    for (Animal animal : animals) {
-        if (getChunk(animal.coords) == chunk) {
-            float xInChunk = animal.coords.x % blocksPerChunk;
-            float yInChunk = animal.coords.y % blocksPerChunk;
-            drawAnimal(animal, xStart + xInChunk * pixelsPerBlock, yStart + yInChunk * pixelsPerBlock);
+void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {
+    for (Mob mob : mobs) {
+        if (getChunk(mob.coords) == chunk) {
+            float xInChunk = mob.coords.x % blocksPerChunk;
+            float yInChunk = mob.coords.y % blocksPerChunk;
+            drawMob(mob, xStart + xInChunk * pixelsPerBlock, yStart + yInChunk * pixelsPerBlock);
         }
     }
 }
 
-void drawAnimal(Animal animal, float x, float y) {
-    fill(animal.c);
+void drawMob(Mob mob, float x, float y) {
+    fill(mob.c);
     square(x, y, pixelsPerBlock / 2);
 }
 

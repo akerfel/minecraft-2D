@@ -7,15 +7,15 @@ float playerWidth;
 float baseChanceStone;
 float baseChanceTree;
 int gameSeed;
-float animalSpaceChance;    // Chance each frame, so should be pretty low
-int maxAnimals;
+float mobSpaceChance;    // Chance each frame, so should be pretty low
+int maxMobs;
 
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
 PVector currentChunkCoords; // Used to check if player has entered new chunk (shows new chunks around player)
 Chunk[] visibleChunks;   
-ArrayList<Animal> animals; 
+ArrayList<Mob> mobs; 
 
 // Other
 boolean rightMouseButtonDown;
@@ -31,8 +31,8 @@ void setup() {
     baseChanceStone = 0.05;
     baseChanceStone = 0.02;
     gameSeed = 1337;
-    animalSpaceChance = 0.03; 
-    maxAnimals = 15;
+    mobSpaceChance = 0.03; 
+    maxMobs = 15;
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
@@ -40,7 +40,7 @@ void setup() {
     currentChunkCoords = calcChunkCoords(player.coords);
     visibleChunks = new Chunk[9];
     initalLoadChunks();
-    animals = new ArrayList<Animal>();
+    mobs = new ArrayList<Mob>();
     
     // Other
     rightMouseButtonDown = false;
