@@ -80,6 +80,12 @@ void drawChunk(Chunk chunk, float xStart, float yStart) {
 void drawBlock(Block block, float x, float y) {
     fill(block.c);
     square(x, y, pixelsPerBlock);
+    drawDamagedLevel(block, x, y);
+}
+
+void drawDamagedLevel(Block block, float x, float y) {
+    fill(180, 0, 0);
+    square(x, y, (block.prcntBroken * pixelsPerBlock));
 }
 
 void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {

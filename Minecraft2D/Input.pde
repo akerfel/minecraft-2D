@@ -21,7 +21,6 @@ void keyPressed() {
     int numberKeyClicked = int(key) - 49;
     if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
         player.hotbarCellSelected = numberKeyClicked;
-        println("Selected hotbar slot " + player.hotbarCellSelected);
     }
     
     if (key == CODED) {

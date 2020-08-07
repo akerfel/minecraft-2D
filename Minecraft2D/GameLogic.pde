@@ -7,6 +7,7 @@ void updateLogic() {
     updateMobs();
 }
 
+
 void updateMobs() {
     for (Mob mob : mobs) {
         mob.update();    
@@ -43,15 +44,19 @@ void placeBlocksWithMouse() {
         HotbarCell cell = player.hotbar[player.hotbarCellSelected];
         if (cell.amount != 0) {
             if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock(cell.block.toString())) {
-                println("Placed " + cell.block.toString() + "        " + random(0, 100));
                 cell.amount--;
             }
         }
     }
     if (leftMouseButtonDown) {
         if (!getMouseBlock().toString().equals("Grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
-            player.addBlockToInventory(getMouseBlock());
-            setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
+            if (getMouseBlock().prcntBroken >= 1) {
+                player.addBlockToInventory(getMouseBlock());
+                setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
+            }
+            else {
+                getMouseBlock().damage();    
+            }
         }
     }
 }

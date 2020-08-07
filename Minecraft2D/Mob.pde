@@ -15,7 +15,6 @@ public class Mob {
         chanceStartMoving = 0.01;
         chanceStopMoving = 0.01;
         c = color(255, 192, 203);
-        println("made mob at " + coords.x + ", " + coords.y);
     }
     
     void update() {
