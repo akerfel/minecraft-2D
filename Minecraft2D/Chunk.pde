@@ -12,7 +12,7 @@ public class Chunk {
         randomSeed(chunkSeed);
         grassColorScheme = color(random(0, 70), random(0, 70), random(0, 70));
         chanceStone = baseChanceStone * random(0.1, 1.3);
-        chanceTree = baseChanceStone * random(0.1, 1.3);
+        chanceTree = baseChanceTree * random(0.1, 1.3);
         for (int i = 0; i < blocksPerChunk; i++) {
             for (int j = 0; j < blocksPerChunk; j++) {
                 if (random(0, 1) < chanceStone) {

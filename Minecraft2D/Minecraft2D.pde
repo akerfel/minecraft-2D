@@ -32,8 +32,8 @@ void setup() {
     pixelsPerBlock = 25;
     blocksPerChunk = 40;
     resetObjectsDependingOnPixelsPerBlock();
-    baseChanceStone = 0.05;
-    baseChanceStone = 0.02;
+    baseChanceStone = 0.005;
+    baseChanceTree = 0.02;
     gameSeed = 1337;
     mobSpaceChance = 0.03; 
     maxMobs = 30;
