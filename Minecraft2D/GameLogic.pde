@@ -52,9 +52,11 @@ void resetObjectsDependingOnPixelsPerBlock() {
 void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
         HotbarCell cell = player.hotbar[player.hotbarCellSelected];
-        if (cell.amount != 0) {
-            if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock(cell.block.toString())) {
-                cell.amount--;
+        if (cell.item.type.equals("block")) {
+            if (cell.amount != 0) {
+                if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock(cell.item.toString())) {
+                    cell.amount--;
+                }
             }
         }
     }

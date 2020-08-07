@@ -1,15 +1,15 @@
-public class Block {
-    public color c;
+public class Block extends Item{
     public boolean isWall;
     float prcntBroken;
     float timeDamagedLastTime;    // millis
     float hardness;
     
     public Block(color c, boolean isWall) {
+        super("block");
         this.c = c;
         this.isWall = isWall;
         this.prcntBroken = 0;
-        hardness = 1.5;
+        hardness = 0.1;
     }
     
     public void damage() {

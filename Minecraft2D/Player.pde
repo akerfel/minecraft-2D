@@ -38,7 +38,7 @@ public class Player {
         if (!foundInInventory) {
             for (int i = 0; i < 9; i++) {
                 if (hotbar[i].amount == 0) {
-                    hotbar[i].block = block;
+                    hotbar[i].item = block;
                     hotbar[i].amount = 1;
                     break;
                 }

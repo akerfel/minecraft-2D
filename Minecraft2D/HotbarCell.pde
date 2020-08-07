@@ -1,17 +1,17 @@
 public class HotbarCell {
-    Block block;
+    Item item;
     int amount;
     
     public HotbarCell() {
-        block = null;
+        item = null;
         amount = 0;
     }
     
     String toString() {
-        if (block == null) {
+        if (item == null) {
             return "Empty";    
         }
-        return block.toString();    
+        return item.toString();    
     }
     
     void incrementItemAmount() {

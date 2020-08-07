@@ -126,7 +126,7 @@ void drawHotbar() {
         if (!(player.hotbar[i].amount == 0)) {
             
             // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
-            fill(player.hotbar[i].block.c);
+            fill(player.hotbar[i].item.c);
             square(x, y, pixelsPerCell / 2);
             
             // Draw amount (text)
