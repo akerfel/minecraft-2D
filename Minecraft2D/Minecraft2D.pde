@@ -37,7 +37,7 @@ void setup() {
     mobSpaceChance = 0.03; 
     maxMobs = 15;
     mobSpawnRange = blocksPerChunk / 2;
-    mobDespawnRange = blocksPerChunk * 3;
+    mobDespawnRange = blocksPerChunk * 2;
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();

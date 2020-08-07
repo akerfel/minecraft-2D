@@ -4,6 +4,13 @@ void updateLogic() {
     placeBlocksWithMouse();
     maybeSpawnMob();
     removeFarMobs();
+    updateMobs();
+}
+
+void updateMobs() {
+    for (Mob mob : mobs) {
+        mob.update();    
+    }
 }
 
 void removeFarMobs() {
