@@ -3,13 +3,15 @@ public class Block extends Item{
     float prcntBroken;
     float timeDamagedLastTime;    // millis
     float hardness;
+    String toolTypeForMining;
     
-    public Block(color c, boolean isWall) {
+    public Block(color c, boolean isWall, String toolTypeForMining) {
         super("block");
         this.c = c;
         this.isWall = isWall;
         this.prcntBroken = 0;
-        hardness = 0.1;
+        this.hardness = 1.5;
+        this.toolTypeForMining = toolTypeForMining;
     }
     
     public void damage() {

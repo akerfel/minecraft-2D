@@ -26,6 +26,25 @@ public class Player {
         reach = 7;
     }
     
+    void addItemToInventory(Item item) {
+        if (item.type.equals("block")) {
+            addBlockToInventory((Block) item);
+        }
+        if (item.type.equals("tool")) {
+            addToolToInventory((Tool) item);    
+        }
+    }
+    
+    void addToolToInventory(Tool tool) {
+        for (int i = 0; i < 9; i++) {
+            if (hotbar[i].amount == 0) {
+                hotbar[i].item = tool;
+                hotbar[i].amount = 1;
+                break;
+            }
+        }
+    }
+    
     void addBlockToInventory(Block block) {
         boolean foundInInventory = false;
         for (int i = 0; i < 9; i++) {

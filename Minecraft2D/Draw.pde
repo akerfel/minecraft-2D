@@ -114,27 +114,56 @@ void drawHotbar() {
     rectMode(CENTER);
     int pixelsPerCell = 60;
     for (int i = 0; i < 9; i++) {
-        if (i == player.hotbarCellSelected) {
-            fill(210, 210, 210);
-        }
-        else {
-            fill(150, 150, 150);
-        }
-        int x = width/2 + (i - 4) * pixelsPerCell;
-        int y = height - pixelsPerCell / 2;
-        square(x, y, pixelsPerCell);
-        if (!(player.hotbar[i].amount == 0)) {
-            
-            // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
-            fill(player.hotbar[i].item.c);
-            square(x, y, pixelsPerCell / 2);
-            
-            // Draw amount (text)
-            textSize(24);
-            textAlign(CENTER, BOTTOM);
-            fill(255, 255, 255);
-            text(player.hotbar[i].amount, x, height);
-        }
+        drawHotbarCell(pixelsPerCell, i);
+        
     }
     rectMode(CORNER);
+}
+
+void drawHotbarCell(int pixelsPerCell, int hotbarIndex) {
+    if (hotbarIndex == player.hotbarCellSelected) {
+        fill(210, 210, 210);
+    }
+    else {
+        fill(150, 150, 150);
+    }
+    int x = width/2 + (hotbarIndex - 4) * pixelsPerCell;
+    int y = height - pixelsPerCell / 2;
+    square(x, y, pixelsPerCell);
+    drawItemInHotbar(x, y, hotbarIndex, pixelsPerCell);    
+}
+
+void drawItemInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
+    Item item = player.hotbar[hotbarIndex].item;
+    if (!(player.hotbar[hotbarIndex].amount == 0)) {
+        switch (item.type) {
+            case "block":
+                drawBlockInHotbar(x, y, hotbarIndex, pixelsPerCell);
+                break;
+            case "tool":
+                drawToolInHotbar(x, y, hotbarIndex, pixelsPerCell);
+                break;
+        }  
+    }
+}
+
+void drawBlockInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
+    Item block = player.hotbar[hotbarIndex].item;
+    
+    // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
+    fill(block.c);
+    square(x, y, pixelsPerCell / 2);
+    
+    // Draw amount (text)
+    textSize(24);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    text(player.hotbar[hotbarIndex].amount, x, height);
+}
+
+void drawToolInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
+    Item tool = player.hotbar[hotbarIndex].item;
+    
+    fill(tool.c);
+    circle(x, y, pixelsPerCell / 2);
 }

@@ -53,6 +53,9 @@ void setup() {
     // Other
     rightMouseButtonDown = false;
     leftMouseButtonDown = false;
+    
+    // Testing atm
+    player.addItemToInventory(new Tool("diamond", "pick"));
 }
 
 void draw() {
