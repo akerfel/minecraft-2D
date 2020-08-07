@@ -10,7 +10,7 @@ public class Mob {
     public Mob(float x, float y) {
         coords = new PVector(x, y);
         direction = new PVector(0, 0);
-        speedFactor = 0.6;
+        speedFactor = 0.1;
         isMoving = false;
         chanceStartMoving = 0.01;
         chanceStopMoving = 0.01;
