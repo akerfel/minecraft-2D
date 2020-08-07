@@ -1,41 +1,11 @@
 void drawEverything() {
     background(0, 0, 0);
-    drawVisibleChunks();
+    drawVisibleChunks();    
     drawPlayer();
     drawHotbar();
 }
 
-
-
-void drawHotbar() {
-    rectMode(CENTER);
-    int pixelsPerCell = 60;
-    for (int i = 0; i < 9; i++) {
-        if (i == player.hotbarCellSelected) {
-            fill(210, 210, 210);
-        }
-        else {
-            fill(150, 150, 150);
-        }
-        int x = width/2 + (i - 4) * pixelsPerCell;
-        int y = height - pixelsPerCell / 2;
-        square(x, y, pixelsPerCell);
-        if (!(player.hotbar[i].amount == 0)) {
-            
-            // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
-            fill(player.hotbar[i].block.c);
-            square(x, y, pixelsPerCell / 2);
-            
-            // Draw amount (text)
-            textSize(24);
-            textAlign(CENTER, BOTTOM);
-            fill(255, 255, 255);
-            text(player.hotbar[i].amount, x, height);
-        }
-    }
-    rectMode(CORNER);
-}
-
+// Draws the 9 curretly visible chunks, and the mobs inside them
 void drawVisibleChunks() {
     float xPlayerOffset = player.coords.x % blocksPerChunk;
     float yPlayerOffset = player.coords.y % blocksPerChunk;
@@ -95,6 +65,8 @@ void drawVisibleChunks() {
     drawChunk(visibleChunks[8], xSouthEastChunk, ySouthEastChunk);
 }
 
+// Draws a chunk, and the mobs inside it
+// xStart and yStart are the exact pixel that the chunks should be started drawing at (the "reference point")
 void drawChunk(Chunk chunk, float xStart, float yStart) {
     for (int i = 0; i < blocksPerChunk; i++) {
         for (int j = 0; j < blocksPerChunk; j++) {
@@ -103,6 +75,11 @@ void drawChunk(Chunk chunk, float xStart, float yStart) {
     }
     
     drawMobsInChunk(chunk, xStart, yStart);
+}
+
+void drawBlock(Block block, float x, float y) {
+    fill(block.c);
+    square(x, y, pixelsPerBlock);
 }
 
 void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {
@@ -117,17 +94,39 @@ void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {
 
 void drawMob(Mob mob, float x, float y) {
     fill(mob.c);
-    square(x, y, pixelsPerBlock / 2);
-}
-
-
-
-void drawBlock(Block block, float x, float y) {
-    fill(block.c);
-    square(x, y, pixelsPerBlock);
+    square(x, y, mobWidth);
 }
 
 void drawPlayer() {
     fill(216, 127, 51);
-    square(width/2, height/2, pixelsPerBlock / 2);    
+    square(width/2, height/2, playerWidth);    
+}
+
+void drawHotbar() {
+    rectMode(CENTER);
+    int pixelsPerCell = 60;
+    for (int i = 0; i < 9; i++) {
+        if (i == player.hotbarCellSelected) {
+            fill(210, 210, 210);
+        }
+        else {
+            fill(150, 150, 150);
+        }
+        int x = width/2 + (i - 4) * pixelsPerCell;
+        int y = height - pixelsPerCell / 2;
+        square(x, y, pixelsPerCell);
+        if (!(player.hotbar[i].amount == 0)) {
+            
+            // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
+            fill(player.hotbar[i].block.c);
+            square(x, y, pixelsPerCell / 2);
+            
+            // Draw amount (text)
+            textSize(24);
+            textAlign(CENTER, BOTTOM);
+            fill(255, 255, 255);
+            text(player.hotbar[i].amount, x, height);
+        }
+    }
+    rectMode(CORNER);
 }

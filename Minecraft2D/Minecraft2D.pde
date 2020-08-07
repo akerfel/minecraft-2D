@@ -4,7 +4,8 @@ import java.util.Iterator;
 // Settings
 int pixelsPerBlock;    // pixels per side of block
 int blocksPerChunk;    // blocks per side of chunk
-float playerWidth;
+float playerWidth;     // in pixels
+float mobWidth;
 float baseChanceStone;
 float baseChanceTree;
 int gameSeed;
@@ -35,9 +36,9 @@ void setup() {
     baseChanceStone = 0.02;
     gameSeed = 1337;
     mobSpaceChance = 0.03; 
-    maxMobs = 15;
-    mobSpawnRange = blocksPerChunk / 2;
-    mobDespawnRange = blocksPerChunk * 2;
+    maxMobs = 30;
+    mobSpawnRange = blocksPerChunk * 2;
+    mobDespawnRange = blocksPerChunk * 4;
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();

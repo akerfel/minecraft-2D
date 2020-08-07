@@ -35,6 +35,7 @@ void spawnMob() {
 
 void resetObjectsDependingOnPixelsPerBlock() {
     playerWidth = pixelsPerBlock / 2;
+    mobWidth = pixelsPerBlock / 2;
 }
 
 void placeBlocksWithMouse() {
