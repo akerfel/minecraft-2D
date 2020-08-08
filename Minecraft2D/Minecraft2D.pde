@@ -55,8 +55,10 @@ void setup() {
     leftMouseButtonDown = false;
     
     // Testing atm
+    player.addItemToInventory(new Tool("iron", "sword"));
     player.addItemToInventory(new Tool("diamond", "pick"));
-    player.addItemToInventory(new Tool("stone", "axe"));
+    player.addItemToInventory(new Tool("stone", "shovel"));
+    player.addItemToInventory(new Tool("diamond", "axe"));
 }
 
 void draw() {

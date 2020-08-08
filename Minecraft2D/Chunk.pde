@@ -13,18 +13,37 @@ public class Chunk {
         grassColorScheme = color(random(0, 70), random(0, 70), random(0, 70));
         chanceStone = baseChanceStone * random(0.1, 1.3);
         chanceTree = baseChanceTree * random(0.1, 1.3);
-        for (int i = 0; i < blocksPerChunk; i++) {
-            for (int j = 0; j < blocksPerChunk; j++) {
+        for (int x = 0; x < blocksPerChunk; x++) {
+            for (int y = 0; y < blocksPerChunk; y++) {
                 if (random(0, 1) < chanceStone) {
-                    blocks[i][j] = new Stone();
-                }
-                else if (random(0, 1) < chanceTree) {
-                    blocks[i][j] = new Planks();
+                    blocks[x][y] = new Stone();
                 }
                 else {
-                    blocks[i][j] = new Grass(grassColorScheme);
+                    blocks[x][y] = new Grass(grassColorScheme);
                 }
             }
         }
+        for (int x = 1; x < blocksPerChunk - 1; x++) {
+            for (int y = 1; y < blocksPerChunk - 1; y++) {
+                if (random(0, 1) < chanceTree) {
+                    makeTree(x, y);
+                }
+            }
+        }
+    }
+    
+    void makeTree(int x, int y) {
+        // Top row
+        blocks[x-1][y-1] = new Leaves();
+        blocks[x][y-1] = new Leaves();
+        blocks[x+1][y-1] = new Leaves();
+        // Middle row
+        blocks[x-1][y] = new Leaves();
+        blocks[x][y] = new Wood();
+        blocks[x+1][y] = new Leaves();
+        // Bottom row
+        blocks[x-1][y+1] = new Leaves();
+        blocks[x][y+1] = new Leaves();
+        blocks[x+1][y+1] = new Leaves();
     }
 }
