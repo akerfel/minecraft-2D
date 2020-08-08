@@ -28,10 +28,10 @@ public class Mob {
             maybeStopMoving();
             
             float mobWidthInBlocks = mobWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
-            if (getBlock(coords.x, coords.y).isWall 
-                || getBlock(coords.x + mobWidthInBlocks, coords.y).isWall 
-                || getBlock(coords.x, coords.y + mobWidthInBlocks).isWall 
-                || getBlock(coords.x + mobWidthInBlocks, coords.y + mobWidthInBlocks).isWall)
+            if (getBlock(coords.x, coords.y).isWallOrWater() 
+                || getBlock(coords.x + mobWidthInBlocks, coords.y).isWallOrWater() 
+                || getBlock(coords.x, coords.y + mobWidthInBlocks).isWallOrWater() 
+                || getBlock(coords.x + mobWidthInBlocks, coords.y + mobWidthInBlocks).isWallOrWater())
                 {
                 coords.x = xPrevious;
                 coords.y = yPrevious;

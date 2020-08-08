@@ -1,17 +1,25 @@
 public class Block extends Item{
+    String stringID;
     public boolean isWall;
     float prcntBroken;
     float timeDamagedLastTime;    // millis
     float hardness;
     String toolTypeForMining;
+    boolean isMineable;
     
-    public Block(color c, boolean isWall, String toolTypeForMining) {
+    public Block(String stringID, color c, boolean isWall, String toolTypeForMining, boolean isMineable) {
         super("block");
+        this.stringID = stringID;
         this.c = c;
         this.isWall = isWall;
         this.prcntBroken = 0;
         this.hardness = 1.5;
         this.toolTypeForMining = toolTypeForMining;
+        this.isMineable = isMineable;
+    }
+    
+    boolean isWallOrWater() {
+        return (isWall || stringID.equals("water"));
     }
     
     boolean isHoldingCorrectToolType() {

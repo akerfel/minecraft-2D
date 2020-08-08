@@ -1,10 +1,10 @@
 public class Grass extends Block {
     public Grass() {
-        super(color(127, 178, 56), false, "shovel");    
+        super("grass", color(127, 178, 56), false, "shovel", false);    
     }
     
     public Grass(color colorScheme) {
-        super(color(127, 178, 56) + colorScheme, false, "shovel");    
+        super("grass", color(127, 178, 56) + colorScheme, false, "shovel", false);    
     }
     
     public String toString() {

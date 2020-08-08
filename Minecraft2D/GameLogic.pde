@@ -51,7 +51,11 @@ void maybeSpawnMob() {
 }
 
 void spawnMob() {
-    mobs.add(new Mob(player.coords.x + random(-mobSpawnRange, mobSpawnRange), player.coords.y + random(-mobSpawnRange, mobSpawnRange)));
+    float xSpawn = int(player.coords.x + random(-mobSpawnRange, mobSpawnRange));
+    float ySpawn = int(player.coords.y + random(-mobSpawnRange, mobSpawnRange));
+    if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
+        mobs.add(new Mob(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
+    }
 }
 
 void resetObjectsDependingOnPixelsPerBlock() {
@@ -75,7 +79,7 @@ void placeBlocksWithMouse() {
 void mineBlocksWithMouse() {
     if (leftMouseButtonDown) {
         Block mouseBlock = getMouseBlock();
-        if (!mouseBlock.toString().equals("grass") && getDistance_BlocksFromPlayerToMouse() < player.reach) {
+        if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < player.reach) {
             if (mouseBlock.prcntBroken >= 1) {
                 player.addBlockToInventory(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
