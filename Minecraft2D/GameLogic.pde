@@ -1,6 +1,6 @@
 void updateLogic() {
     player.move();
-    loadVisibleBlocksIfNeeded();    
+    loadVisibleBlocks();    
     placeBlocksWithMouse();
     mineBlocksWithMouse();
     removeBlockDamageIfNotMining();
@@ -9,14 +9,16 @@ void updateLogic() {
     updateMobs();
 }
 
-void loadVisibleBlocksIfNeeded() {
+// This function is called each frame.
+// I tried to only call this each time the player stepped on a new block, but it did not seem to improve the fps.
+// That also introduced other problems (block would not be mined until stepped new block), so I chose to keep it like this.
+void loadVisibleBlocks() {
     for (int x = 0; x < sightInBlocks; x++) {
         for (int y = 0; y < sightInBlocks; y++) {
             visibleBlocks[x][y] = getBlock(player.coords.x + x - sightInBlocks/2, player.coords.y + y - sightInBlocks/2);
         }
-    }
+    }    
 }
-
 
 void updateMobs() {
     for (Mob mob : mobs) {
@@ -144,7 +146,7 @@ Chunk getChunk(PVector coords) {
     // Create chunk if does not exist
     if (!generatedChunks.containsKey(chunkCoords)) {
         generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
-        println(generatedChunks.size());
+        //println(generatedChunks.size());
     }
     return generatedChunks.get(chunkCoords);
 }

@@ -19,12 +19,14 @@ int mobDespawnRange;    // In blocks
 int sightInBlocks;      
 
 // Game objects
+boolean needToReloadVisibleBlocks;
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
 PVector currentChunkCoords; // Used to check if player has entered new chunk (shows new chunks around player)
 Block[][] visibleBlocks;
 ArrayList<Mob> mobs; 
 ArrayList<Block> damagedBlocks;
+
 
 // Other
 boolean rightMouseButtonDown;
@@ -47,15 +49,17 @@ void setup() {
     maxMobs = 30;
     mobSpawnRange = blocksPerChunk * 2;
     mobDespawnRange = blocksPerChunk * 4;
-    sightInBlocks = 120;
+    sightInBlocks = 80;
     
     // Game objects
+    needToReloadVisibleBlocks = true;
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(8020, 8020);
     currentChunkCoords = calcChunkCoords(player.coords);
     visibleBlocks = new Block[sightInBlocks][sightInBlocks];
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();
+    loadVisibleBlocks();
     
     // Other
     rightMouseButtonDown = false;

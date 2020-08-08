@@ -29,7 +29,6 @@ public class Block extends Item{
             if (player.isHoldingTool() && isHoldingCorrectToolType()) {
                 toolTypeMult = 1.5;
                 toolMaterialMult = ((Tool) player.getHeldItem()).mult;
-                println("ye");
             }
             
             // ODD BEHAVIOR: Increasing numBreakingStages also increases breaking time.
