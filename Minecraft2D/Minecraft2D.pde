@@ -16,12 +16,13 @@ float mobSpaceChance;    // Chance each frame, so should be pretty low
 int maxMobs;
 int mobSpawnRange;    // In blocks
 int mobDespawnRange;    // In blocks
+int sightInBlocks;      
 
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
 PVector currentChunkCoords; // Used to check if player has entered new chunk (shows new chunks around player)
-Chunk[] visibleChunks;   
+Block[][] visibleBlocks;
 ArrayList<Mob> mobs; 
 ArrayList<Block> damagedBlocks;
 
@@ -37,7 +38,7 @@ void setup() {
     
     // Settings
     pixelsPerBlock = 25;
-    blocksPerChunk = 40;
+    blocksPerChunk = 250;
     resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.005;
     baseChanceTree = 0.02;
@@ -46,13 +47,13 @@ void setup() {
     maxMobs = 30;
     mobSpawnRange = blocksPerChunk * 2;
     mobDespawnRange = blocksPerChunk * 4;
+    sightInBlocks = 120;
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(8020, 8020);
     currentChunkCoords = calcChunkCoords(player.coords);
-    visibleChunks = new Chunk[9];
-    initalLoadChunks();
+    visibleBlocks = new Block[sightInBlocks][sightInBlocks];
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();
     

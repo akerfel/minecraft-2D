@@ -1,12 +1,20 @@
 void updateLogic() {
     player.move();
-    loadVisibleChunksIfNeeded();    
+    loadVisibleBlocksIfNeeded();    
     placeBlocksWithMouse();
     mineBlocksWithMouse();
     removeBlockDamageIfNotMining();
     maybeSpawnMob();
     removeFarMobs();
     updateMobs();
+}
+
+void loadVisibleBlocksIfNeeded() {
+    for (int x = 0; x < sightInBlocks; x++) {
+        for (int y = 0; y < sightInBlocks; y++) {
+            visibleBlocks[x][y] = getBlock(player.coords.x + x - sightInBlocks/2, player.coords.y + y - sightInBlocks/2);
+        }
+    }
 }
 
 
@@ -121,54 +129,6 @@ boolean setBlock(Block block, float x, float y) {
     return false;
 }
 
-void setFireCenterChunk() {
-    for (int x = 0; x < blocksPerChunk; x++) {
-        for (int y = 0; y < blocksPerChunk; y++) {
-            if (random(0, 1) < 0.05) {
-                Block block = visibleChunks[4].blocks[x][y];
-                if (block.toString() == "grass") {
-                    visibleChunks[4].blocks[x][y].c = color(200, 0, 0);
-                }
-            }
-        }
-    }    
-}
-
-void initalLoadChunks() {
-    loadVisibleChunks();
-}
-
-void loadVisibleChunksIfNeeded() {
-    PVector previousChunkCoords = currentChunkCoords;
-    currentChunkCoords = calcChunkCoords(player.coords);
-    
-    if (!(currentChunkCoords.x == previousChunkCoords.x && currentChunkCoords.y == previousChunkCoords.y)) {
-        //println("Showing different chunks");
-        //println("Previous: " + previousChunkCoords);
-        //println("Current: " + currentChunkCoords);
-        loadVisibleChunks();
-    }
-}
-
-
-void loadVisibleChunks() {
-
-    // Top row
-    visibleChunks[0] = getChunk(new PVector(player.coords.x - blocksPerChunk, player.coords.y - blocksPerChunk));
-    visibleChunks[1] = getChunk(new PVector(player.coords.x, player.coords.y - blocksPerChunk));
-    visibleChunks[2] = getChunk(new PVector(player.coords.x + blocksPerChunk, player.coords.y - blocksPerChunk));
-    
-    // Middle row
-    visibleChunks[3] = getChunk(new PVector(player.coords.x - blocksPerChunk, player.coords.y));
-    visibleChunks[4] = getChunk(new PVector(player.coords.x, player.coords.y));
-    visibleChunks[5] = getChunk(new PVector(player.coords.x + blocksPerChunk, player.coords.y));
-    
-    // Bottom row
-    visibleChunks[6] = getChunk(new PVector(player.coords.x - blocksPerChunk, player.coords.y + blocksPerChunk));
-    visibleChunks[7] = getChunk(new PVector(player.coords.x, player.coords.y + blocksPerChunk));
-    visibleChunks[8] = getChunk(new PVector(player.coords.x + blocksPerChunk, player.coords.y + blocksPerChunk));    
-}
-
 // Takes player coords, converts them into chunkCoords and loads that chunk from generatedChunks. 
 // If chunk has not yet been generated, create it and it to generatedChunks (chunkCoords is key).
 Chunk getChunk(PVector coords) {
@@ -184,6 +144,7 @@ Chunk getChunk(PVector coords) {
     // Create chunk if does not exist
     if (!generatedChunks.containsKey(chunkCoords)) {
         generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
+        println(generatedChunks.size());
     }
     return generatedChunks.get(chunkCoords);
 }

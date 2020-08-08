@@ -15,9 +15,6 @@ void keyPressed() {
     
     player.setMove(keyCode, true);
     
-    if (key == 'f') {
-        setFireCenterChunk();
-    }
     int numberKeyClicked = int(key) - 49;
     if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
         player.hotbarIndexSelected = numberKeyClicked;
