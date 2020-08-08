@@ -40,7 +40,7 @@ void setup() {
     
     // Settings
     pixelsPerBlock = 25;
-    blocksPerChunk = 500;
+    blocksPerChunk = 1024;
     resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.005;
     baseChanceTree = 0.02;
@@ -54,7 +54,7 @@ void setup() {
     // Game objects
     needToReloadVisibleBlocks = true;
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(8020, 8020);
+    player = new Player(8192, 8192);
     currentChunkCoords = calcChunkCoords(player.coords);
     visibleBlocks = new Block[viewDistance][viewDistance];
     mobs = new ArrayList<Mob>();
