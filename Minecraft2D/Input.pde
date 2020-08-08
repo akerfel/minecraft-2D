@@ -7,12 +7,6 @@ void keyPressed() {
         
     }
     
-    if (key == 'c') {
-        for (int i = 0; i < 5; i++) {
-            player.addBlockToInventory(new Planks());
-        }
-    }
-    
     player.setMove(keyCode, true);
     
     int numberKeyClicked = int(key) - 49;

@@ -10,9 +10,13 @@ public class Chunk {
         blocks = new Block[blocksPerChunk][blocksPerChunk];
         long chunkSeed = gameSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);
+        placeGrassStoneAndRivers();
+        placeTrees();
+    }
+    
+    void placeGrassStoneAndRivers() {
         grassColorScheme = color(random(0, 70), random(0, 70), random(0, 70));
         chanceStone = baseChanceStone * random(0.1, 1.3);
-        chanceTree = baseChanceTree * random(0.1, 1.3);
         for (int x = 0; x < blocksPerChunk; x++) {
             for (int y = 0; y < blocksPerChunk; y++) {
                 if (random(0, 1) < chanceStone) {
@@ -21,16 +25,25 @@ public class Chunk {
                 else {
                     blocks[x][y] = new Grass(grassColorScheme);
                 }
+                //if (random(0, 1) < chanceRiver) {
+                //    makeRiver(x, y);
+                //}
             }
         }
+    }
+    
+    void placeTrees() {
+        chanceTree = baseChanceTree * random(0.1, 1.3);
         for (int x = 1; x < blocksPerChunk - 1; x++) {
             for (int y = 1; y < blocksPerChunk - 1; y++) {
                 if (random(0, 1) < chanceTree) {
                     makeTree(x, y);
                 }
             }
-        }
+        }    
     }
+    
+    
     
     void makeTree(int x, int y) {
         // Top row
@@ -46,4 +59,5 @@ public class Chunk {
         blocks[x][y+1] = new Leaves();
         blocks[x+1][y+1] = new Leaves();
     }
+    
 }

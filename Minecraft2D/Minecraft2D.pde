@@ -11,12 +11,17 @@ float playerWidth;     // in pixels
 float mobWidth;
 float baseChanceStone;
 float baseChanceTree;
+float chanceRiver;
 int gameSeed;
 float mobSpaceChance;    // Chance each frame, so should be pretty low
 int maxMobs;
 int mobSpawnRange;    // In blocks
 int mobDespawnRange;    // In blocks
 int viewDistance;      
+
+// River stuff (atm)
+float chanceTurningMode_Short = 0.05;
+float chanceTurningMode_Long = 0.01;
 
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
@@ -41,6 +46,7 @@ void setup() {
     resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.005;
     baseChanceTree = 0.02;
+    chanceRiver = 0.005;
     gameSeed = 1337;
     mobSpaceChance = 0.03; 
     maxMobs = 30;

@@ -1,6 +1,6 @@
 public class Planks extends Block {
     public Planks() {
-        super(color(184, 135, 100), true, "axe");    
+        super(color(255, 221, 153), true, "axe");    
     }
     
     public String toString() {
