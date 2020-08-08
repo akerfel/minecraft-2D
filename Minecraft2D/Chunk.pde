@@ -41,7 +41,7 @@ public class Chunk {
     void makeRiver(int xCord, int yCord) {
         int startWidth = int(random(3, 5));
         int currentWidth = startWidth;
-        int lengthRiver = constrain(int(random(40, 150)), 1, blocksPerChunk - yCord - 3);
+        int lengthRiver = constrain(int(random(40, 400)), 1, blocksPerChunk - yCord - 3);
         float chanceTurnRight = 0.2;
         float chanceTurnLeft = 0.2;
         for (int y = 0; y < lengthRiver; y++) {

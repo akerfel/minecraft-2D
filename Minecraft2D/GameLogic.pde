@@ -67,13 +67,36 @@ void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
         HotbarCell cell = player.hotbar[player.hotbarIndexSelected];
         if (cell.item.type.equals("block")) {
+            Block block = (Block) cell.item;
             if (cell.amount != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock((Block) cell.item)) {
+                if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock(generateBlockObject(block.stringID))) {
                     cell.amount--;
                 }
             }
         }
     }
+}
+
+Block generateBlockObject(String stringID) {
+    switch (stringID) {
+        case "dirt":
+            return new Dirt();
+        case "grass":
+            return new Grass();
+        case "leaves":
+            return new Leaves();
+        case "planks":
+            return new Planks();
+        case "sand":
+            return new Sand();
+        case "stone":
+            return new Stone();
+        case "water":
+            return new Water();
+        case "wood":
+            return new Wood();
+    }
+    return new Grass();
 }
 
 void mineBlocksWithMouse() {
