@@ -19,7 +19,7 @@ public class Player {
         isRunning = false;
         isRunningLikeUsainBolt = false;
         runningFactor = 1.5;
-        usainBoltRunningFactor = 20;
+        usainBoltRunningFactor = 200;
         hotbarIndexSelected = 0;
         hotbar = new HotbarCell[9];
         setHotbarEmpty();

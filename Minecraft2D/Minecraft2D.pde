@@ -12,6 +12,7 @@ float mobWidth;
 float baseChanceStone;
 float baseChanceTree;
 float chanceRiver;
+float chanceForestChunk;
 int gameSeed;
 float mobSpaceChance;    // Chance each frame, so should be pretty low
 int maxMobs;
@@ -43,19 +44,20 @@ void setup() {
     resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.005;
     baseChanceTree = 0.02;
-    chanceRiver = 0.0001;
+    chanceRiver = 0.00004;
+    chanceForestChunk = 0.3;
     gameSeed = 1337;
     mobSpaceChance = 0.03; 
     maxMobs = 30;
     mobSpawnRange = 50;
     mobDespawnRange = 100;
-    viewDistance = 150;
+    viewDistance = 250;
     noStrokeMode = true;
     settingsSetup();
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(8192, 8192);
+    player = new Player(9220, 9220);
     visibleBlocks = new Block[viewDistance][viewDistance];
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();

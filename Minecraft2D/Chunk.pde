@@ -14,7 +14,7 @@ public class Chunk {
     }
     
     void placeGrassAndStone() {
-        grassColorScheme = color(random(0, 70), random(0, 70), random(0, 70));
+        grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
         chanceStone = baseChanceStone * random(0.1, 1.3);
         for (int x = 0; x < blocksPerChunk; x++) {
             for (int y = 0; y < blocksPerChunk; y++) {
@@ -68,6 +68,9 @@ public class Chunk {
     
     void placeTrees() {
         chanceTree = baseChanceTree * random(0.1, 1.3);
+        if (random(0, 1) < chanceForestChunk) {
+            chanceTree = 0.2 + random(-0.05, 0.05);
+        }
         for (int x = 1; x < blocksPerChunk - 1; x++) {
             for (int y = 1; y < blocksPerChunk - 1; y++) {
                 if (random(0, 1) < chanceTree) {
@@ -81,17 +84,25 @@ public class Chunk {
     
     void makeTree(int x, int y) {
         // Top row
-        blocks[x-1][y-1] = new Leaves();
-        blocks[x][y-1] = new Leaves();
-        blocks[x+1][y-1] = new Leaves();
+        makeLeaf(x-1, y-1);
+        makeLeaf(x, y-1);
+        makeLeaf(x+1, y-1);
+        
         // Middle row
-        blocks[x-1][y] = new Leaves();
+        makeLeaf(x-1, y);
         blocks[x][y] = new Wood();
-        blocks[x+1][y] = new Leaves();
+        makeLeaf(x+1, y);
+        
         // Bottom row
-        blocks[x-1][y+1] = new Leaves();
-        blocks[x][y+1] = new Leaves();
-        blocks[x+1][y+1] = new Leaves();
+        makeLeaf(x-1, y+1);
+        makeLeaf(x, y+1);
+        makeLeaf(x+1, y+1);
+    }
+    
+    void makeLeaf(int x, int y) {
+       if (!blocks[x][y].stringID.equals("wood")) {
+           blocks[x][y] = new Leaves();
+       }
     }
     
 }
