@@ -46,38 +46,6 @@ public class Mob {
         }
     }
     
-    /*
-    void move() {
-        // 
-        float v = speed;
-        if (isRunning) {
-            v *= runningFactor; 
-        }
-        if (isRunningLikeUsainBolt) {
-            v *= usainBoltRunningFactor;
-        }
-        
-        // Save previous coords
-        float xPrevious = coords.x;
-        float yPrevious = coords.y;
-        
-        // Change coords
-        coords.x += v*(int(isRight) - int(isLeft));
-        coords.y += v*(int(isDown)  - int(isUp));
-        // If new coords are inside wall, go back to old coords
-        float playerWidthInBlocks = playerWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
-        
-        if (getBlock(coords.x, coords.y).isWall 
-            || getBlock(coords.x + playerWidthInBlocks, coords.y).isWall 
-            || getBlock(coords.x, coords.y + playerWidthInBlocks).isWall 
-            || getBlock(coords.x + playerWidthInBlocks, coords.y + playerWidthInBlocks).isWall)
-            {
-            coords.x = xPrevious;
-            coords.y = yPrevious;
-        }
-        
-        */
-    
     void slightlyShiftDirection() {
         if (random(0, 1) < 0.7) {
             direction.x += random(-0.15, 0.15);
