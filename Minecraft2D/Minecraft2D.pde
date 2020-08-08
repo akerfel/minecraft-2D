@@ -1,6 +1,9 @@
 import java.util.HashMap;
 import java.util.Iterator;
 
+// Cheats
+boolean cheatWalkThroughWalls;
+
 // Settings
 int pixelsPerBlock;    // pixels per side of block
 int blocksPerChunk;    // blocks per side of chunk
@@ -28,6 +31,9 @@ boolean leftMouseButtonDown;
 
 void setup() {
     size(1200, 1200);
+    
+    // Cheats
+    cheatWalkThroughWalls = false;
     
     // Settings
     pixelsPerBlock = 25;
