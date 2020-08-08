@@ -19,10 +19,6 @@ int mobSpawnRange;    // In blocks
 int mobDespawnRange;    // In blocks
 int viewDistance;      
 
-// River stuff (atm)
-float chanceTurningMode_Short = 0.05;
-float chanceTurningMode_Long = 0.01;
-
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
@@ -46,13 +42,13 @@ void setup() {
     resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.005;
     baseChanceTree = 0.02;
-    chanceRiver = 0.005;
+    chanceRiver = 0.0001;
     gameSeed = 1337;
     mobSpaceChance = 0.03; 
     maxMobs = 30;
     mobSpawnRange = 50;
     mobDespawnRange = 100;
-    viewDistance = 120;
+    viewDistance = 150;
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
