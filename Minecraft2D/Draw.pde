@@ -20,7 +20,7 @@ void drawVisibleBlocks() {
 
 void drawBlock(Block block, float x, float y) {
     fill(block.c);
-    square(x, y, pixelsPerBlock);
+    square(x, y, pixelsPerBlock + 1);
     if (block.prcntBroken > 0) {
         drawBlockBreakingTexture(block, x, y);
     }
