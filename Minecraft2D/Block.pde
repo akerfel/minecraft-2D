@@ -15,8 +15,6 @@ public class Block extends Item{
     }
     
     boolean isHoldingCorrectToolType() {
-        println("held tool type: " + ((Tool) player.getHeldItem()).toolType);
-        println("toolType for block: " + toolTypeForMining);
         return (toolTypeForMining.equals(((Tool) player.getHeldItem()).toolType));
     }
     
@@ -28,7 +26,7 @@ public class Block extends Item{
         else {
             float toolTypeMult = 5;            // Higher = slower. 1.5 longer timer for correct tool type, 5 for incorrect tool type
             float toolMaterialMult = 1;        // Higher = faster. wood/stone/iron
-            if (isHoldingCorrectToolType()) {
+            if (player.isHoldingTool() && isHoldingCorrectToolType()) {
                 toolTypeMult = 1.5;
                 toolMaterialMult = ((Tool) player.getHeldItem()).mult;
                 println("ye");

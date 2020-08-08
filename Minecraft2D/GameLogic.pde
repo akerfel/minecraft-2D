@@ -54,7 +54,7 @@ void placeBlocksWithMouse() {
         HotbarCell cell = player.hotbar[player.hotbarIndexSelected];
         if (cell.item.type.equals("block")) {
             if (cell.amount != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock(cell.item.toString())) {
+                if (getDistance_BlocksFromPlayerToMouse() < player.reach && setMouseBlock((Block) cell.item)) {
                     cell.amount--;
                 }
             }
@@ -76,16 +76,6 @@ void mineBlocksWithMouse() {
             }
         }
     }
-}
-
-boolean setMouseBlock(String blockName) {
-    switch (blockName) {
-        case "stone":
-            return setMouseBlock(new Stone());
-        case "planks":
-            return setMouseBlock(new Planks());
-    }
-    return false;
 }
 
 Block getMouseBlock() {

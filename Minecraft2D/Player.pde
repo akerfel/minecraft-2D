@@ -30,6 +30,10 @@ public class Player {
         return hotbar[hotbarIndexSelected].item;
     }
     
+    public boolean isHoldingTool() {
+        return getHeldItem() instanceof Tool;
+    }
+    
     void addItemToInventory(Item item) {
         if (item.type.equals("block")) {
             addBlockToInventory((Block) item);
