@@ -19,14 +19,11 @@ int mobDespawnRange;    // In blocks
 int viewDistance;      
 
 // Game objects
-boolean needToReloadVisibleBlocks;
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
-PVector currentChunkCoords; // Used to check if player has entered new chunk (shows new chunks around player)
 Block[][] visibleBlocks;
 ArrayList<Mob> mobs; 
 ArrayList<Block> damagedBlocks;
-
 
 // Other
 boolean rightMouseButtonDown;
@@ -40,7 +37,7 @@ void setup() {
     
     // Settings
     pixelsPerBlock = 25;
-    blocksPerChunk = 1024;
+    blocksPerChunk = 512;
     resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.005;
     baseChanceTree = 0.02;
@@ -52,10 +49,8 @@ void setup() {
     viewDistance = 120;
     
     // Game objects
-    needToReloadVisibleBlocks = true;
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(8192, 8192);
-    currentChunkCoords = calcChunkCoords(player.coords);
     visibleBlocks = new Block[viewDistance][viewDistance];
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();
