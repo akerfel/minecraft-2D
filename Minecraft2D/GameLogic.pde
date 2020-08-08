@@ -146,7 +146,8 @@ Chunk getChunk(PVector coords) {
     // Create chunk if does not exist
     if (!generatedChunks.containsKey(chunkCoords)) {
         generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
-        //println(generatedChunks.size());
+        println("Generated chunks: " + generatedChunks.size());
+        println(generatedChunks.keySet());
     }
     return generatedChunks.get(chunkCoords);
 }

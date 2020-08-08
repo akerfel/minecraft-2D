@@ -40,16 +40,16 @@ void setup() {
     
     // Settings
     pixelsPerBlock = 25;
-    blocksPerChunk = 250;
+    blocksPerChunk = 500;
     resetObjectsDependingOnPixelsPerBlock();
     baseChanceStone = 0.005;
     baseChanceTree = 0.02;
     gameSeed = 1337;
     mobSpaceChance = 0.03; 
     maxMobs = 30;
-    mobSpawnRange = blocksPerChunk * 2;
-    mobDespawnRange = blocksPerChunk * 4;
-    sightInBlocks = 80;
+    mobSpawnRange = 50;
+    mobDespawnRange = 100;
+    sightInBlocks = 120;
     
     // Game objects
     needToReloadVisibleBlocks = true;

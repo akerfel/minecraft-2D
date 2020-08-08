@@ -1,6 +1,7 @@
 void drawEverything() {
     background(0, 0, 0);
-    drawVisibleBlocks();    
+    drawVisibleBlocks();
+    drawMobs();
     drawPlayer();
     drawHotbar();
 }
@@ -30,6 +31,22 @@ void drawBlockBreakingTexture(Block block, float x, float y) {
     circle(x + pixelsPerBlock/2, y + pixelsPerBlock/2, (block.prcntBroken * pixelsPerBlock));
 }
 
+void drawMobs() {
+    for (Mob mob : mobs) {
+        drawMob(mob);    
+    }
+}
+
+void drawMob(Mob mob) {
+    float xBlocksToPlayer = mob.coords.x - player.coords.x;
+    float yBlocksToPlayer = mob.coords.y - player.coords.y;
+    float x = width/2 + xBlocksToPlayer * pixelsPerBlock;
+    float y = height/2 + yBlocksToPlayer * pixelsPerBlock;
+    fill(mob.c);
+    square(x, y, mobWidth);
+}
+
+/*
 void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {
     for (Mob mob : mobs) {
         if (getChunk(mob.coords) == chunk) {
@@ -39,11 +56,7 @@ void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {
         }
     }
 }
-
-void drawMob(Mob mob, float x, float y) {
-    fill(mob.c);
-    square(x, y, mobWidth);
-}
+*/
 
 void drawPlayer() {
     fill(216, 127, 51);
