@@ -13,9 +13,9 @@ void updateLogic() {
 // I tried to only call this each time the player stepped on a new block, but it did not seem to improve the fps.
 // That also introduced other problems (block would not be mined until stepped new block), so I chose to keep it like this.
 void loadVisibleBlocks() {
-    for (int x = 0; x < sightInBlocks; x++) {
-        for (int y = 0; y < sightInBlocks; y++) {
-            visibleBlocks[x][y] = getBlock(player.coords.x + x - sightInBlocks/2, player.coords.y + y - sightInBlocks/2);
+    for (int x = 0; x < viewDistance; x++) {
+        for (int y = 0; y < viewDistance; y++) {
+            visibleBlocks[x][y] = getBlock(player.coords.x + x - viewDistance/2, player.coords.y + y - viewDistance/2);
         }
     }    
 }

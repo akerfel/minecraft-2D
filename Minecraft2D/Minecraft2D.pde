@@ -16,7 +16,7 @@ float mobSpaceChance;    // Chance each frame, so should be pretty low
 int maxMobs;
 int mobSpawnRange;    // In blocks
 int mobDespawnRange;    // In blocks
-int sightInBlocks;      
+int viewDistance;      
 
 // Game objects
 boolean needToReloadVisibleBlocks;
@@ -49,14 +49,14 @@ void setup() {
     maxMobs = 30;
     mobSpawnRange = 50;
     mobDespawnRange = 100;
-    sightInBlocks = 120;
+    viewDistance = 120;
     
     // Game objects
     needToReloadVisibleBlocks = true;
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(8020, 8020);
     currentChunkCoords = calcChunkCoords(player.coords);
-    visibleBlocks = new Block[sightInBlocks][sightInBlocks];
+    visibleBlocks = new Block[viewDistance][viewDistance];
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();
     loadVisibleBlocks();
