@@ -18,6 +18,7 @@ int maxMobs;
 int mobSpawnRange;    // In blocks
 int mobDespawnRange;    // In blocks
 int viewDistance;      
+boolean noStrokeMode;
 
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
@@ -49,6 +50,8 @@ void setup() {
     mobSpawnRange = 50;
     mobDespawnRange = 100;
     viewDistance = 150;
+    noStrokeMode = true;
+    settingsSetup();
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();

@@ -20,6 +20,12 @@ void loadVisibleBlocks() {
     }    
 }
 
+void settingsSetup() {
+    if (noStrokeMode) {
+        noStroke();   
+    }
+}
+
 void updateMobs() {
     for (Mob mob : mobs) {
         mob.update();    
