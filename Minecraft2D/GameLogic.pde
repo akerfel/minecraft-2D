@@ -31,6 +31,19 @@ void settingsSetup() {
     }
 }
 
+void zoom(int changeInPixelsPerBlock) {
+    int oldPixelsPerBlock = pixelsPerBlock;
+    pixelsPerBlock += changeInPixelsPerBlock;
+    if (pixelsPerBlock < 1) {
+        pixelsPerBlock = 1;    
+    }
+    if (oldPixelsPerBlock != pixelsPerBlock) {
+        println("Pixels per block: " + pixelsPerBlock);
+        resetObjectsDependingOnPixelsPerBlock();
+        makeViewDistanceFitZoomLevel();
+    }
+}
+
 void setViewDistance(int newViewDistance) {
     if (newViewDistance > 3) {
         viewDistance = newViewDistance;

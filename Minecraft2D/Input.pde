@@ -4,7 +4,6 @@ void keyPressed() {
         for (int i = 0; i < 5; i++) {
             player.addBlockToInventory(new Stone());
         }
-        
     }
     
     player.setMove(keyCode, true);
@@ -15,10 +14,26 @@ void keyPressed() {
     }
     
     if (key == '+') {
-        setViewDistance(viewDistance + 2);   
+        zoom(1);
     }
     else if (key == '-') {
+        zoom(-1);
+    }
+    
+    if (key == '.') {
         setViewDistance(viewDistance - 2);   
+    }
+    
+    // hacks
+    
+    if (key == 'h') {
+        cheatWalkThroughWalls = !cheatWalkThroughWalls;
+        if (cheatWalkThroughWalls) {
+            println("Player can walk through walls");    
+        }
+        else {
+            println("Player can not walk through walls");    
+        }
     }
     
     if (key == CODED) {
@@ -62,21 +77,11 @@ void mouseReleased() {
 }
 
 void mouseWheel(MouseEvent event) {
-    int oldPixelsPerBlock = pixelsPerBlock;
-    int changeInPixels = 1;
     if (event.getCount() > 0) {
-        pixelsPerBlock -= changeInPixels;
-        if (pixelsPerBlock < 1) {
-            pixelsPerBlock = 1;    
-        }
+        zoom(-1);
     }
     else {
-        pixelsPerBlock += changeInPixels;
-    }
-    if (oldPixelsPerBlock != pixelsPerBlock) {
-        println("Pixels per block: " + pixelsPerBlock);
-        resetObjectsDependingOnPixelsPerBlock();
-        makeViewDistanceFitZoomLevel();
+        zoom(1);
     }
 }
  

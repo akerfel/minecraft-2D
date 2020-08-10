@@ -10,7 +10,7 @@ void drawEverything() {
 }
 
 void drawFPS() {
-  fill(200);
+  fill(220);
   text(int(frameRate), 20, 30); 
 }
 
