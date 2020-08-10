@@ -24,6 +24,10 @@ void keyPressed() {
         setViewDistance(viewDistance - 2);   
     }
     
+    if (key == 'f') {
+        rightMouseButtonDown = true;   
+    }
+    
     // hacks
     
     if (key == 'h') {
@@ -48,6 +52,11 @@ void keyPressed() {
 
 void keyReleased() {
     player.setMove(keyCode, false);
+    
+    if (key == 'f') {
+        rightMouseButtonDown = false;   
+    }
+    
     if (key == CODED) {
         if (keyCode == SHIFT) {
             player.isRunning = false;    
