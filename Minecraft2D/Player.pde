@@ -88,8 +88,8 @@ public class Player {
         if (isRunningLikeUsainBolt) {
             v *= usainBoltRunningFactor;
         }
-        if (getPlayerBlock() instanceof Water) {
-            v *= 0.3;
+        if (getPlayerBlock().stringID.equals("water")) {
+            v *= 0.5;
         }
         
         // Save previous coords
