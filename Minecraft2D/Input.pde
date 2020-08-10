@@ -14,6 +14,13 @@ void keyPressed() {
         player.hotbarIndexSelected = numberKeyClicked;
     }
     
+    if (key == '+') {
+        setViewDistance(viewDistance + 2);   
+    }
+    else if (key == '-') {
+        setViewDistance(viewDistance - 2);   
+    }
+    
     if (key == CODED) {
         if (keyCode == SHIFT) {
             player.isRunning = true;    

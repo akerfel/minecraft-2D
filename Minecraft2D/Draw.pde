@@ -1,9 +1,17 @@
+
+
 void drawEverything() {
     background(0, 0, 0);
     drawVisibleBlocks();
     drawMobs();
     drawPlayer();
     drawHotbar();
+    drawFPS();
+}
+
+void drawFPS() {
+  fill(200);
+  text(int(frameRate), 20, 30); 
 }
 
 void drawVisibleBlocks() {

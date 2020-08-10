@@ -26,6 +26,12 @@ void settingsSetup() {
     }
 }
 
+void setViewDistance(int newViewDistance) {
+    println("View distance: " + newViewDistance);
+    viewDistance = newViewDistance;
+    visibleBlocks = new Block[viewDistance][viewDistance];
+}
+
 void updateMobs() {
     for (Mob mob : mobs) {
         mob.update();    

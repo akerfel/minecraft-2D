@@ -51,14 +51,14 @@ void setup() {
     maxMobs = 30;
     mobSpawnRange = 50;
     mobDespawnRange = 100;
-    viewDistance = 250;
+    viewDistance = 150;
     noStrokeMode = true;
     settingsSetup();
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(9220, 9220);
-    visibleBlocks = new Block[viewDistance][viewDistance];
+    setViewDistance(viewDistance);
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();
     loadVisibleBlocks();
