@@ -64,7 +64,6 @@ void drawPlayer() {
 }
 
 void drawHotbar() {
-    stroke(100);
     rectMode(CENTER);
     int pixelsPerCell = 60;
     for (int i = 0; i < 9; i++) {
@@ -72,7 +71,6 @@ void drawHotbar() {
         
     }
     rectMode(CORNER);
-    noStroke();
 }
 
 void drawHotbarCell(int pixelsPerCell, int hotbarIndex) {
