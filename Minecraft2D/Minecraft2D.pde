@@ -19,7 +19,7 @@ int maxMobs;
 int mobSpawnRange;    // In blocks
 int mobDespawnRange;    // In blocks
 int viewDistance;      
-boolean noStrokeMode;
+boolean noStrokeMode;    // Setting this to false HALVES FPS (!), and makes things uglier. Keep it at true.
 
 // Game objects
 HashMap<PVector, Chunk> generatedChunks;
@@ -52,7 +52,7 @@ void setup() {
     mobSpawnRange = 50;
     mobDespawnRange = 100;
     viewDistance = 250;
-    noStrokeMode = true;
+    noStrokeMode = false;
     settingsSetup();
     
     // Game objects
