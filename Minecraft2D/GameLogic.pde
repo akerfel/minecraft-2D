@@ -35,7 +35,7 @@ void setViewDistance(int newViewDistance) {
     if (newViewDistance > 3) {
         viewDistance = newViewDistance;
         visibleBlocks = new Block[viewDistance][viewDistance];
-        println("View distance: " + newViewDistance);
+        println("Blocks rendered: " + viewDistance + "x" + viewDistance + " = " + (viewDistance * viewDistance));
     }
 }
 

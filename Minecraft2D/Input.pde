@@ -62,13 +62,21 @@ void mouseReleased() {
 }
 
 void mouseWheel(MouseEvent event) {
+    int oldPixelsPerBlock = pixelsPerBlock;
+    int changeInPixels = 1;
     if (event.getCount() > 0) {
-        pixelsPerBlock -= 2;
+        pixelsPerBlock -= changeInPixels;
+        if (pixelsPerBlock < 1) {
+            pixelsPerBlock = 1;    
+        }
     }
     else {
-        pixelsPerBlock += 2;
+        pixelsPerBlock += changeInPixels;
     }
-    resetObjectsDependingOnPixelsPerBlock();
-    makeViewDistanceFitZoomLevel();
+    if (oldPixelsPerBlock != pixelsPerBlock) {
+        println("Pixels per block: " + pixelsPerBlock);
+        resetObjectsDependingOnPixelsPerBlock();
+        makeViewDistanceFitZoomLevel();
+    }
 }
  
