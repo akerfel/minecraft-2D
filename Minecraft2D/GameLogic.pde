@@ -11,7 +11,7 @@ void updateLogic() {
 
 void makeViewDistanceFitZoomLevel() {
     int numBlocksVisible = width / pixelsPerBlock;
-    setViewDistance(numBlocksVisible + 2);
+    setViewDistance(numBlocksVisible + 4);
 }
 
 // This function is called each frame.
