@@ -80,7 +80,6 @@ public class Player {
     }
     
     void move() {
-        // 
         float v = speed;
         if (isRunning) {
             v *= runningFactor; 
@@ -111,8 +110,6 @@ public class Player {
             coords.x = xPrevious;
             coords.y = yPrevious;
         }
-        
-        
     }
     
     boolean setMove(final int k, final boolean b) {
