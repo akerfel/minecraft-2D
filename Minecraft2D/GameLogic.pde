@@ -27,9 +27,11 @@ void settingsSetup() {
 }
 
 void setViewDistance(int newViewDistance) {
-    println("View distance: " + newViewDistance);
-    viewDistance = newViewDistance;
-    visibleBlocks = new Block[viewDistance][viewDistance];
+    if (newViewDistance > 3) {
+        viewDistance = newViewDistance;
+        visibleBlocks = new Block[viewDistance][viewDistance];
+        println("View distance: " + newViewDistance);
+    }
 }
 
 void updateMobs() {
