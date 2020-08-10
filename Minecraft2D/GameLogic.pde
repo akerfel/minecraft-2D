@@ -9,6 +9,11 @@ void updateLogic() {
     updateMobs();
 }
 
+void makeViewDistanceFitZoomLevel() {
+    int numBlocksVisible = width / pixelsPerBlock;
+    setViewDistance(numBlocksVisible + 2);
+}
+
 // This function is called each frame.
 // I tried to only call this each time the player stepped on a new block, but it did not seem to improve the fps.
 // That also introduced other problems (block would not be mined until stepped new block), so I chose to keep it like this.
@@ -190,7 +195,7 @@ Chunk getChunk(PVector coords) {
     if (!generatedChunks.containsKey(chunkCoords)) {
         generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
         println("Generated chunks: " + generatedChunks.size());
-        println(generatedChunks.keySet());
+        //println(generatedChunks.keySet());
     }
     return generatedChunks.get(chunkCoords);
 }

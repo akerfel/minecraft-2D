@@ -62,6 +62,7 @@ void setup() {
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();
     loadVisibleBlocks();
+    makeViewDistanceFitZoomLevel();
     
     // Other
     rightMouseButtonDown = false;

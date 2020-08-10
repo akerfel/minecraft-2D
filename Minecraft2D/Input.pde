@@ -62,12 +62,13 @@ void mouseReleased() {
 }
 
 void mouseWheel(MouseEvent event) {
-  if (event.getCount() > 0) {
-      pixelsPerBlock -= 2;
-  }
-  else {
-      pixelsPerBlock += 2;
-  }
-  resetObjectsDependingOnPixelsPerBlock();
+    if (event.getCount() > 0) {
+        pixelsPerBlock -= 2;
+    }
+    else {
+        pixelsPerBlock += 2;
+    }
+    resetObjectsDependingOnPixelsPerBlock();
+    makeViewDistanceFitZoomLevel();
 }
  
