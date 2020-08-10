@@ -51,7 +51,7 @@ void setup() {
     maxMobs = 30;
     mobSpawnRange = 50;
     mobDespawnRange = 100;
-    viewDistance = 150;
+    viewDistance = 250;
     noStrokeMode = true;
     settingsSetup();
     

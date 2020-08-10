@@ -40,8 +40,10 @@ void updateMobs() {
 
 void removeBlockDamageIfNotMining() {
     if (!leftMouseButtonDown) {
-        for (Block block : damagedBlocks) {
-            block.removeDamage();    
+        Iterator<Block> it = damagedBlocks.iterator();
+        while (it.hasNext()) {
+            it.next().removeDamage();
+            it.remove();            
         }
     }
 }
