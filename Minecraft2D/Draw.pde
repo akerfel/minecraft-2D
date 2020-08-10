@@ -46,18 +46,6 @@ void drawMob(Mob mob) {
     square(x, y, mobWidth);
 }
 
-/*
-void drawMobsInChunk(Chunk chunk, float xStart, float yStart) {
-    for (Mob mob : mobs) {
-        if (getChunk(mob.coords) == chunk) {
-            float xInChunk = mob.coords.x % blocksPerChunk;
-            float yInChunk = mob.coords.y % blocksPerChunk;
-            drawMob(mob, xStart + xInChunk * pixelsPerBlock, yStart + yInChunk * pixelsPerBlock);
-        }
-    }
-}
-*/
-
 void drawPlayer() {
     fill(216, 127, 51);
     square(width/2, height/2, playerWidth);    
