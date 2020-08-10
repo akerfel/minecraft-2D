@@ -57,7 +57,7 @@ void setup() {
     
     // Game objects
     generatedChunks = new HashMap<PVector, Chunk>();
-    player = new Player(9220, 9220);
+    player = new Player(1000000, 1000000);
     setViewDistance(viewDistance);
     mobs = new ArrayList<Mob>();
     damagedBlocks = new ArrayList<Block>();
