@@ -38,7 +38,7 @@ void zoom(int changeInPixelsPerBlock) {
         pixelsPerBlock = 1;    
     }
     if (oldPixelsPerBlock != pixelsPerBlock) {
-        println("Pixels per block: " + pixelsPerBlock);
+        println("Pixels per block: " + pixelsPerBlock + "x" + pixelsPerBlock);
         resetObjectsDependingOnPixelsPerBlock();
         makeViewDistanceFitZoomLevel();
     }
