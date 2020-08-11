@@ -52,7 +52,7 @@ void setup() {
     mobSpawnRange = 50;
     mobDespawnRange = 100;
     viewDistance = 250;
-    noStrokeMode = false;
+    noStrokeMode = true;
     settingsSetup();
     
     // Game objects
