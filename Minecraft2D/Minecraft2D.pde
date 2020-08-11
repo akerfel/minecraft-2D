@@ -67,6 +67,7 @@ void setup() {
     // Other
     rightMouseButtonDown = false;
     leftMouseButtonDown = false;
+    setPlayerBlock(new Grass());
     
     // Testing atm
     player.addItemToInventory(new Tool("iron", "sword"));

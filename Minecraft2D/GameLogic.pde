@@ -222,6 +222,10 @@ Block getBlock(float x, float y) {
     return chunk.blocks[int(x) % blocksPerChunk][int(y) % blocksPerChunk];
 }
 
+void setPlayerBlock(Block block) {
+    setBlock(block, player.coords.x, player.coords.y);
+}
+
 Block getPlayerBlock() {
     return getBlock(player.coords.x, player.coords.y);
 }
