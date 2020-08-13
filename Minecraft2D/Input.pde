@@ -20,6 +20,10 @@ void keyPressed() {
         zoom(-1);
     }
     
+    if (key == 'e') {
+        inventoryShowing = !inventoryShowing;    
+    }
+    
     if (key == '.') {
         setViewDistance(viewDistance - 2);   
     }

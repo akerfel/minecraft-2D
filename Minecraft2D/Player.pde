@@ -11,6 +11,7 @@ public class Player {
     boolean isLeft, isRight, isUp, isDown;
     int hotbarIndexSelected;
     ItemSlot[] hotbar;
+    ItemSlot[] craftingGrid;
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
@@ -23,6 +24,8 @@ public class Player {
         hotbarIndexSelected = 0;
         hotbar = new ItemSlot[9];
         setHotbarEmpty();
+        craftingGrid = new ItemSlot[4];
+        setCraftingGridEmpty();
     }
     
     Item getHeldItem() {
@@ -84,6 +87,12 @@ public class Player {
     void setHotbarEmpty() {
         for (int i = 0; i < 9; i++) {
             hotbar[i] = new ItemSlot();
+        }
+    }
+    
+    void setCraftingGridEmpty() {
+        for (int i = 0; i < 4; i++) {
+            craftingGrid[i] = new ItemSlot();
         }
     }
     

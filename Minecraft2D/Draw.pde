@@ -6,12 +6,19 @@ void drawEverything() {
     drawMobs();
     drawPlayer();
     drawHotbar();
+    drawInventory();
     drawFPS();
 }
 
 void drawFPS() {
   fill(220);
   text(int(frameRate), 20, 30); 
+}
+
+void drawInventory() {
+    if (inventoryShowing) {
+        
+    }
 }
 
 void drawVisibleBlocks() {
@@ -61,47 +68,46 @@ void drawPlayer() {
 
 void drawHotbar() {
     rectMode(CENTER);
-    int pixelsPerCell = 60;
     for (int i = 0; i < 9; i++) {
-        drawItemSlot(pixelsPerCell, i);
+        drawItemSlotInHotbar(i);
         
     }
     rectMode(CORNER);
 }
 
-void drawItemSlot(int pixelsPerCell, int hotbarIndex) {
+void drawItemSlotInHotbar(int hotbarIndex) {
     if (hotbarIndex == player.hotbarIndexSelected) {
         fill(210, 210, 210);
     }
     else {
         fill(150, 150, 150);
     }
-    int x = width/2 + (hotbarIndex - 4) * pixelsPerCell;
-    int y = height - pixelsPerCell / 2;
-    square(x, y, pixelsPerCell);
-    drawItemInHotbar(x, y, hotbarIndex, pixelsPerCell);    
+    int x = width/2 + (hotbarIndex - 4) * pixelsPerItemSlot;
+    int y = height - pixelsPerItemSlot / 2;
+    square(x, y, pixelsPerItemSlot);
+    drawItemInHotbar(x, y, hotbarIndex, pixelsPerItemSlot);    
 }
 
-void drawItemInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
+void drawItemInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
     Item item = player.hotbar[hotbarIndex].item;
     if (!(player.hotbar[hotbarIndex].amount == 0)) {
         switch (item.type) {
             case "block":
-                drawBlockInHotbar(x, y, hotbarIndex, pixelsPerCell);
+                drawBlockInHotbar(x, y, hotbarIndex, pixelsPerItemSlot);
                 break;
             case "tool":
-                drawToolInHotbar(x, y, hotbarIndex, pixelsPerCell);
+                drawToolInHotbar(x, y, hotbarIndex, pixelsPerItemSlot);
                 break;
         }  
     }
 }
 
-void drawBlockInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
+void drawBlockInHotbar(int x,int y, int hotbarIndex, int pixelsPerItemSlot) {
     Block block = (Block) player.hotbar[hotbarIndex].item;
     
     // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
     fill(block.c);
-    square(x, y, pixelsPerCell / 2);
+    square(x, y, pixelsPerItemSlot / 2);
     
     // Draw amount (text)
     textSize(24);
@@ -110,11 +116,11 @@ void drawBlockInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
     text(player.hotbar[hotbarIndex].amount, x, height);
 }
 
-void drawToolInHotbar(int x,int y, int hotbarIndex, int pixelsPerCell) {
+void drawToolInHotbar(int x,int y, int hotbarIndex, int pixelsPerItemSlot) {
     Tool tool = (Tool) player.hotbar[hotbarIndex].item;
     
     fill(tool.c);
-    circle(x, y, pixelsPerCell / 2);
+    circle(x, y, pixelsPerItemSlot / 2);
     
     // Draw letter for tool type (Temporary solution, before I add specific images for tools) 
     textSize(20);

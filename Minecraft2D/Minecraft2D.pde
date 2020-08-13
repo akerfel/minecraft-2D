@@ -20,17 +20,17 @@ int mobSpawnRange;    // In blocks
 int mobDespawnRange;    // In blocks
 int viewDistance;
 boolean noStrokeMode;    // Setting this to false HALVES FPS (!), and makes things uglier. Keep it at true.
+int pixelsPerItemSlot;
 
-// Game objects
+// Other
 HashMap<PVector, Chunk> generatedChunks;
 Player player;
 Block[][] visibleBlocks;
 ArrayList<Mob> mobs;
 ArrayList<Block> damagedBlocks;
-
-// Other
 boolean rightMouseButtonDown;
 boolean leftMouseButtonDown;
+boolean inventoryShowing;
 
 void setup() {
     size(1200, 1200);
@@ -54,8 +54,10 @@ void setup() {
     viewDistance = 250;
     noStrokeMode = true;
     settingsSetup();
+    pixelsPerItemSlot = 60;
+    
 
-    // Game objects
+    // Other
     generatedChunks = new HashMap<PVector, Chunk>();
     player = new Player(1000000, 1000000);
     setViewDistance(viewDistance);
@@ -63,11 +65,10 @@ void setup() {
     damagedBlocks = new ArrayList<Block>();
     loadVisibleBlocks();
     makeViewDistanceFitZoomLevel();
-
-    // Other
     rightMouseButtonDown = false;
     leftMouseButtonDown = false;
     setPlayerBlock(new Grass());
+    inventoryShowing = false;
 
     // Testing atm
     player.addItemToInventory(new Tool("iron", "sword"));
