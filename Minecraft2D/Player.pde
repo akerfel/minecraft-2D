@@ -54,23 +54,32 @@ public class Player {
     }
     
     void addBlockToInventory(Block block) {
+        boolean foundInInventory = tryAddBlockToExistingStack(block);
+        if (!foundInInventory) {
+            putBlockInEmptyCell(block);
+        }
+    }
+    
+    private boolean tryAddBlockToExistingStack(Block block) {
         boolean foundInInventory = false;
         for (int i = 0; i < 9; i++) {
-            if (hotbar[i].toString().equals(block.toString()) && hotbar[i].amount != 64) {
+            if (hotbar[i].toString().equals(block.toString()) && hotbar[i].amount < 64) {
                 hotbar[i].incrementItemAmount();
                 foundInInventory = true;
                 break;
             }
         }
-        if (!foundInInventory) {
-            for (int i = 0; i < 9; i++) {
+        return foundInInventory;
+    }
+    
+    private void putBlockInEmptyCell(Block block) {
+        for (int i = 0; i < 9; i++) {
                 if (hotbar[i].amount == 0) {
                     hotbar[i].item = block;
                     hotbar[i].amount = 1;
                     break;
                 }
-            }  
-        }
+            }     
     }
     
     void setHotbarEmpty() {
