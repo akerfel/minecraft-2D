@@ -1,8 +1,8 @@
-public class HotbarCell {
+public class ItemSlot {
     Item item;
     int amount;
     
-    public HotbarCell() {
+    public ItemSlot() {
         item = null;
         amount = 0;
     }

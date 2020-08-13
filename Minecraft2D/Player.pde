@@ -2,6 +2,7 @@
 
 public class Player {
     PVector coords;
+    int reach;
     float speed;
     boolean isRunning;
     boolean isRunningLikeUsainBolt;
@@ -9,21 +10,19 @@ public class Player {
     float usainBoltRunningFactor;    // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
     int hotbarIndexSelected;
-    HotbarCell[] hotbar;
-    int reach;
-   
+    ItemSlot[] hotbar;
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
         speed = 0.1;
+        reach = 7;
         isRunning = false;
         isRunningLikeUsainBolt = false;
         runningFactor = 1.5;
         usainBoltRunningFactor = 200;
         hotbarIndexSelected = 0;
-        hotbar = new HotbarCell[9];
+        hotbar = new ItemSlot[9];
         setHotbarEmpty();
-        reach = 7;
     }
     
     Item getHeldItem() {
@@ -84,7 +83,7 @@ public class Player {
     
     void setHotbarEmpty() {
         for (int i = 0; i < 9; i++) {
-            hotbar[i] = new HotbarCell();
+            hotbar[i] = new ItemSlot();
         }
     }
     

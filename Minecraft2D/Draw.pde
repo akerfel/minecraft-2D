@@ -63,13 +63,13 @@ void drawHotbar() {
     rectMode(CENTER);
     int pixelsPerCell = 60;
     for (int i = 0; i < 9; i++) {
-        drawHotbarCell(pixelsPerCell, i);
+        drawItemSlot(pixelsPerCell, i);
         
     }
     rectMode(CORNER);
 }
 
-void drawHotbarCell(int pixelsPerCell, int hotbarIndex) {
+void drawItemSlot(int pixelsPerCell, int hotbarIndex) {
     if (hotbarIndex == player.hotbarIndexSelected) {
         fill(210, 210, 210);
     }

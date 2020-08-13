@@ -107,7 +107,7 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
-        HotbarCell cell = player.hotbar[player.hotbarIndexSelected];
+        ItemSlot cell = player.hotbar[player.hotbarIndexSelected];
         if (cell.item.type.equals("block")) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
