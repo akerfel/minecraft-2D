@@ -1,12 +1,20 @@
 void updateLogic() {
     player.move();
+    updateBlocks();
+    updateMobs();
+}
+
+void updateBlocks() {
     loadVisibleBlocks();    
     placeBlocksWithMouse();
     mineBlocksWithMouse();
     removeBlockDamageIfNotMining();
+}
+
+void updateMobs() {
     maybeSpawnMob();
     removeFarMobs();
-    updateMobs();
+    updateMobsPos();    
 }
 
 void makeViewDistanceFitZoomLevel() {
@@ -52,7 +60,7 @@ void setViewDistance(int newViewDistance) {
     }
 }
 
-void updateMobs() {
+void updateMobsPos() {
     for (Mob mob : mobs) {
         mob.update();    
     }
