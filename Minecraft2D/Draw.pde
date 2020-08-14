@@ -22,13 +22,23 @@ void drawInventory() {
 }
 
 void drawVisibleBlocks() {
-    for (float y = 0; y < viewDistance; y++) {
-        float yPos = height/2 + (y - viewDistance/2) * pixelsPerBlock;
-        float yPlayerPixelOffset = (player.coords.y % 1) * pixelsPerBlock;
-        for (float x = 0; x < viewDistance; x++) {
-            float xPos = width/2 + (x - viewDistance/2) * pixelsPerBlock;
-            float xPlayerPixelOffset = (player.coords.x % 1) * pixelsPerBlock;
-            drawBlock(visibleBlocks[int(x)][int(y)], xPos - xPlayerPixelOffset, yPos - yPlayerPixelOffset);
+    // These 
+    float[] xPixels = new float[viewDistance];
+    float[] yPixels = new float[viewDistance];
+    float xPlayerPixelOffset = (player.coords.x % 1) * pixelsPerBlock;
+    float yPlayerPixelOffset = (player.coords.y % 1) * pixelsPerBlock;
+    for (float i = 0; i < viewDistance; i++) {
+        // x
+        float xPos = width/2 + (i - viewDistance/2) * pixelsPerBlock;
+        xPixels[int(i)] = xPos - xPlayerPixelOffset;
+        // y
+        float yPos = height/2 + (i - viewDistance/2) * pixelsPerBlock;
+        yPixels[int(i)] = yPos - yPlayerPixelOffset;
+    }
+            
+    for (int y = 0; y < viewDistance; y++) {
+        for (int x = 0; x < viewDistance; x++) {
+            drawBlock(visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
         }
     }
 }
