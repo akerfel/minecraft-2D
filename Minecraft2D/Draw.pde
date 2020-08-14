@@ -22,7 +22,7 @@ void drawInventory() {
 }
 
 void drawVisibleBlocks() {
-    // These 
+    // xPixels and yPixels store the top left corner pixel positions of each block
     float[] xPixels = new float[viewDistance];
     float[] yPixels = new float[viewDistance];
     float xPlayerPixelOffset = (player.coords.x % 1) * pixelsPerBlock;
