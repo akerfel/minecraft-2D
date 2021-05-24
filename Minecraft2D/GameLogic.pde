@@ -201,7 +201,7 @@ boolean setBlock(Block block, float x, float y) {
 }
 
 // Takes player coords, converts them into chunkCoords and loads that chunk from generatedChunks. 
-// If chunk has not yet been generated, create it and it to generatedChunks (chunkCoords is key).
+// If chunk has not yet been generated, create it and add it to generatedChunks (chunkCoords is key).
 Chunk getChunk(PVector coords) {
     PVector chunkCoords = calcChunkCoords(coords);
     // The next two if statements ensure that the same chunk wont be loaded
