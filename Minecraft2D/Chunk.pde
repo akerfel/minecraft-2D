@@ -1,15 +1,33 @@
 public class Chunk {
     public Block[][] blocks;
-    public color grassColorScheme; // Each chunk has a special color for grass
-    float chanceStone;
-    float chanceTree;
+    public color grassColorScheme;         // Each chunk has a special color for grass
+    float chanceStone;                     // for each block
+    float chanceTree;                      
+    boolean isForestChunk;                 // true means much higher tree density
+    boolean isBigTreesChunk;               // true means only big trees
     
     public Chunk(PVector coords) {
         blocks = new Block[blocksPerChunk][blocksPerChunk];
         long chunkSeed = gameSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);
+
+        // Place grass and stone 
         placeGrassAndStone();
-        placeTrees();
+
+        // Place trees or big trees. A forest chunk can not also be a big trees chunk.
+        isForestChunk = false;
+        chanceTree = baseChanceTree * random(0.1, 1.3);
+        isBigTreesChunk = random(0, 1) < chanceBigTreesChunk;
+        if (isBigTreesChunk) placeBigTrees();
+        else {
+            isForestChunk = random(0, 1) < chanceForestChunk;
+            if (isForestChunk) {
+                chanceTree = 0.2 + random(-0.05, 0.05);
+            }
+            placeTrees();
+        }
+        
+        // Water
         placeRivers();
     }
     
@@ -67,12 +85,8 @@ public class Chunk {
     }
     
     void placeTrees() {
-        chanceTree = baseChanceTree * random(0.1, 1.3);
-        if (random(0, 1) < chanceForestChunk) {
-            chanceTree = 0.2 + random(-0.05, 0.05);
-        }
-        for (int x = 1; x < blocksPerChunk - 1; x++) {
-            for (int y = 1; y < blocksPerChunk - 1; y++) {
+        for (int x = 0; x < blocksPerChunk - 2; x++) {
+            for (int y = 0; y < blocksPerChunk - 2; y++) {
                 if (random(0, 1) < chanceTree) {
                     makeTree(x, y);
                 }
@@ -80,23 +94,62 @@ public class Chunk {
         }    
     }
     
+    void placeBigTrees() {
+        for (int x = 0; x < blocksPerChunk - 5; x++) {
+            for (int y = 0; y < blocksPerChunk - 5; y++) {
+                if (random(0, 1) < chanceTree) {
+                    makeBigTree(x, y);
+                }
+            }
+        }    
+    }
     
-    
+    // (x, y) is the top left square of the tree
     void makeTree(int x, int y) {
         // Top row
-        makeLeaf(x-1, y-1);
-        makeLeaf(x, y-1);
-        makeLeaf(x+1, y-1);
+        makeLeaf(x, y);
+        makeLeaf(x+1, y);
+        makeLeaf(x+2, y);
         
         // Middle row
-        makeLeaf(x-1, y);
-        blocks[x][y] = new Wood();
-        makeLeaf(x+1, y);
+        makeLeaf(x, y+1);
+        blocks[x+1][y+1] = new Wood();
+        makeLeaf(x+2, y+1);
         
         // Bottom row
-        makeLeaf(x-1, y+1);
+        makeLeaf(x, y+2);
+        makeLeaf(x+1, y+2);
+        makeLeaf(x+2, y+2);
+    }
+
+    // (x, y) is the top left square of the tree
+    void makeBigTree(int x, int y) {
+        
+        // Horizontal row 1 of 4
+        makeLeaf(x, y);
+        makeLeaf(x+1, y);
+        makeLeaf(x+2, y);
+        makeLeaf(x+3, y);
+        
+        // Horizontal row 2 of 4
         makeLeaf(x, y+1);
-        makeLeaf(x+1, y+1);
+        blocks[x+1][y+1] = new Wood();
+        blocks[x+2][y+1] = new Wood();
+        makeLeaf(x+3, y+1);
+        
+        // Horizontal row 3 of 4
+        makeLeaf(x, y+2);
+        blocks[x+1][y+2] = new Wood();
+        blocks[x+2][y+2] = new Wood();
+        makeLeaf(x+3, y+2);
+        
+        // Horizontal row 4 of 4
+        makeLeaf(x, y+3);
+        makeLeaf(x+1, y+3);
+        makeLeaf(x+2, y+3);
+        makeLeaf(x+3, y+3);
+        
+        
     }
     
     void makeLeaf(int x, int y) {

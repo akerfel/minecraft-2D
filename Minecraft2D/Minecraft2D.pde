@@ -13,6 +13,7 @@ float baseChanceStone;
 float baseChanceTree;
 float chanceRiver;
 float chanceForestChunk;
+float chanceBigTreesChunk;
 int gameSeed;
 float mobSpawnChance;    // Chance each frame, so should be pretty low
 int maxMobs;
@@ -46,6 +47,7 @@ void setup() {
     baseChanceTree = 0.02;
     chanceRiver = 0.00004;
     chanceForestChunk = 0.17;
+    chanceBigTreesChunk = 0.20;
     gameSeed = int(random(0, 100000000));
     mobSpawnChance = 0.03;
     maxMobs = 30;
