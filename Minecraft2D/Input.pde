@@ -48,7 +48,7 @@ void keyPressed() {
         if (keyCode == SHIFT) {
             player.isRunning = true;    
         }
-        if (keyCode == CONTROL) {
+        if (keyCode == ALT) {
             player.isRunningLikeUsainBolt = true;    
         }
     }
@@ -65,7 +65,7 @@ void keyReleased() {
         if (keyCode == SHIFT) {
             player.isRunning = false;    
         }
-        if (keyCode == CONTROL) {
+        if (keyCode == ALT) {
             player.isRunningLikeUsainBolt = false;    
         }
     }
