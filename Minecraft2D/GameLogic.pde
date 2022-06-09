@@ -87,7 +87,7 @@ void removeFarMobs() {
 }
 
 void maybeSpawnMob() {
-    if (mobs.size() < maxMobs && random(0, 1) < mobSpaceChance) {
+    if (mobs.size() < maxMobs && random(0, 1) < mobSpawnChance) {
         spawnMob();    
     }
 }
