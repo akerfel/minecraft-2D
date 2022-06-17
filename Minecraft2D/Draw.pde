@@ -17,7 +17,7 @@ void drawFPS() {
 
 void drawInventory() {
     if (inventoryShowing) {
-        
+        square(50, 50, 50);
     }
 }
 
@@ -77,12 +77,16 @@ void drawPlayer() {
 }
 
 void drawHotbar() {
+    stroke(0);
     rectMode(CENTER);
     for (int i = 0; i < 9; i++) {
         drawItemSlotInHotbar(i);
         
     }
     rectMode(CORNER);
+    if (noStrokeMode) {
+        noStroke();   
+    }
 }
 
 void drawItemSlotInHotbar(int hotbarIndex) {

@@ -54,6 +54,7 @@ void setup() {
     mobSpawnRange = 50;
     mobDespawnRange = 100;
     viewDistance = 250;
+    
     noStrokeMode = true;
     settingsSetup();
     pixelsPerItemSlot = 60;
