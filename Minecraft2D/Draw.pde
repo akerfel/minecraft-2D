@@ -1,5 +1,3 @@
-
-
 void drawEverything() {
     background(0, 0, 0);
     drawVisibleBlocks();
