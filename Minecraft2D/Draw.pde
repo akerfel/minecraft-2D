@@ -14,7 +14,9 @@ void drawFPS() {
 }
 
 void drawInventory() {
-    
+    if (inventoryShowing) {
+        rect(50, 50, 50, 50);
+    }
 }
 
 void drawVisibleBlocks() {

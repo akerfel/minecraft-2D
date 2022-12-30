@@ -4,4 +4,4 @@ A top-down minecraft-esque game with an infinite world which is randomly generat
 ![java_iNpaFTUuma](https://user-images.githubusercontent.com/45148959/205670770-726a353d-85be-45d4-b660-f789061718e5.png)
 
 ## Tips
-* Zoom in and out with the mouse wheel.
+* Zoom with **Ctrl+Mouse Wheel**

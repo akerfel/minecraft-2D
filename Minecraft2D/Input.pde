@@ -90,11 +90,34 @@ void mouseReleased() {
 }
 
 void mouseWheel(MouseEvent event) {
-    if (event.getCount() > 0) {
-        zoom(-1);
+    if (keyPressed && key == CODED && keyCode == CONTROL) {
+        // Scroll up
+        if (event.getCount() > 0) {
+            zoom(-1);
+        }
+        // Scroll down
+        else {
+            zoom(1);
+        }
     }
     else {
-        zoom(1);
+        // Scroll up
+        if (event.getCount() > 0) {
+            //zoom(-1);
+            player.hotbarIndexSelected++;
+            if (player.hotbarIndexSelected >= player.hotbar.length) {
+                player.hotbarIndexSelected = 0;    
+            }
+        }
+        // Scroll down
+        else {
+            //zoom(1);
+            player.hotbarIndexSelected--;
+            if (player.hotbarIndexSelected < 0) {
+                player.hotbarIndexSelected = player.hotbar.length - 1;    
+            }
+        }
     }
 }
+
  

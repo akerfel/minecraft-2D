@@ -49,7 +49,7 @@ void setup() {
     chanceForestChunk = 0.17;
     chanceBigTreesChunk = 0.20;
     gameSeed = int(random(0, 100000000));
-    mobSpawnChance = 0.03;
+    mobSpawnChance = 0.01;
     maxMobs = 30;
     mobSpawnRange = 50;
     mobDespawnRange = 100;
