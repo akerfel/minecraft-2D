@@ -62,12 +62,13 @@ public class Player {
     
     // Add tool to some empty inventory slot
     void addToolToInventory(Tool tool) {
-        // TODO: should also check for inventory spaces
-        for (int i = 0; i < 9; i++) {
-            if (getHotbarSlot(i).amount == 0) {
-                getHotbarSlot(i).item = tool;
-                getHotbarSlot(i).amount = 1;
-                return;
+        for (int y = inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < inventoryWidth; x++) {
+                if (inventory[x][y].amount == 0) {
+                    inventory[x][y].item = tool;
+                    inventory[x][y].amount = 1;
+                    return;
+                }
             }
         }
     }
@@ -80,7 +81,6 @@ public class Player {
     
     // Add block to some empty inventory slot
     void addBlockToInventory(Block block) {
-        // TODO: should also check for inventory spaces
         boolean foundInInventory = tryAddBlockToExistingStack(block);
         if (!foundInInventory) {
             putBlockInEmptyCell(block);
@@ -101,27 +101,29 @@ public class Player {
         return inventory[x][inventoryHeight - 1];
     }
     
+    // Returns true if found in inventory (and added to that stack)
     private boolean tryAddBlockToExistingStack(Block block) {
-        // TODO: should also check for inventory spaces
-        boolean foundInInventory = false;
-        for (int i = 0; i < 9; i++) {
-            if (getHotbarSlot(i).toString().equals(block.toString()) && getHotbarSlot(i).amount < 64) {
-                getHotbarSlot(i).incrementItemAmount();
-                foundInInventory = true;
-                break;
+        for (int y = inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < inventoryWidth; x++) {
+                if (inventory[x][y].toString().equals(block.toString()) && inventory[x][y].amount < 64) {
+                    inventory[x][y].incrementItemAmount();
+                    return true;
+                }
             }
         }
-        return foundInInventory;
+        return false;
     }
     
     // Put block in some empty cell
     private void putBlockInEmptyCell(Block block) {
         // TODO: should also check for inventory spaces
-        for (int i = 0; i < 9; i++) {
-            if (getHotbarSlot(i).amount == 0) {
-                getHotbarSlot(i).item = block;
-                getHotbarSlot(i).amount = 1;
-                break;
+        for (int y = inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < inventoryWidth; x++) {
+                if (inventory[x][y].amount == 0) {
+                    inventory[x][y].item = block;
+                    inventory[x][y].amount = 1;
+                    return;
+                }
             }
         }     
     }

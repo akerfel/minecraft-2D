@@ -82,7 +82,6 @@ void mousePressed() {
             ItemSlot currentMouseHeldItemSlot = player.mouseHeldItemSlot;
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
             
-            
             int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
             int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
             

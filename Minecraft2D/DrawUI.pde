@@ -46,15 +46,22 @@ void drawHotbar() {
 }
 
 void drawMouseItemSlot() {
+    stroke(0);
     if (player.mouseHeldItemSlot.amount != 0) {
         drawItemInItemSlot(player.mouseHeldItemSlot, mouseX, mouseY);
+    }
+    if (noStrokeMode) {
+        noStroke();   
     }
 }
 
 // Draws an itemSlot with center at (xPixel, yPixel)
 void drawItemSlot(ItemSlot itemSlot, int xPixel, int yPixel, boolean highlightBackground) {
     drawItemSlotBackground(xPixel, yPixel, highlightBackground);
-    drawItemInItemSlot(itemSlot, xPixel, yPixel);
+    // We will specifiy the center of each itemSlot
+    int xPixelCenterOfItemSlot = xPixel + pixelsPerItemSlot / 2;
+    int yPixelCenterOfItemSlot = yPixel + pixelsPerItemSlot / 2;
+    drawItemInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
 }
 
 void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground) {
@@ -65,19 +72,17 @@ void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground)
     square(xPixel, yPixel, pixelsPerItemSlot);    
 }
 
+// (xPixel, yPixel) should be the center of the drawn Item.
 void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
-    // We will specifiy the center of each itemSlot
     rectMode(CENTER);
-    int xPixelCenterOfItemSlot = xPixel + pixelsPerItemSlot / 2;
-    int yPixelCenterOfItemSlot = yPixel + pixelsPerItemSlot / 2;
     Item item = itemSlot.item;
     if (itemSlot.amount != 0) {
         switch (item.type) {
             case "block":
-                drawBlockInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
+                drawBlockInItemSlot(itemSlot, xPixel, yPixel);
                 break;
             case "tool":
-                drawToolInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
+                drawToolInItemSlot(itemSlot, xPixel, yPixel);
                 break;
         }
     }
@@ -85,6 +90,7 @@ void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
 }
 
 void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    rectMode(CENTER);
     Block block = (Block) itemSlot.item;
     
     // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
@@ -96,9 +102,11 @@ void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
     text(itemSlot.amount, xPixel, yPixel + pixelsPerItemSlot / 2);
+    rectMode(CORNER);
 }
 
 void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    rectMode(CENTER);
     Tool tool = (Tool) itemSlot.item;
     
     fill(tool.c);
@@ -109,4 +117,5 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
     text(tool.toolType, xPixel, yPixel + pixelsPerItemSlot / 2);
+    rectMode(CORNER);
 }

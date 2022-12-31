@@ -171,6 +171,9 @@ ItemSlot getInventorySlotWhichMouseHovers() {
         if (inventoryXindex < 0 || inventoryXindex >= inventoryWidth || inventoryYindex < 0 || inventoryYindex >= inventoryHeight) {
             return null;    
         }
+        if (player.inventory[inventoryXindex][inventoryYindex].item != null) {
+            System.out.println("Grabbed item: " + (player.inventory[inventoryXindex][inventoryYindex].item));
+        }
         return player.inventory[inventoryXindex][inventoryYindex];
     }
     return null;

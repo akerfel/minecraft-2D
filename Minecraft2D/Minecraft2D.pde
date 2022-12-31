@@ -87,12 +87,18 @@ void setup() {
     player.addItemToInventory(new Tool("diamond", "pick"));
     player.addItemToInventory(new Tool("stone", "shovel"));
     player.addItemToInventory(new Tool("diamond", "axe"));
+    player.addItemToInventory(new Dirt());
+    player.addItemToInventory(new Sand());
+    player.addItemToInventory(new Wood());
+    player.addItemToInventory(new Planks());
+    player.addItemToInventory(new Grass());
+    player.addItemToInventory(new Leaves());
     
     // Adding some items to the inventory
-    player.addItemToInventory(new Tool("iron", "sword"), 1, 2);
-    player.addItemToInventory(new Dirt(), 3, 0);
-    player.addItemToInventory(new Dirt(), 3, 0);
-    player.addItemToInventory(new Dirt(), 3, 0);
+    //player.addItemToInventory(new Tool("iron", "sword"), 1, 2);
+    //player.addItemToInventory(new Dirt(), 3, 0);
+    //player.addItemToInventory(new Dirt(), 3, 0);
+    //player.addItemToInventory(new Dirt(), 3, 0);
 }
 
 // This function is called 60 times per second
