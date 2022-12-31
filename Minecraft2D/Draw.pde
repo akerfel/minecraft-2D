@@ -1,11 +1,13 @@
 void drawEverything() {
     background(0, 0, 0);
+    drawWorld();
+    drawUI();
+}
+
+void drawWorld() {
     drawVisibleBlocks();
     drawMobs();
-    drawPlayer();
-    drawHotbar();
-    drawInventory();
-    drawFPS();
+    drawPlayer();    
 }
 
 void drawVisibleBlocks() {
@@ -15,11 +17,9 @@ void drawVisibleBlocks() {
     float xPlayerPixelOffset = (player.coords.x % 1) * pixelsPerBlock;
     float yPlayerPixelOffset = (player.coords.y % 1) * pixelsPerBlock;
     for (float i = 0; i < viewDistance; i++) {
-        // x
         float xPos = width/2 + (i - viewDistance/2) * pixelsPerBlock;
-        xPixels[int(i)] = xPos - xPlayerPixelOffset;
-        // y
         float yPos = height/2 + (i - viewDistance/2) * pixelsPerBlock;
+        xPixels[int(i)] = xPos - xPlayerPixelOffset;
         yPixels[int(i)] = yPos - yPlayerPixelOffset;
     }
             

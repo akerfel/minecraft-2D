@@ -1,3 +1,9 @@
+void drawUI() {
+    drawHotbar();
+    drawInventory();
+    drawFPS();    
+}
+
 void drawFPS() {
   fill(220);
   text(int(frameRate), 20, 30); 
@@ -99,7 +105,7 @@ void drawItemInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
 void drawBlockInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
     Block block = (Block) player.getHotbarSlot(hotbarIndex).item;
     
-    // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
+    // Can not call drawBlock() here, because the block size in that function depends on pixelsPerBlock
     fill(block.c);
     square(x, y, pixelsPerItemSlot / 2);
     
@@ -122,8 +128,6 @@ void drawToolInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
     fill(255, 255, 255);
     text(tool.toolType, x, height);
 }
-
-
 
 void drawHotbar() {
     if (!inventoryIsOpen) {
