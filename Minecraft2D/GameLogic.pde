@@ -22,7 +22,7 @@ void updateMobs() {
 }
 
 void makeViewDistanceFitZoomLevel() {
-    int numBlocksVisible = width / pixelsPerBlock;
+    int numBlocksVisible = width / settings.pixelsPerBlock;
     setViewDistance(numBlocksVisible + 4);
 }
 
@@ -30,27 +30,27 @@ void makeViewDistanceFitZoomLevel() {
 // I tried to only call this each time the state.player stepped on a new block, but it did not seem to improve the fps.
 // That also introduced other problems (block would not be mined until stepped new block), so I chose to keep it like this.
 void loadVisibleBlocks() {
-    for (int x = 0; x < viewDistance; x++) {
-        for (int y = 0; y < viewDistance; y++) {
-            state.visibleBlocks[x][y] = getBlock(state.player.coords.x + x - viewDistance/2, state.player.coords.y + y - viewDistance/2);
+    for (int x = 0; x < settings.viewDistance; x++) {
+        for (int y = 0; y < settings.viewDistance; y++) {
+            state.visibleBlocks[x][y] = getBlock(state.player.coords.x + x - settings.viewDistance/2, state.player.coords.y + y - settings.viewDistance/2);
         }
     }    
 }
 
-void settingsSetup() {
-    if (noStrokeMode) {
+void setNoStrokeModeDependingOnSetting() {
+    if (settings.noStrokeMode) {
         noStroke();   
     }
 }
 
 void zoom(int changeInPixelsPerBlock) {
-    int oldPixelsPerBlock = pixelsPerBlock;
-    pixelsPerBlock += changeInPixelsPerBlock;
-    if (pixelsPerBlock < 1) {
-        pixelsPerBlock = 1;    
+    int oldPixelsPerBlock = settings.pixelsPerBlock;
+    settings.pixelsPerBlock += changeInPixelsPerBlock;
+    if (settings.pixelsPerBlock < 1) {
+        settings.pixelsPerBlock = 1;    
     }
-    if (oldPixelsPerBlock != pixelsPerBlock) {
-        println("Pixels per block: " + pixelsPerBlock + "x" + pixelsPerBlock);
+    if (oldPixelsPerBlock != settings.pixelsPerBlock) {
+        println("Pixels per block: " + settings.pixelsPerBlock + "x" + settings.pixelsPerBlock);
         resetObjectsDependingOnPixelsPerBlock();
         makeViewDistanceFitZoomLevel();
     }
@@ -58,9 +58,9 @@ void zoom(int changeInPixelsPerBlock) {
 
 void setViewDistance(int newViewDistance) {
     if (newViewDistance > 3) {
-        viewDistance = newViewDistance;
-        state.visibleBlocks = new Block[viewDistance][viewDistance];
-        println("Blocks rendered: " + viewDistance + "x" + viewDistance + " = " + (viewDistance * viewDistance));
+        settings.viewDistance = newViewDistance;
+        state.visibleBlocks = new Block[settings.viewDistance][settings.viewDistance];
+        println("Blocks rendered: " + settings.viewDistance + "x" + settings.viewDistance + " = " + (settings.viewDistance * settings.viewDistance));
     }
 }
 
@@ -84,29 +84,29 @@ void removeFarMobs() {
     Iterator<Mob> it = state.mobs.iterator();
     while (it.hasNext()) {
         Mob mob = it.next();
-        if (state.player.coords.dist(mob.coords) > mobDespawnRange) {
+        if (state.player.coords.dist(mob.coords) > settings.mobDespawnRange) {
             it.remove();
         }
     }
 }
 
 void maybeSpawnMob() {
-    if (state.mobs.size() < maxMobs && random(0, 1) < mobSpawnChance) {
+    if (state.mobs.size() < settings.maxMobs && random(0, 1) < settings.mobSpawnChance) {
         spawnMob();    
     }
 }
 
 void spawnMob() {
-    float xSpawn = int(state.player.coords.x + random(-mobSpawnRange, mobSpawnRange));
-    float ySpawn = int(state.player.coords.y + random(-mobSpawnRange, mobSpawnRange));
+    float xSpawn = int(state.player.coords.x + random(-settings.mobSpawnRange, settings.mobSpawnRange));
+    float ySpawn = int(state.player.coords.y + random(-settings.mobSpawnRange, settings.mobSpawnRange));
     if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
         state.mobs.add(new Mob(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
     }
 }
 
 void resetObjectsDependingOnPixelsPerBlock() {
-    playerWidth = pixelsPerBlock / 2;
-    mobWidth = pixelsPerBlock / 2;
+    settings.playerWidth = settings.pixelsPerBlock / 2;
+    settings.mobWidth = settings.pixelsPerBlock / 2;
 }
 
 void placeBlocksWithMouse() {
@@ -170,10 +170,10 @@ Block getMouseBlock() {
 // Note that this is not the same as state.player.mouseItemSlot
 ItemSlot getInventorySlotWhichMouseHovers() {
     if (state.inventoryIsOpen) {
-        if (mouseX < inventoryUpperLeftXPixel || mouseY < inventoryUpperLeftYPixel) return null;
-        int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
-        int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
-        if (inventoryXindex < 0 || inventoryXindex >= inventoryWidth || inventoryYindex < 0 || inventoryYindex >= inventoryHeight) {
+        if (mouseX < settings.inventoryUpperLeftXPixel || mouseY < settings.inventoryUpperLeftYPixel) return null;
+        int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
+        int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
+        if (inventoryXindex < 0 || inventoryXindex >= settings.inventoryWidth || inventoryYindex < 0 || inventoryYindex >= settings.inventoryHeight) {
             return null;    
         }
         if (state.player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
@@ -192,8 +192,8 @@ boolean setMouseBlock(Block block) {
 PVector getVector_BlocksFromPlayerToMouse() {
     float xPixelsFromPlayerToMouse = width / 2 - mouseX;
     float yPixelsFromPlayerToMouse = width / 2 - mouseY;
-    float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / pixelsPerBlock;
-    float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / pixelsPerBlock;
+    float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / settings.pixelsPerBlock;
+    float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / settings.pixelsPerBlock;
     return new PVector(xBlocksFromPlayerToMouse, yBlocksFromPlayerToMouse);
 }
 
@@ -207,8 +207,8 @@ float getDistance_BlocksFromPlayerToMouse() {
 // Example: if you try to replace a stone block with stone, the block will not change, so function returns false
 boolean setBlock(Block block, float x, float y) {
     Chunk chunk = getChunk(new PVector(x, y));
-    int xInChunk = int(x) % blocksPerChunk;
-    int yInChunk = int(y) % blocksPerChunk;
+    int xInChunk = int(x) % settings.blocksPerChunk;
+    int yInChunk = int(y) % settings.blocksPerChunk;
     if (!block.toString().equals(chunk.blocks[xInChunk][yInChunk].toString())) {
         // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
         if (block.toString().equals("grass")) { 
@@ -244,12 +244,12 @@ Chunk getChunk(PVector coords) {
 }
 
 PVector calcChunkCoords(PVector coords) {
-    return new PVector(int(coords.x / blocksPerChunk), int(coords.y / blocksPerChunk));
+    return new PVector(int(coords.x / settings.blocksPerChunk), int(coords.y / settings.blocksPerChunk));
 }
 
 Block getBlock(float x, float y) {
     Chunk chunk = getChunk(new PVector(x, y));
-    return chunk.blocks[int(x) % blocksPerChunk][int(y) % blocksPerChunk];
+    return chunk.blocks[int(x) % settings.blocksPerChunk][int(y) % settings.blocksPerChunk];
 }
 
 void setPlayerBlock(Block block) {

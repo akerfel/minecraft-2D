@@ -38,7 +38,7 @@ public class Player {
         coords.x += v*(int(state.D_IsPressed) - int(state.A_isPressed));
         coords.y += v*(int(state.S_isPressed)  - int(state.W_isPressed));
         // If new coords are inside wall, go back to old coords
-        float playerWidthInBlocks = playerWidth / pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
+        float playerWidthInBlocks = settings.playerWidth / settings.pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
         
         if (!cheats.canWalkThroughWalls 
             && (getBlock(coords.x, coords.y).isWall 

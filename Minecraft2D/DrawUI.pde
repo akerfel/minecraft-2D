@@ -12,15 +12,15 @@ void drawFPS() {
 void drawInventoryIfOpen() {
     if (state.inventoryIsOpen) {
         stroke(0);
-        for (int y = 0; y < inventoryHeight; y++) {
-            for (int x = 0; x < inventoryWidth; x++) {
+        for (int y = 0; y < settings.inventoryHeight; y++) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
                 ItemSlot itemSlot = state.player.inventory.grid[x][y];
-                int xPixel = inventoryUpperLeftXPixel + x * pixelsPerItemSlot;
-                int yPixel = inventoryUpperLeftYPixel + y * pixelsPerItemSlot;
+                int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
+                int yPixel = settings.inventoryUpperLeftYPixel + y * settings.pixelsPerItemSlot;
                 drawItemSlot(itemSlot, xPixel, yPixel, false);
             }
         }
-        if (noStrokeMode) {
+        if (settings.noStrokeMode) {
             noStroke();   
         }
     }
@@ -30,9 +30,9 @@ void drawInventoryIfOpen() {
 // and the currently selected hotbar slot will be highlighted.
 void drawHotbar() {
     stroke(0);
-    int yPixel = height - pixelsPerItemSlot;
-    for (int x = 0; x < inventoryWidth; x++) {
-        int xPixel = inventoryUpperLeftXPixel + x * pixelsPerItemSlot;
+    int yPixel = height - settings.pixelsPerItemSlot;
+    for (int x = 0; x < settings.inventoryWidth; x++) {
+        int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
         ItemSlot itemSlot = state.player.inventory.getHotbarSlot(x);
         boolean highlightBackground = false;
         if (x == state.player.inventory.hotbarIndexSelected) {
@@ -40,7 +40,7 @@ void drawHotbar() {
         }
         drawItemSlot(itemSlot, xPixel, yPixel, highlightBackground);
     }
-    if (noStrokeMode) {
+    if (settings.noStrokeMode) {
         noStroke();   
     }
 }
@@ -50,7 +50,7 @@ void drawMouseItemSlot() {
     if (state.player.inventory.mouseHeldItemSlot.amount != 0) {
         drawItemInItemSlot(state.player.inventory.mouseHeldItemSlot, mouseX, mouseY);
     }
-    if (noStrokeMode) {
+    if (settings.noStrokeMode) {
         noStroke();   
     }
 }
@@ -59,8 +59,8 @@ void drawMouseItemSlot() {
 void drawItemSlot(ItemSlot itemSlot, int xPixel, int yPixel, boolean highlightBackground) {
     drawItemSlotBackground(xPixel, yPixel, highlightBackground);
     // We will specifiy the center of each itemSlot
-    int xPixelCenterOfItemSlot = xPixel + pixelsPerItemSlot / 2;
-    int yPixelCenterOfItemSlot = yPixel + pixelsPerItemSlot / 2;
+    int xPixelCenterOfItemSlot = xPixel + settings.pixelsPerItemSlot / 2;
+    int yPixelCenterOfItemSlot = yPixel + settings.pixelsPerItemSlot / 2;
     drawItemInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
 }
 
@@ -69,7 +69,7 @@ void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground)
     if (highlightBackground) {
         fill(210, 210, 210);
     }
-    square(xPixel, yPixel, pixelsPerItemSlot);    
+    square(xPixel, yPixel, settings.pixelsPerItemSlot);    
 }
 
 // (xPixel, yPixel) should be the center of the drawn Item.
@@ -93,9 +93,9 @@ void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Block block = (Block) itemSlot.item;
     
-    // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
+    // Can not call drawBlock() function here, because that ones size changes with settings.pixelsPerBlock
     fill(block.c);
-    square(xPixel, yPixel, pixelsPerItemSlot / 2);
+    square(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
     
     // Write amount
     textSize(24);
@@ -108,7 +108,7 @@ void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(block.toString(), xPixel, yPixel + pixelsPerItemSlot / 2);
+    text(block.toString(), xPixel, yPixel + settings.pixelsPerItemSlot / 2);
     rectMode(CORNER);
 }
 
@@ -117,11 +117,11 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     Tool tool = (Tool) itemSlot.item;
     
     fill(tool.c);
-    circle(xPixel, yPixel, pixelsPerItemSlot / 2);
+    circle(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
     
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(tool.toolType, xPixel, yPixel + pixelsPerItemSlot / 2);
+    text(tool.toolType, xPixel, yPixel + settings.pixelsPerItemSlot / 2);
     rectMode(CORNER);
 }

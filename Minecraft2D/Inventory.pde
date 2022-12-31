@@ -10,7 +10,7 @@ public class Inventory {
         hotbarIndexSelected = 0;
         craftingGrid = new ItemSlot[4];
         setCraftingGridEmpty();
-        grid = new ItemSlot[inventoryWidth][inventoryHeight];
+        grid = new ItemSlot[settings.inventoryWidth][settings.inventoryHeight];
         setInventoryEmpty();
         mouseHeldItemSlot = new ItemSlot();    
     }
@@ -52,8 +52,8 @@ public class Inventory {
     
     // Add tool to some empty inventory slot
     void addTool(Tool tool) {
-        for (int y = inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < inventoryWidth; x++) {
+        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
                 if (grid[x][y].amount == 0) {
                     grid[x][y].item = tool;
                     grid[x][y].amount = 1;
@@ -94,13 +94,13 @@ public class Inventory {
     }
 
     private ItemSlot getHotbarSlot(int x) {
-        return grid[x][inventoryHeight - 1];
+        return grid[x][settings.inventoryHeight - 1];
     }
     
     // Returns true if found in inventory (and added to that stack)
     private boolean tryAddBlockToExistingStack(Block block) {
-        for (int y = inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < inventoryWidth; x++) {
+        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
                 if (grid[x][y].toString().equals(block.toString()) && grid[x][y].amount < 64) {
                     grid[x][y].incrementItemAmount();
                     return true;
@@ -113,8 +113,8 @@ public class Inventory {
     // Put block in some empty cell
     private void putBlockInEmptyCell(Block block) {
         // TODO: should also check for inventory spaces
-        for (int y = inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < inventoryWidth; x++) {
+        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
                 if (grid[x][y].amount == 0) {
                     grid[x][y].item = block;
                     grid[x][y].amount = 1;
@@ -139,8 +139,8 @@ public class Inventory {
     }
     
     void setInventoryEmpty() {
-        for (int y = 0; y < inventoryHeight; y++) {
-            for (int x = 0; x < inventoryWidth; x++) {
+        for (int y = 0; y < settings.inventoryHeight; y++) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
                 grid[x][y] = new ItemSlot();
             }
         }

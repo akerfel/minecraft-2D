@@ -28,7 +28,7 @@ void keyPressed() {
     }
     
     if (key == '.') {
-        setViewDistance(viewDistance - 2);   
+        setViewDistance(settings.viewDistance - 2);   
     }
     
     if (key == 'f') {
@@ -84,8 +84,8 @@ void mousePressed() {
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
             if (clickedItemSlot != null) {
                 ItemSlot currentMouseHeldItemSlot = state.player.inventory.mouseHeldItemSlot;
-                int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
-                int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
+                int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
+                int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
                 state.player.inventory.grabbedXindex = inventoryXindex;
                 state.player.inventory.grabbedYindex = inventoryYindex;
                 state.player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
@@ -119,7 +119,7 @@ void mouseWheel(MouseEvent event) {
         // Scroll up
         if (event.getCount() > 0) {
             state.player.inventory.hotbarIndexSelected++;
-            if (state.player.inventory.hotbarIndexSelected >= inventoryWidth) {
+            if (state.player.inventory.hotbarIndexSelected >= settings.inventoryWidth) {
                 state.player.inventory.hotbarIndexSelected = 0;    
             }
         }
@@ -127,7 +127,7 @@ void mouseWheel(MouseEvent event) {
         else {
             state.player.inventory.hotbarIndexSelected--;
             if (state.player.inventory.hotbarIndexSelected < 0) {
-                state.player.inventory.hotbarIndexSelected = inventoryWidth - 1;    
+                state.player.inventory.hotbarIndexSelected = settings.inventoryWidth - 1;    
             }
         }
     }

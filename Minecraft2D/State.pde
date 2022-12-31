@@ -22,7 +22,7 @@ void intializeState() {
     state.mobs = new ArrayList<Mob>();
     
     // Will not be stored in the game save
-    setViewDistance(viewDistance);
+    setViewDistance(settings.viewDistance);
     makeViewDistanceFitZoomLevel();
     loadVisibleBlocks();
     state.damagedBlocks = new ArrayList<Block>();
@@ -36,5 +36,5 @@ void intializeState() {
     state.player.inventory.addItem(new Tool("diamond", "pick"));
     state.player.inventory.addItem(new Tool("stone", "shovel"));
     state.player.inventory.addItem(new Tool("diamond", "axe"));
-    state.player.inventory.addBlock(new Planks(), 128);        
+    state.player.inventory.addBlock(new Planks(), 128);
 }
