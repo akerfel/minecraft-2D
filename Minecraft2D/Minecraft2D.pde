@@ -24,6 +24,8 @@ boolean noStrokeMode;          // Setting this to false HALVES FPS (!), and make
 int pixelsPerItemSlot;
 int inventoryWidth;
 int inventoryHeight;
+int inventoryUpperLeftXPixel;  // The x pixel coordinate of the upper left corner of the inventory
+int inventoryUpperLeftYPixel;  // The y pixel coordinate of the upper left corner of the inventory
 
 // Other
 HashMap<PVector, Chunk> generatedChunks;
@@ -63,6 +65,8 @@ void setup() {
     pixelsPerItemSlot = 60;
     inventoryWidth = 9;
     inventoryHeight = 4;
+    inventoryUpperLeftXPixel = width / 2 - pixelsPerItemSlot * inventoryWidth / 2;
+    inventoryUpperLeftYPixel = height / 2 - pixelsPerItemSlot * inventoryHeight / 2;
     
 
     // Other

@@ -36,4 +36,8 @@ public class Tool extends Item {
                 break;
         }
     }
+    
+    public String toString() {
+        return toolType;    
+    }
 }

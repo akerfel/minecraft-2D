@@ -12,16 +12,14 @@ void drawFPS() {
 void drawInventoryIfOpen() {
     if (inventoryIsOpen) {
         stroke(0);
-        rectMode(CENTER);
         for (int y = 0; y < inventoryHeight; y++) {
             for (int x = 0; x < inventoryWidth; x++) {
                 ItemSlot itemSlot = player.inventory[x][y];
-                int xPixel = width / 2 + (x - 4) * pixelsPerItemSlot;
-                int yPixel = height / 2 + (y - inventoryHeight / 2) * pixelsPerItemSlot;
+                int xPixel = inventoryUpperLeftXPixel + x * pixelsPerItemSlot;
+                int yPixel = inventoryUpperLeftYPixel + y * pixelsPerItemSlot;
                 drawItemSlot(itemSlot, xPixel, yPixel, false);
             }
         }
-        rectMode(CORNER);
         if (noStrokeMode) {
             noStroke();   
         }
@@ -32,10 +30,9 @@ void drawInventoryIfOpen() {
 // and the currently selected hotbar slot will be highlighted.
 void drawHotbar() {
     stroke(0);
-    rectMode(CENTER);
-    int yPixel = height - pixelsPerItemSlot / 2;
+    int yPixel = height - pixelsPerItemSlot;
     for (int x = 0; x < inventoryWidth; x++) {
-        int xPixel = width / 2 + (x - 4) * pixelsPerItemSlot;
+        int xPixel = inventoryUpperLeftXPixel + x * pixelsPerItemSlot;
         ItemSlot itemSlot = player.getHotbarSlot(x);
         boolean highlightBackground = false;
         if (x == player.hotbarIndexSelected) {
@@ -43,9 +40,14 @@ void drawHotbar() {
         }
         drawItemSlot(itemSlot, xPixel, yPixel, highlightBackground);
     }
-    rectMode(CORNER);
     if (noStrokeMode) {
         noStroke();   
+    }
+}
+
+void drawMouseItemSlot() {
+    if (player.mouseHeldItemSlot.amount != 0) {
+        drawItemInItemSlot(player.mouseHeldItemSlot, mouseX, mouseY);
     }
 }
 
@@ -64,17 +66,22 @@ void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground)
 }
 
 void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    // We will specifiy the center of each itemSlot
+    rectMode(CENTER);
+    int xPixelCenterOfItemSlot = xPixel + pixelsPerItemSlot / 2;
+    int yPixelCenterOfItemSlot = yPixel + pixelsPerItemSlot / 2;
     Item item = itemSlot.item;
     if (itemSlot.amount != 0) {
         switch (item.type) {
             case "block":
-                drawBlockInItemSlot(itemSlot, xPixel, yPixel);
+                drawBlockInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
                 break;
             case "tool":
-                drawToolInItemSlot(itemSlot, xPixel, yPixel);
+                drawToolInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
                 break;
         }
     }
+    rectMode(CORNER);
 }
 
 void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {

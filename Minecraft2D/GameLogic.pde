@@ -162,6 +162,20 @@ Block getMouseBlock() {
     return getBlock(int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));
 }
 
+// Returns the inventory slot which the mouse currently hovers. 
+// Note that this is not the same as player.mouseItemSlot
+ItemSlot getInventorySlotWhichMouseHovers() {
+    if (inventoryIsOpen) {
+        int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
+        int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
+        if (inventoryXindex < 0 || inventoryXindex >= inventoryWidth || inventoryYindex < 0 || inventoryYindex >= inventoryHeight) {
+            return null;    
+        }
+        return player.inventory[inventoryXindex][inventoryYindex];
+    }
+    return null;
+}
+
 boolean setMouseBlock(Block block) {
     PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
     return setBlock(block, int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));

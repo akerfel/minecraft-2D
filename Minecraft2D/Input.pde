@@ -77,6 +77,18 @@ void mousePressed() {
     }
     else if (mouseButton == LEFT) {
         leftMouseButtonDown = true;
+        
+        if (inventoryIsOpen) {
+            ItemSlot currentMouseHeldItemSlot = player.mouseHeldItemSlot;
+            ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
+            
+            
+            int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
+            int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
+            
+            player.inventory[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
+            player.mouseHeldItemSlot = clickedItemSlot;
+        }
     }
 }
 

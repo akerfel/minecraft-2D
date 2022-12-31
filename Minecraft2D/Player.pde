@@ -12,6 +12,7 @@ public class Player {
     int hotbarIndexSelected;
     ItemSlot[] craftingGrid;
     ItemSlot[][] inventory;                 // The hotbar is the last row in the inventory
+    ItemSlot mouseHeldItemSlot;             // An itemSlot which is held by the mouse in the inventory (e.g. when reorganizing the inventory)
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
@@ -28,6 +29,7 @@ public class Player {
         setCraftingGridEmpty();
         inventory = new ItemSlot[inventoryWidth][inventoryHeight];
         setInventoryEmpty();
+        mouseHeldItemSlot = new ItemSlot();
     }
     
     Item getHeldItem() {
