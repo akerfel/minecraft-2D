@@ -35,6 +35,7 @@ boolean rightMouseButtonDown;
 boolean leftMouseButtonDown;
 boolean inventoryIsShowing;
 
+// This function is called once, at startup
 void setup() {
     size(1200, 1200);
 
@@ -90,6 +91,7 @@ void setup() {
     player.addItemToInventory(new Dirt(), 3, 0);
 }
 
+// This function is called 60 times per second
 void draw() {
     updateLogic();
     drawEverything();
