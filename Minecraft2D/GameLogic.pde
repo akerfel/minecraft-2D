@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 void updateLogic() {
     player.move();
     updateBlocks();
