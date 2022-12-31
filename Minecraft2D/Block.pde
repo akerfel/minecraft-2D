@@ -102,7 +102,7 @@ public class Leaves extends Block {
 
 public class Planks extends Block {
     public Planks() {
-        super("planks", color(255, 221, 153), true, "axe", true);    
+        super("planks", color(194, 155, 115), true, "axe", true);    
     }
     
     public String toString() {
@@ -143,7 +143,7 @@ public class Water extends Block {
 
 public class Wood extends Block {
     public Wood() {
-        super("wood", color(184, 135, 100), true, "axe", true);    
+        super("wood", color(174, 125, 90), true, "axe", true);    
     }
     
     public String toString() {

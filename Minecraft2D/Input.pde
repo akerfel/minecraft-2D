@@ -2,7 +2,7 @@ void keyPressed() {
     
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
-            player.inventory.addBlockToInventory(new Stone());
+            player.inventory.addBlock(new Stone());
         }
     }
     
@@ -21,7 +21,10 @@ void keyPressed() {
     }
     
     if (key == 'e') {
-        inventoryIsOpen = !inventoryIsOpen;    
+        if (inventoryIsOpen) {
+            player.inventory.returnMouseGrabbedItemToInventory();
+        }
+        inventoryIsOpen = !inventoryIsOpen;
     }
     
     if (key == '.') {
@@ -77,13 +80,14 @@ void mousePressed() {
     }
     else if (mouseButton == LEFT) {
         leftMouseButtonDown = true;
-        
         if (inventoryIsOpen) {
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
             if (clickedItemSlot != null) {
                 ItemSlot currentMouseHeldItemSlot = player.inventory.mouseHeldItemSlot;
                 int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
                 int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
+                player.inventory.grabbedXindex = inventoryXindex;
+                player.inventory.grabbedYindex = inventoryYindex;
                 player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
                 player.inventory.mouseHeldItemSlot = clickedItemSlot;
             }

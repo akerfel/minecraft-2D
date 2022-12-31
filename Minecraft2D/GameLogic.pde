@@ -5,9 +5,11 @@ void updateLogic() {
 }
 
 void updateBlocks() {
-    loadVisibleBlocks();    
-    placeBlocksWithMouse();
-    mineBlocksWithMouse();
+    loadVisibleBlocks();
+    if (!inventoryIsOpen) {
+        placeBlocksWithMouse();
+        mineBlocksWithMouse();
+    }
     removeBlockDamageIfNotMining();
 }
 
@@ -146,7 +148,7 @@ void mineBlocksWithMouse() {
         Block mouseBlock = getMouseBlock();
         if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < player.reach) {
             if (mouseBlock.prcntBroken >= 1) {
-                player.inventory.addBlockToInventory(mouseBlock);
+                player.inventory.addBlock(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
             }
             else {

@@ -84,15 +84,11 @@ void setup() {
     inventoryIsOpen = false;
 
     // Adding some items to inventory
-    player.inventory.addItemToInventory(new Tool("iron", "sword"));
-    player.inventory.addItemToInventory(new Tool("diamond", "pick"));
-    player.inventory.addItemToInventory(new Tool("stone", "shovel"));
-    player.inventory.addItemToInventory(new Tool("diamond", "axe"));
-    player.inventory.addItemToInventory(new Dirt());
-    player.inventory.addItemToInventory(new Sand());
-    player.inventory.addItemToInventory(new Wood());
-    player.inventory.addItemToInventory(new Planks());
-    player.inventory.addItemToInventory(new Leaves());
+    player.inventory.addItem(new Tool("iron", "sword"));
+    player.inventory.addItem(new Tool("diamond", "pick"));
+    player.inventory.addItem(new Tool("stone", "shovel"));
+    player.inventory.addItem(new Tool("diamond", "axe"));
+    player.inventory.addBlock(new Planks(), 128);
 }
 
 // This function is called 60 times per second
