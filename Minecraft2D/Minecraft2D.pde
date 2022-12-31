@@ -5,9 +5,9 @@ import java.util.Iterator;
 boolean cheatWalkThroughWalls;
 
 // Settings
-int pixelsPerBlock;    // pixels per side of block
-int blocksPerChunk;    // blocks per side of chunk
-float playerWidth;     // in pixels
+int pixelsPerBlock;            // pixels per side of block
+int blocksPerChunk;            // blocks per side of chunk
+float playerWidth;             // in pixels
 float mobWidth;
 float baseChanceStone;
 float baseChanceTree;
@@ -15,12 +15,12 @@ float chanceRiver;
 float chanceForestChunk;
 float chanceBigTreesChunk;
 int worldSeed;
-float mobSpawnChance;    // Chance each frame, so should be pretty low
+float mobSpawnChance;          // Chance each frame, so should be pretty low
 int maxMobs;
-int mobSpawnRange;    // In blocks
-int mobDespawnRange;    // In blocks
+int mobSpawnRange;             // In blocks
+int mobDespawnRange;           // In blocks
 int viewDistance;
-boolean noStrokeMode;    // Setting this to false HALVES FPS (!), and makes things uglier. Keep it at true.
+boolean noStrokeMode;          // Setting this to false HALVES FPS (!), and makes things uglier. Keep it at true.
 int pixelsPerItemSlot;
 int inventoryWidth;
 int inventoryHeight;
@@ -33,7 +33,7 @@ ArrayList<Mob> mobs;
 ArrayList<Block> damagedBlocks;
 boolean rightMouseButtonDown;
 boolean leftMouseButtonDown;
-boolean inventoryIsShowing;
+boolean inventoryIsOpen;
 
 // This function is called once, at startup
 void setup() {
@@ -62,7 +62,7 @@ void setup() {
     settingsSetup();
     pixelsPerItemSlot = 60;
     inventoryWidth = 9;
-    inventoryHeight = 3;
+    inventoryHeight = 4;
     
 
     // Other
@@ -76,7 +76,7 @@ void setup() {
     rightMouseButtonDown = false;
     leftMouseButtonDown = false;
     setPlayerBlock(new Grass());
-    inventoryIsShowing = false;
+    inventoryIsOpen = false;
 
     // Adding some items to the hotbar
     player.addItemToInventory(new Tool("iron", "sword"));

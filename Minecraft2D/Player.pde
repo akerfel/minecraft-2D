@@ -4,14 +4,14 @@ public class Player {
     float speed;
     boolean isRunning;
     boolean isRunningSuperSpeed;
-    float runningFactor;    // 1.5 gives 50% speed increase when running
-    float usainBoltRunningFactor;    // 1.5 gives 50% speed increase when running
+    float runningFactor;                    // 1.5 gives 50% speed increase when running
+    float usainBoltRunningFactor;           // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
-    int hotbarIndexSelected;
     
-    ItemSlot[] hotbar;
+    // Inventory
+    int hotbarIndexSelected;
     ItemSlot[] craftingGrid;
-    ItemSlot[][] inventory;
+    ItemSlot[][] inventory;                 // The hotbar is the last row in the inventory
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
@@ -21,9 +21,9 @@ public class Player {
         isRunningSuperSpeed = false;
         runningFactor = 1.5;
         usainBoltRunningFactor = 200;
+        
+        // Inventory
         hotbarIndexSelected = 0;
-        hotbar = new ItemSlot[9];
-        setHotbarEmpty();
         craftingGrid = new ItemSlot[4];
         setCraftingGridEmpty();
         inventory = new ItemSlot[inventoryWidth][inventoryHeight];
@@ -31,7 +31,7 @@ public class Player {
     }
     
     Item getHeldItem() {
-        return hotbar[hotbarIndexSelected].item;
+        return getHotbarSlot(hotbarIndexSelected).item;
     }
     
     public boolean isHoldingTool() {
@@ -62,9 +62,9 @@ public class Player {
     void addToolToInventory(Tool tool) {
         // TODO: should also check for inventory spaces
         for (int i = 0; i < 9; i++) {
-            if (hotbar[i].amount == 0) {
-                hotbar[i].item = tool;
-                hotbar[i].amount = 1;
+            if (getHotbarSlot(i).amount == 0) {
+                getHotbarSlot(i).item = tool;
+                getHotbarSlot(i).amount = 1;
                 return;
             }
         }
@@ -94,13 +94,17 @@ public class Player {
             putBlockInEmptyCell(block, x, y);
         }
     }
+
+    private ItemSlot getHotbarSlot(int x) {
+        return inventory[x][inventoryHeight - 1];
+    }
     
     private boolean tryAddBlockToExistingStack(Block block) {
         // TODO: should also check for inventory spaces
         boolean foundInInventory = false;
         for (int i = 0; i < 9; i++) {
-            if (hotbar[i].toString().equals(block.toString()) && hotbar[i].amount < 64) {
-                hotbar[i].incrementItemAmount();
+            if (getHotbarSlot(i).toString().equals(block.toString()) && getHotbarSlot(i).amount < 64) {
+                getHotbarSlot(i).incrementItemAmount();
                 foundInInventory = true;
                 break;
             }
@@ -112,9 +116,9 @@ public class Player {
     private void putBlockInEmptyCell(Block block) {
         // TODO: should also check for inventory spaces
         for (int i = 0; i < 9; i++) {
-            if (hotbar[i].amount == 0) {
-                hotbar[i].item = block;
-                hotbar[i].amount = 1;
+            if (getHotbarSlot(i).amount == 0) {
+                getHotbarSlot(i).item = block;
+                getHotbarSlot(i).amount = 1;
                 break;
             }
         }     
@@ -125,12 +129,6 @@ public class Player {
         if (inventory[x][y].amount == 0) {
             inventory[x][y].item = block;
             inventory[x][y].amount = 1;
-        }
-    }
-    
-    void setHotbarEmpty() {
-        for (int i = 0; i < 9; i++) {
-            hotbar[i] = new ItemSlot();
         }
     }
     
