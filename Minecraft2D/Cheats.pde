@@ -1,7 +1,7 @@
-public static class Cheats {
-    static boolean canWalkThroughWalls;
+public class Cheats {
+    boolean canWalkThroughWalls;
     
     public Cheats() {
-        canWalkThroughWalls = false;
+        canWalkThroughWalls = true;
     }
 }

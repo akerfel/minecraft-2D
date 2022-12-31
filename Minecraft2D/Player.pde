@@ -40,7 +40,7 @@ public class Player {
         // If new coords are inside wall, go back to old coords
         float playerWidthInBlocks = playerWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
         
-        if (!Cheats.canWalkThroughWalls 
+        if (!cheats.canWalkThroughWalls 
             && (getBlock(coords.x, coords.y).isWall 
             || getBlock(coords.x + playerWidthInBlocks, coords.y).isWall 
             || getBlock(coords.x, coords.y + playerWidthInBlocks).isWall 
