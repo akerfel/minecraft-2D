@@ -1,9 +1,9 @@
 public class Settings {
     int pixelsPerBlock;            // pixels per side of block
     int blocksPerChunk;            // blocks per side of chunk
-    float playerWidth;             // will change depending on zoom level  
-    float mobWidth;                // will change depending on zoom level  
-    float baseChanceStone;  
+    float playerWidth;             // will change depending on zoom level
+    float mobWidth;                // will change depending on zoom level
+    float baseChanceStone;
     float baseChanceTree;
     float chanceRiver;
     float chanceForestChunk;
@@ -41,5 +41,5 @@ void initializeSettings() {
     settings.inventoryUpperLeftXPixel = width / 2 - settings.pixelsPerItemSlot * settings.inventoryWidth / 2;
     settings.inventoryUpperLeftYPixel = height / 2 - settings.pixelsPerItemSlot * settings.inventoryHeight / 2;
     settings.noStrokeMode = true;
-    setNoStrokeModeDependingOnSetting(); 
+    setNoStrokeModeDependingOnSetting();
 }

@@ -1,7 +1,7 @@
 void drawWorld() {
     drawVisibleBlocks();
     drawMobs();
-    drawPlayer();    
+    drawPlayer();
 }
 
 void drawVisibleBlocks() {
@@ -16,7 +16,7 @@ void drawVisibleBlocks() {
         xPixels[int(i)] = xPos - xPlayerPixelOffset;
         yPixels[int(i)] = yPos - yPlayerPixelOffset;
     }
-            
+
     for (int y = 0; y < settings.viewDistance; y++) {
         for (int x = 0; x < settings.viewDistance; x++) {
             drawBlock(state.visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
@@ -39,7 +39,7 @@ void drawBlockBreakingTexture(Block block, float xPixel, float yPixel) {
 
 void drawMobs() {
     for (Mob mob : state.mobs) {
-        drawMob(mob);    
+        drawMob(mob);
     }
 }
 
@@ -54,5 +54,5 @@ void drawMob(Mob mob) {
 
 void drawPlayer() {
     fill(216, 127, 51);
-    square(width/2, height/2, settings.playerWidth);    
+    square(width/2, height/2, settings.playerWidth);
 }

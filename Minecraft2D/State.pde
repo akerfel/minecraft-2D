@@ -4,7 +4,7 @@ public class State {
     HashMap<PVector, Chunk> generatedChunks;
     Player player;
     ArrayList<Mob> mobs;
-    
+
     // Will not be stored in the game save
     Block[][] visibleBlocks;
     ArrayList<Block> damagedBlocks;
@@ -20,7 +20,7 @@ void intializeState() {
     state.generatedChunks = new HashMap<PVector, Chunk>();
     state.player = new Player(1000000, 1000000);
     state.mobs = new ArrayList<Mob>();
-    
+
     // Will not be stored in the game save
     setViewDistance(settings.viewDistance);
     makeViewDistanceFitZoomLevel();
@@ -30,7 +30,7 @@ void intializeState() {
     state.leftMouseButtonDown = false;
     setPlayerBlock(new Grass());
     state.inventoryIsOpen = false;
-    
+
     // Add some items to inventory
     state.player.inventory.addItem(new Tool("iron", "sword"));
     state.player.inventory.addItem(new Tool("diamond", "pick"));

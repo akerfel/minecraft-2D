@@ -1,12 +1,12 @@
 void drawUI() {
     drawInventoryIfOpen();
     drawHotbar();
-    drawFPS();    
+    drawFPS();
 }
 
 void drawFPS() {
-  fill(220);
-  text(int(frameRate), 20, 30); 
+    fill(220);
+    text(int(frameRate), 20, 30);
 }
 
 void drawInventoryIfOpen() {
@@ -21,7 +21,7 @@ void drawInventoryIfOpen() {
             }
         }
         if (settings.noStrokeMode) {
-            noStroke();   
+            noStroke();
         }
     }
 }
@@ -41,7 +41,7 @@ void drawHotbar() {
         drawItemSlot(itemSlot, xPixel, yPixel, highlightBackground);
     }
     if (settings.noStrokeMode) {
-        noStroke();   
+        noStroke();
     }
 }
 
@@ -51,7 +51,7 @@ void drawMouseItemSlot() {
         drawItemInItemSlot(state.player.inventory.mouseHeldItemSlot, mouseX, mouseY);
     }
     if (settings.noStrokeMode) {
-        noStroke();   
+        noStroke();
     }
 }
 
@@ -65,11 +65,11 @@ void drawItemSlot(ItemSlot itemSlot, int xPixel, int yPixel, boolean highlightBa
 }
 
 void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground) {
-    fill(150, 150, 150);    
+    fill(150, 150, 150);
     if (highlightBackground) {
         fill(210, 210, 210);
     }
-    square(xPixel, yPixel, settings.pixelsPerItemSlot);    
+    square(xPixel, yPixel, settings.pixelsPerItemSlot);
 }
 
 // (xPixel, yPixel) should be the center of the drawn Item.
@@ -78,12 +78,12 @@ void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     Item item = itemSlot.item;
     if (itemSlot.amount != 0) {
         switch (item.type) {
-            case "block":
-                drawBlockInItemSlot(itemSlot, xPixel, yPixel);
-                break;
-            case "tool":
-                drawToolInItemSlot(itemSlot, xPixel, yPixel);
-                break;
+        case "block":
+            drawBlockInItemSlot(itemSlot, xPixel, yPixel);
+            break;
+        case "tool":
+            drawToolInItemSlot(itemSlot, xPixel, yPixel);
+            break;
         }
     }
     rectMode(CORNER);
@@ -92,19 +92,19 @@ void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
 void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Block block = (Block) itemSlot.item;
-    
+
     // Can not call drawBlock() function here, because that ones size changes with settings.pixelsPerBlock
     fill(block.c);
     square(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
-    
+
     // Write amount
     textSize(24);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
     text(itemSlot.amount, xPixel, yPixel);
     rectMode(CORNER);
-    
-    // Write tool name (temporary solution, until specific images for tools are added) 
+
+    // Write tool name (temporary solution, until specific images for tools are added)
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
@@ -115,10 +115,10 @@ void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
 void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Tool tool = (Tool) itemSlot.item;
-    
+
     fill(tool.c);
     circle(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
-    
+
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);

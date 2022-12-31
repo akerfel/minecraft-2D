@@ -6,7 +6,7 @@ public class Block extends Item {
     float hardness;
     String toolTypeForMining;
     boolean isMineable;
-    
+
     public Block(String stringID, color c, boolean isWall, String toolTypeForMining, boolean isMineable) {
         super("block");
         this.stringID = stringID;
@@ -17,31 +17,30 @@ public class Block extends Item {
         this.toolTypeForMining = toolTypeForMining;
         this.isMineable = isMineable;
     }
-    
+
     boolean isWallOrWater() {
         return (isWall || stringID.equals("water"));
     }
-    
+
     boolean isHoldingCorrectToolType() {
         return (toolTypeForMining.equals(((Tool) state.player.inventory.getHeldItem()).toolType));
     }
-    
+
     public void mineBlock() {
         if (prcntBroken == 0) {
             timeDamagedLastTime = millis();
             prcntBroken = 0.1;
-        }
-        else {
+        } else {
             float toolTypeMult = 5;            // Higher = slower. 1.5 longer timer for correct tool type, 5 for incorrect tool type
             float toolMaterialMult = 1;        // Higher = faster. wood/stone/iron
             if (state.player.inventory.isHoldingTool() && isHoldingCorrectToolType()) {
                 toolTypeMult = 1.5;
                 toolMaterialMult = ((Tool) state.player.inventory.getHeldItem()).mult;
             }
-            
+
             // ODD BEHAVIOR: Increasing numBreakingStages also increases breaking time.
             // Especially for high values. Keep numBreakingStages at <= 10 for now.
-            float numBreakingStages = 10;    
+            float numBreakingStages = 10;
             if (millis() - timeDamagedLastTime > hardness * 1.5 * toolTypeMult / toolMaterialMult * (1000.0 / numBreakingStages)) {
                 if (prcntBroken < 1) {
                     timeDamagedLastTime = millis();
@@ -53,7 +52,7 @@ public class Block extends Item {
             }
         }
     }
-    
+
     public void removeDamage() {
         if (prcntBroken > 0) {
             prcntBroken -= 0.1;
@@ -67,86 +66,86 @@ public class Block extends Item {
 
 public class Dirt extends Block {
     public Dirt() {
-        super("dirt", color(151, 109, 77), false, "shovel", true);    
+        super("dirt", color(151, 109, 77), false, "shovel", true);
     }
-    
+
     public String toString() {
-        return "dirt";    
+        return "dirt";
     }
 }
 
 public class Grass extends Block {
     public Grass() {
-        super("grass", color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, "shovel", false);    
+        super("grass", color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, "shovel", false);
     }
-    
+
     public Grass(color colorScheme) {
-        super("grass", color(127, 178, 56) + colorScheme + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, "shovel", false);    
+        super("grass", color(127, 178, 56) + colorScheme + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, "shovel", false);
     }
-    
+
     public String toString() {
-        return "grass";    
+        return "grass";
     }
 }
 
 public class Leaves extends Block {
     public Leaves() {
-        super("leaves", color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, "axe", true);    
+        super("leaves", color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, "axe", true);
         this.hardness = 0.2;
     }
-    
+
     public String toString() {
-        return "leaves";    
+        return "leaves";
     }
 }
 
 public class Planks extends Block {
     public Planks() {
-        super("planks", color(194, 155, 115), true, "axe", true);    
+        super("planks", color(194, 155, 115), true, "axe", true);
     }
-    
+
     public String toString() {
-        return "planks";    
+        return "planks";
     }
 }
 
 public class Sand extends Block {
     public Sand() {
-        super("sand", color(247, 233, 163), false, "shovel", true);    
+        super("sand", color(247, 233, 163), false, "shovel", true);
     }
-    
+
     public String toString() {
-        return "sand";    
+        return "sand";
     }
 }
 
 public class Stone extends Block {
     public Stone() {
-        super("stone", color(112, 112, 112), true, "pick", true);    
+        super("stone", color(112, 112, 112), true, "pick", true);
     }
-    
+
     public String toString() {
-        return "stone";    
+        return "stone";
     }
 }
 
 public class Water extends Block {
     public Water() {
-        super("water", color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, "nothing", false);    
+        super("water", color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, "nothing", false);
         hardness = 100000;
     }
-    
+
     public String toString() {
-        return "water";    
+        return "water";
     }
 }
 
 public class Wood extends Block {
     public Wood() {
-        super("wood", color(174, 125, 90), true, "axe", true);    
+        super("wood", color(174, 125, 90), true, "axe", true);
     }
-    
+
     public String toString() {
-        return "wood";    
+        return "wood";
     }
 }

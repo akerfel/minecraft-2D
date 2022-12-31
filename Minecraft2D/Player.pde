@@ -17,11 +17,11 @@ public class Player {
         runningFactor = 2;
         superSpeedFactor = 200;
     }
-    
+
     void move() {
         float v = speed;
         if (isRunning) {
-            v *= runningFactor; 
+            v *= runningFactor;
         }
         if (isRunningSuperSpeed) {
             v *= superSpeedFactor;
@@ -29,52 +29,52 @@ public class Player {
         if (getPlayerBlock().stringID.equals("water")) {
             v *= 0.5;
         }
-        
+
         // Save previous coords
         float xPrevious = coords.x;
         float yPrevious = coords.y;
-        
+
         // Change coords
         coords.x += v*(int(state.D_IsPressed) - int(state.A_isPressed));
         coords.y += v*(int(state.S_isPressed)  - int(state.W_isPressed));
         // If new coords are inside wall, go back to old coords
         float playerWidthInBlocks = settings.playerWidth / settings.pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
-        
-        if (!cheats.canWalkThroughWalls 
-            && (getBlock(coords.x, coords.y).isWall 
-            || getBlock(coords.x + playerWidthInBlocks, coords.y).isWall 
-            || getBlock(coords.x, coords.y + playerWidthInBlocks).isWall 
+
+        if (!cheats.canWalkThroughWalls
+            && (getBlock(coords.x, coords.y).isWall
+            || getBlock(coords.x + playerWidthInBlocks, coords.y).isWall
+            || getBlock(coords.x, coords.y + playerWidthInBlocks).isWall
             || getBlock(coords.x + playerWidthInBlocks, coords.y + playerWidthInBlocks).isWall))
-            {
+        {
             coords.x = xPrevious;
             coords.y = yPrevious;
         }
     }
-    
+
     void setMove(final int keyWhichWasPressed, final boolean bool) {
         switch (keyWhichWasPressed) {
-            case 'W':
-            case UP:
-                  state.W_isPressed = bool;
-                  return;
-         
-            case 'S':
-            case DOWN:
-                  state.S_isPressed = bool;
-                  return;
-         
-            case 'A':
-            case LEFT:
-                  state.A_isPressed = bool;
-                  return;
-         
-            case 'D':
-            case RIGHT:
-                  state.D_IsPressed = bool;
-                  return;
-         
-            default:
-                  return;
+        case 'W':
+        case UP:
+            state.W_isPressed = bool;
+            return;
+
+        case 'S':
+        case DOWN:
+            state.S_isPressed = bool;
+            return;
+
+        case 'A':
+        case LEFT:
+            state.A_isPressed = bool;
+            return;
+
+        case 'D':
+        case RIGHT:
+            state.D_IsPressed = bool;
+            return;
+
+        default:
+            return;
         }
     }
 }

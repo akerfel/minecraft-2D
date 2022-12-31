@@ -1,75 +1,70 @@
 void keyPressed() {
-    
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
             state.player.inventory.addBlock(new Stone());
         }
     }
-    
+
     state.player.setMove(keyCode, true);
-    
+
     int numberKeyClicked = int(key) - 49;
     if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
         state.player.inventory.hotbarIndexSelected = numberKeyClicked;
     }
-    
+
     if (key == '+') {
         zoom(1);
-    }
-    else if (key == '-') {
+    } else if (key == '-') {
         zoom(-1);
     }
-    
+
     if (key == 'e') {
         if (state.inventoryIsOpen) {
             state.player.inventory.returnMouseGrabbedItemToInventory();
         }
         state.inventoryIsOpen = !state.inventoryIsOpen;
     }
-    
+
     if (key == '.') {
-        setViewDistance(settings.viewDistance - 2);   
+        setViewDistance(settings.viewDistance - 2);
     }
-    
+
     if (key == 'f') {
-        state.rightMouseButtonDown = true;   
+        state.rightMouseButtonDown = true;
     }
-    
-    // hacks
-    
+
     if (key == 'h') {
         cheats.canWalkThroughWalls = !cheats.canWalkThroughWalls;
         if (cheats.canWalkThroughWalls) {
-            println("Player can walk through walls");    
-        }
-        else {
-            println("Player can not walk through walls");    
+            println("Player can walk through walls");
+        } else {
+            println("Player can not walk through walls");
         }
     }
-    
+
     if (key == CODED) {
         if (keyCode == SHIFT) {
-            state.player.isRunning = true;    
+            state.player.isRunning = true;
         }
         if (keyCode == ALT) {
-            state.player.isRunningSuperSpeed = true;    
+            state.player.isRunningSuperSpeed = true;
         }
     }
 }
 
 void keyReleased() {
     state.player.setMove(keyCode, false);
-    
+
     if (key == 'f') {
-        state.rightMouseButtonDown = false;   
+        state.rightMouseButtonDown = false;
     }
-    
+
     if (key == CODED) {
         if (keyCode == SHIFT) {
-            state.player.isRunning = false;    
+            state.player.isRunning = false;
         }
         if (keyCode == ALT) {
-            state.player.isRunningSuperSpeed = false;    
+            state.player.isRunningSuperSpeed = false;
         }
     }
 }
@@ -77,8 +72,7 @@ void keyReleased() {
 void mousePressed() {
     if (mouseButton == RIGHT) {
         state.rightMouseButtonDown = true;
-    }
-    else if (mouseButton == LEFT) {
+    } else if (mouseButton == LEFT) {
         state.leftMouseButtonDown = true;
         if (state.inventoryIsOpen) {
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
@@ -98,8 +92,7 @@ void mousePressed() {
 void mouseReleased() {
     if (mouseButton == RIGHT) {
         state.rightMouseButtonDown = false;
-    }
-    else if (mouseButton == LEFT) {
+    } else if (mouseButton == LEFT) {
         state.leftMouseButtonDown = false;
     }
 }
@@ -114,23 +107,20 @@ void mouseWheel(MouseEvent event) {
         else {
             zoom(1);
         }
-    }
-    else {
+    } else {
         // Scroll up
         if (event.getCount() > 0) {
             state.player.inventory.hotbarIndexSelected++;
             if (state.player.inventory.hotbarIndexSelected >= settings.inventoryWidth) {
-                state.player.inventory.hotbarIndexSelected = 0;    
+                state.player.inventory.hotbarIndexSelected = 0;
             }
         }
         // Scroll down
         else {
             state.player.inventory.hotbarIndexSelected--;
             if (state.player.inventory.hotbarIndexSelected < 0) {
-                state.player.inventory.hotbarIndexSelected = settings.inventoryWidth - 1;    
+                state.player.inventory.hotbarIndexSelected = settings.inventoryWidth - 1;
             }
         }
     }
 }
-
- 

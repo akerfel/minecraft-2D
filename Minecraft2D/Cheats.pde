@@ -3,5 +3,5 @@ public class Cheats {
 }
 
 public void intializeCheats() {
-    cheats.canWalkThroughWalls = false;   
+    cheats.canWalkThroughWalls = false;
 }

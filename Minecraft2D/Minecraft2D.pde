@@ -1,12 +1,12 @@
 // Global variables
 Cheats cheats;
 Settings settings;
-State state;
+State state;            // Game state
 
 // This function is called once, at startup
 void setup() {
     size(1200, 1200);
-    
+
     // Initialize cheats, settings and state
     cheats = new Cheats();
     intializeCheats();
