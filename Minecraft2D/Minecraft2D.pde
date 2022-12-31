@@ -83,7 +83,7 @@ void setup() {
     setPlayerBlock(new Grass());
     inventoryIsOpen = false;
 
-    // Adding some items to the hotbar
+    // Adding some items to inventory
     player.inventory.addItemToInventory(new Tool("iron", "sword"));
     player.inventory.addItemToInventory(new Tool("diamond", "pick"));
     player.inventory.addItemToInventory(new Tool("stone", "shovel"));
@@ -92,14 +92,7 @@ void setup() {
     player.inventory.addItemToInventory(new Sand());
     player.inventory.addItemToInventory(new Wood());
     player.inventory.addItemToInventory(new Planks());
-    player.inventory.addItemToInventory(new Grass());
     player.inventory.addItemToInventory(new Leaves());
-    
-    // Adding some items to the inventory
-    //player.addItemToInventory(new Tool("iron", "sword"), 1, 2);
-    //player.addItemToInventory(new Dirt(), 3, 0);
-    //player.addItemToInventory(new Dirt(), 3, 0);
-    //player.addItemToInventory(new Dirt(), 3, 0);
 }
 
 // This function is called 60 times per second

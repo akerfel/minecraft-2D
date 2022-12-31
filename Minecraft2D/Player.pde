@@ -6,7 +6,7 @@ public class Player {
     boolean isRunning;
     boolean isRunningSuperSpeed;
     float runningFactor;                    // 1.5 gives 50% speed increase when running
-    float usainBoltRunningFactor;           // 1.5 gives 50% speed increase when running
+    float superSpeedFactor;                 // 1.5 gives 50% speed increase when running
     public Player(float x, float y) {
         inventory = new Inventory();
         coords = new PVector(x, y);
@@ -14,8 +14,8 @@ public class Player {
         reach = 7;
         isRunning = false;
         isRunningSuperSpeed = false;
-        runningFactor = 1.5;
-        usainBoltRunningFactor = 200;
+        runningFactor = 2;
+        superSpeedFactor = 200;
     }
     
     void move() {
@@ -24,7 +24,7 @@ public class Player {
             v *= runningFactor; 
         }
         if (isRunningSuperSpeed) {
-            v *= usainBoltRunningFactor;
+            v *= superSpeedFactor;
         }
         if (getPlayerBlock().stringID.equals("water")) {
             v *= 0.5;
