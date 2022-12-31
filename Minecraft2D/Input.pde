@@ -21,7 +21,7 @@ void keyPressed() {
     }
     
     if (key == 'e') {
-        inventoryIsShowing = !inventoryIsShowing;    
+        inventoryIsOpen = !inventoryIsOpen;    
     }
     
     if (key == '.') {
@@ -104,7 +104,7 @@ void mouseWheel(MouseEvent event) {
         // Scroll up
         if (event.getCount() > 0) {
             player.hotbarIndexSelected++;
-            if (player.hotbarIndexSelected >= player.hotbar.length) {
+            if (player.hotbarIndexSelected >= inventoryWidth) {
                 player.hotbarIndexSelected = 0;    
             }
         }
@@ -112,7 +112,7 @@ void mouseWheel(MouseEvent event) {
         else {
             player.hotbarIndexSelected--;
             if (player.hotbarIndexSelected < 0) {
-                player.hotbarIndexSelected = player.hotbar.length - 1;    
+                player.hotbarIndexSelected = inventoryWidth - 1;    
             }
         }
     }

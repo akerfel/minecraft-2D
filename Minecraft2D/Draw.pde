@@ -14,7 +14,7 @@ void drawFPS() {
 }
 
 void drawInventory() {
-    if (inventoryIsShowing) {
+    if (inventoryIsOpen) {
         stroke(0);
         rectMode(CENTER);
         for (int y = 0; y < inventoryHeight; y++) {
@@ -134,15 +134,17 @@ void drawPlayer() {
 }
 
 void drawHotbar() {
-    stroke(0);
-    rectMode(CENTER);
-    for (int i = 0; i < 9; i++) {
-        drawItemSlotInHotbar(i);
-        
-    }
-    rectMode(CORNER);
-    if (noStrokeMode) {
-        noStroke();   
+    if (!inventoryIsOpen) {
+        stroke(0);
+        rectMode(CENTER);
+        for (int i = 0; i < 9; i++) {
+            drawItemSlotInHotbar(i);
+            
+        }
+        rectMode(CORNER);
+        if (noStrokeMode) {
+            noStroke();   
+        }
     }
 }
 
@@ -160,8 +162,8 @@ void drawItemSlotInHotbar(int hotbarIndex) {
 }
 
 void drawItemInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
-    Item item = player.hotbar[hotbarIndex].item;
-    if (!(player.hotbar[hotbarIndex].amount == 0)) {
+    Item item = player.getHotbarSlot(hotbarIndex).item;
+    if (!(player.getHotbarSlot(hotbarIndex).amount == 0)) {
         switch (item.type) {
             case "block":
                 drawBlockInHotbar(x, y, hotbarIndex, pixelsPerItemSlot);
@@ -174,7 +176,7 @@ void drawItemInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
 }
 
 void drawBlockInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
-    Block block = (Block) player.hotbar[hotbarIndex].item;
+    Block block = (Block) player.getHotbarSlot(hotbarIndex).item;
     
     // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
     fill(block.c);
@@ -184,11 +186,11 @@ void drawBlockInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
     textSize(24);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(player.hotbar[hotbarIndex].amount, x, height);
+    text(player.getHotbarSlot(hotbarIndex).amount, x, height);
 }
 
 void drawToolInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
-    Tool tool = (Tool) player.hotbar[hotbarIndex].item;
+    Tool tool = (Tool) player.getHotbarSlot(hotbarIndex).item;
     
     fill(tool.c);
     circle(x, y, pixelsPerItemSlot / 2);
