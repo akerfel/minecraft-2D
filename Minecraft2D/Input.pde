@@ -90,7 +90,7 @@ void mouseReleased() {
 }
 
 void mouseWheel(MouseEvent event) {
-    if (keyPressed && key == 'z') {
+    if (keyPressed && key == 't') {
         // Scroll up
         if (event.getCount() > 0) {
             zoom(-1);
