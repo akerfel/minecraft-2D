@@ -1,7 +1,7 @@
 // Global variables
 Cheats cheats;
 Settings settings;
-State state;            // Game state
+State state;
 
 // This function is called once, at startup
 void setup() {
