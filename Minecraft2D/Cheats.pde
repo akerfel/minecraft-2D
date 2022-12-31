@@ -1,5 +1,7 @@
-boolean cheatWalkThroughWalls;
-
-void initializeCheats() {
-    cheatWalkThroughWalls = false;
+public static class Cheats {
+    static boolean canWalkThroughWalls;
+    
+    public Cheats() {
+        canWalkThroughWalls = false;
+    }
 }

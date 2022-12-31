@@ -1,7 +1,10 @@
+// Global variables
+Cheats cheats;
+
 // This function is called once, at startup
 void setup() {
     size(1200, 1200);
-    initializeCheats();
+    cheats = new Cheats();
     intializeSettings();
     intializeGameState();
 }

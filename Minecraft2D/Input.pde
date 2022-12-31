@@ -38,8 +38,8 @@ void keyPressed() {
     // hacks
     
     if (key == 'h') {
-        cheatWalkThroughWalls = !cheatWalkThroughWalls;
-        if (cheatWalkThroughWalls) {
+        Cheats.canWalkThroughWalls = !Cheats.canWalkThroughWalls;
+        if (Cheats.canWalkThroughWalls) {
             println("Player can walk through walls");    
         }
         else {
