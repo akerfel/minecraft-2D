@@ -21,7 +21,7 @@ void keyPressed() {
     }
     
     if (key == 'e') {
-        inventoryShowing = !inventoryShowing;    
+        inventoryIsShowing = !inventoryIsShowing;    
     }
     
     if (key == '.') {
@@ -49,7 +49,7 @@ void keyPressed() {
             player.isRunning = true;    
         }
         if (keyCode == ALT) {
-            player.isRunningLikeUsainBolt = true;    
+            player.isRunningSuperSpeed = true;    
         }
     }
 }
@@ -66,7 +66,7 @@ void keyReleased() {
             player.isRunning = false;    
         }
         if (keyCode == ALT) {
-            player.isRunningLikeUsainBolt = false;    
+            player.isRunningSuperSpeed = false;    
         }
     }
 }
@@ -90,7 +90,7 @@ void mouseReleased() {
 }
 
 void mouseWheel(MouseEvent event) {
-    if (keyPressed && key == CODED && keyCode == CONTROL) {
+    if (keyPressed && key == 'z') {
         // Scroll up
         if (event.getCount() > 0) {
             zoom(-1);
@@ -103,7 +103,6 @@ void mouseWheel(MouseEvent event) {
     else {
         // Scroll up
         if (event.getCount() > 0) {
-            //zoom(-1);
             player.hotbarIndexSelected++;
             if (player.hotbarIndexSelected >= player.hotbar.length) {
                 player.hotbarIndexSelected = 0;    
@@ -111,7 +110,6 @@ void mouseWheel(MouseEvent event) {
         }
         // Scroll down
         else {
-            //zoom(1);
             player.hotbarIndexSelected--;
             if (player.hotbarIndexSelected < 0) {
                 player.hotbarIndexSelected = player.hotbar.length - 1;    

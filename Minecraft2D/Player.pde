@@ -1,24 +1,24 @@
-// Movement code mostly taken from http://studio.processingtogether.com/sp/pad/export/ro.91tcpPtI9LrXp
-
 public class Player {
     PVector coords;
     int reach;
     float speed;
     boolean isRunning;
-    boolean isRunningLikeUsainBolt;
+    boolean isRunningSuperSpeed;
     float runningFactor;    // 1.5 gives 50% speed increase when running
     float usainBoltRunningFactor;    // 1.5 gives 50% speed increase when running
     boolean isLeft, isRight, isUp, isDown;
     int hotbarIndexSelected;
+    
     ItemSlot[] hotbar;
     ItemSlot[] craftingGrid;
+    ItemSlot[][] inventory;
     
     public Player(float x, float y) {
         coords = new PVector(x, y);
         speed = 0.1;
         reach = 7;
         isRunning = false;
-        isRunningLikeUsainBolt = false;
+        isRunningSuperSpeed = false;
         runningFactor = 1.5;
         usainBoltRunningFactor = 200;
         hotbarIndexSelected = 0;
@@ -26,6 +26,8 @@ public class Player {
         setHotbarEmpty();
         craftingGrid = new ItemSlot[4];
         setCraftingGridEmpty();
+        inventory = new ItemSlot[inventoryWidth][inventoryHeight];
+        setInventoryEmpty();
     }
     
     Item getHeldItem() {
@@ -36,6 +38,7 @@ public class Player {
         return getHeldItem() instanceof Tool;
     }
     
+    // Add item to some empty inventory slot
     void addItemToInventory(Item item) {
         if (item.type.equals("block")) {
             addBlockToInventory((Block) item);
@@ -45,24 +48,55 @@ public class Player {
         }
     }
     
+    // Add item to a specified inventory slot
+    void addItemToInventory(Item item, int x, int y) {
+        if (item.type.equals("block")) {
+            addBlockToInventory((Block) item, x, y);
+        }
+        if (item.type.equals("tool")) {
+            addToolToInventory((Tool) item, x, y);    
+        }
+    }
+    
+    // Add tool to some empty inventory slot
     void addToolToInventory(Tool tool) {
+        // TODO: should also check for inventory spaces
         for (int i = 0; i < 9; i++) {
             if (hotbar[i].amount == 0) {
                 hotbar[i].item = tool;
                 hotbar[i].amount = 1;
-                break;
+                return;
             }
         }
     }
     
+    // Add tool to a specified inventory slot
+    void addToolToInventory(Tool tool, int x, int y) {
+        inventory[x][y].item = tool;
+        inventory[x][y].amount = 1;
+    }
+    
+    // Add block to some empty inventory slot
     void addBlockToInventory(Block block) {
+        // TODO: should also check for inventory spaces
         boolean foundInInventory = tryAddBlockToExistingStack(block);
         if (!foundInInventory) {
             putBlockInEmptyCell(block);
         }
     }
     
+    // Add block to a specified inventory slot
+    void addBlockToInventory(Block block, int x, int y) {
+        if (inventory[x][y].toString().equals(block.toString()) && inventory[x][y].amount < 64) {
+            inventory[x][y].incrementItemAmount();
+        }
+        else {
+            putBlockInEmptyCell(block, x, y);
+        }
+    }
+    
     private boolean tryAddBlockToExistingStack(Block block) {
+        // TODO: should also check for inventory spaces
         boolean foundInInventory = false;
         for (int i = 0; i < 9; i++) {
             if (hotbar[i].toString().equals(block.toString()) && hotbar[i].amount < 64) {
@@ -74,14 +108,24 @@ public class Player {
         return foundInInventory;
     }
     
+    // Put block in some empty cell
     private void putBlockInEmptyCell(Block block) {
+        // TODO: should also check for inventory spaces
         for (int i = 0; i < 9; i++) {
-                if (hotbar[i].amount == 0) {
-                    hotbar[i].item = block;
-                    hotbar[i].amount = 1;
-                    break;
-                }
-            }     
+            if (hotbar[i].amount == 0) {
+                hotbar[i].item = block;
+                hotbar[i].amount = 1;
+                break;
+            }
+        }     
+    }
+    
+    // Put block in a specified cell
+    private void putBlockInEmptyCell(Block block, int x, int y) {
+        if (inventory[x][y].amount == 0) {
+            inventory[x][y].item = block;
+            inventory[x][y].amount = 1;
+        }
     }
     
     void setHotbarEmpty() {
@@ -96,12 +140,20 @@ public class Player {
         }
     }
     
+    void setInventoryEmpty() {
+        for (int y = 0; y < inventoryHeight; y++) {
+            for (int x = 0; x < inventoryWidth; x++) {
+                inventory[x][y] = new ItemSlot();
+            }
+        }
+    }
+    
     void move() {
         float v = speed;
         if (isRunning) {
             v *= runningFactor; 
         }
-        if (isRunningLikeUsainBolt) {
+        if (isRunningSuperSpeed) {
             v *= usainBoltRunningFactor;
         }
         if (getPlayerBlock().stringID.equals("water")) {

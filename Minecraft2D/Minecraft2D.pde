@@ -22,6 +22,8 @@ int mobDespawnRange;    // In blocks
 int viewDistance;
 boolean noStrokeMode;    // Setting this to false HALVES FPS (!), and makes things uglier. Keep it at true.
 int pixelsPerItemSlot;
+int inventoryWidth;
+int inventoryHeight;
 
 // Other
 HashMap<PVector, Chunk> generatedChunks;
@@ -31,7 +33,7 @@ ArrayList<Mob> mobs;
 ArrayList<Block> damagedBlocks;
 boolean rightMouseButtonDown;
 boolean leftMouseButtonDown;
-boolean inventoryShowing;
+boolean inventoryIsShowing;
 
 void setup() {
     size(1200, 1200);
@@ -55,10 +57,11 @@ void setup() {
     mobSpawnRange = 50;
     mobDespawnRange = 100;
     viewDistance = 250;
-    
     noStrokeMode = true;
     settingsSetup();
     pixelsPerItemSlot = 60;
+    inventoryWidth = 9;
+    inventoryHeight = 3;
     
 
     // Other
@@ -72,13 +75,19 @@ void setup() {
     rightMouseButtonDown = false;
     leftMouseButtonDown = false;
     setPlayerBlock(new Grass());
-    inventoryShowing = false;
+    inventoryIsShowing = false;
 
-    // Testing atm
+    // Adding some items to the hotbar
     player.addItemToInventory(new Tool("iron", "sword"));
     player.addItemToInventory(new Tool("diamond", "pick"));
     player.addItemToInventory(new Tool("stone", "shovel"));
     player.addItemToInventory(new Tool("diamond", "axe"));
+    
+    // Adding some items to the inventory
+    player.addItemToInventory(new Tool("iron", "sword"), 1, 2);
+    player.addItemToInventory(new Dirt(), 3, 0);
+    player.addItemToInventory(new Dirt(), 3, 0);
+    player.addItemToInventory(new Dirt(), 3, 0);
 }
 
 void draw() {
