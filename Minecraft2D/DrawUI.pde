@@ -119,7 +119,6 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     fill(tool.c);
     circle(xPixel, yPixel, pixelsPerItemSlot / 2);
     
-    // Write tool name (temporary solution, until specific images for tools are added) 
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);

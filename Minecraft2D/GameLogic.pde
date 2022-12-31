@@ -166,6 +166,7 @@ Block getMouseBlock() {
 // Note that this is not the same as player.mouseItemSlot
 ItemSlot getInventorySlotWhichMouseHovers() {
     if (inventoryIsOpen) {
+        if (mouseX < inventoryUpperLeftXPixel || mouseY < inventoryUpperLeftYPixel) return null;
         int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
         int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
         if (inventoryXindex < 0 || inventoryXindex >= inventoryWidth || inventoryYindex < 0 || inventoryYindex >= inventoryHeight) {

@@ -79,14 +79,14 @@ void mousePressed() {
         leftMouseButtonDown = true;
         
         if (inventoryIsOpen) {
-            ItemSlot currentMouseHeldItemSlot = player.inventory.mouseHeldItemSlot;
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
-            
-            int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
-            int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
-            
-            player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
-            player.inventory.mouseHeldItemSlot = clickedItemSlot;
+            if (clickedItemSlot != null) {
+                ItemSlot currentMouseHeldItemSlot = player.inventory.mouseHeldItemSlot;
+                int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
+                int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
+                player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
+                player.inventory.mouseHeldItemSlot = clickedItemSlot;
+            }
         }
     }
 }
