@@ -2,7 +2,7 @@ void keyPressed() {
     
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
-            player.addBlockToInventory(new Stone());
+            player.inventory.addBlockToInventory(new Stone());
         }
     }
     
@@ -10,7 +10,7 @@ void keyPressed() {
     
     int numberKeyClicked = int(key) - 49;
     if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
-        player.hotbarIndexSelected = numberKeyClicked;
+        player.inventory.hotbarIndexSelected = numberKeyClicked;
     }
     
     if (key == '+') {
@@ -79,14 +79,14 @@ void mousePressed() {
         leftMouseButtonDown = true;
         
         if (inventoryIsOpen) {
-            ItemSlot currentMouseHeldItemSlot = player.mouseHeldItemSlot;
+            ItemSlot currentMouseHeldItemSlot = player.inventory.mouseHeldItemSlot;
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
             
             int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
             int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
             
-            player.inventory[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
-            player.mouseHeldItemSlot = clickedItemSlot;
+            player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
+            player.inventory.mouseHeldItemSlot = clickedItemSlot;
         }
     }
 }
@@ -114,16 +114,16 @@ void mouseWheel(MouseEvent event) {
     else {
         // Scroll up
         if (event.getCount() > 0) {
-            player.hotbarIndexSelected++;
-            if (player.hotbarIndexSelected >= inventoryWidth) {
-                player.hotbarIndexSelected = 0;    
+            player.inventory.hotbarIndexSelected++;
+            if (player.inventory.hotbarIndexSelected >= inventoryWidth) {
+                player.inventory.hotbarIndexSelected = 0;    
             }
         }
         // Scroll down
         else {
-            player.hotbarIndexSelected--;
-            if (player.hotbarIndexSelected < 0) {
-                player.hotbarIndexSelected = inventoryWidth - 1;    
+            player.inventory.hotbarIndexSelected--;
+            if (player.inventory.hotbarIndexSelected < 0) {
+                player.inventory.hotbarIndexSelected = inventoryWidth - 1;    
             }
         }
     }

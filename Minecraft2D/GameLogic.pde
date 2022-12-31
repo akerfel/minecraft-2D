@@ -107,7 +107,7 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlocksWithMouse() {
     if (rightMouseButtonDown) {
-        ItemSlot cell = player.getHotbarSlot(player.hotbarIndexSelected);
+        ItemSlot cell = player.inventory.getHotbarSlot(player.inventory.hotbarIndexSelected);
         if (cell.item.type.equals("block")) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
@@ -146,7 +146,7 @@ void mineBlocksWithMouse() {
         Block mouseBlock = getMouseBlock();
         if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < player.reach) {
             if (mouseBlock.prcntBroken >= 1) {
-                player.addBlockToInventory(mouseBlock);
+                player.inventory.addBlockToInventory(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
             }
             else {
@@ -171,10 +171,10 @@ ItemSlot getInventorySlotWhichMouseHovers() {
         if (inventoryXindex < 0 || inventoryXindex >= inventoryWidth || inventoryYindex < 0 || inventoryYindex >= inventoryHeight) {
             return null;    
         }
-        if (player.inventory[inventoryXindex][inventoryYindex].item != null) {
-            System.out.println("Grabbed item: " + (player.inventory[inventoryXindex][inventoryYindex].item));
+        if (player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
+            System.out.println("Grabbed item: " + (player.inventory.grid[inventoryXindex][inventoryYindex].item));
         }
-        return player.inventory[inventoryXindex][inventoryYindex];
+        return player.inventory.grid[inventoryXindex][inventoryYindex];
     }
     return null;
 }

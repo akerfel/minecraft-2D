@@ -1,4 +1,5 @@
 public class Player {
+    Inventory inventory;
     PVector coords;
     int reach;
     float speed;
@@ -6,15 +7,8 @@ public class Player {
     boolean isRunningSuperSpeed;
     float runningFactor;                    // 1.5 gives 50% speed increase when running
     float usainBoltRunningFactor;           // 1.5 gives 50% speed increase when running
-    boolean isLeft, isRight, isUp, isDown;
-    
-    // Inventory
-    int hotbarIndexSelected;
-    ItemSlot[] craftingGrid;
-    ItemSlot[][] inventory;                 // The hotbar is the last row in the inventory
-    ItemSlot mouseHeldItemSlot;             // An itemSlot which is held by the mouse in the inventory (e.g. when reorganizing the inventory)
-    
     public Player(float x, float y) {
+        inventory = new Inventory();
         coords = new PVector(x, y);
         speed = 0.1;
         reach = 7;
@@ -22,132 +16,6 @@ public class Player {
         isRunningSuperSpeed = false;
         runningFactor = 1.5;
         usainBoltRunningFactor = 200;
-        
-        // Inventory
-        hotbarIndexSelected = 0;
-        craftingGrid = new ItemSlot[4];
-        setCraftingGridEmpty();
-        inventory = new ItemSlot[inventoryWidth][inventoryHeight];
-        setInventoryEmpty();
-        mouseHeldItemSlot = new ItemSlot();
-    }
-    
-    Item getHeldItem() {
-        return getHotbarSlot(hotbarIndexSelected).item;
-    }
-    
-    public boolean isHoldingTool() {
-        return getHeldItem() instanceof Tool;
-    }
-    
-    // Add item to some empty inventory slot
-    void addItemToInventory(Item item) {
-        if (item.type.equals("block")) {
-            addBlockToInventory((Block) item);
-        }
-        if (item.type.equals("tool")) {
-            addToolToInventory((Tool) item);    
-        }
-    }
-    
-    // Add item to a specified inventory slot
-    void addItemToInventory(Item item, int x, int y) {
-        if (item.type.equals("block")) {
-            addBlockToInventory((Block) item, x, y);
-        }
-        if (item.type.equals("tool")) {
-            addToolToInventory((Tool) item, x, y);    
-        }
-    }
-    
-    // Add tool to some empty inventory slot
-    void addToolToInventory(Tool tool) {
-        for (int y = inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < inventoryWidth; x++) {
-                if (inventory[x][y].amount == 0) {
-                    inventory[x][y].item = tool;
-                    inventory[x][y].amount = 1;
-                    return;
-                }
-            }
-        }
-    }
-    
-    // Add tool to a specified inventory slot
-    void addToolToInventory(Tool tool, int x, int y) {
-        inventory[x][y].item = tool;
-        inventory[x][y].amount = 1;
-    }
-    
-    // Add block to some empty inventory slot
-    void addBlockToInventory(Block block) {
-        boolean foundInInventory = tryAddBlockToExistingStack(block);
-        if (!foundInInventory) {
-            putBlockInEmptyCell(block);
-        }
-    }
-    
-    // Add block to a specified inventory slot
-    void addBlockToInventory(Block block, int x, int y) {
-        if (inventory[x][y].toString().equals(block.toString()) && inventory[x][y].amount < 64) {
-            inventory[x][y].incrementItemAmount();
-        }
-        else {
-            putBlockInEmptyCell(block, x, y);
-        }
-    }
-
-    private ItemSlot getHotbarSlot(int x) {
-        return inventory[x][inventoryHeight - 1];
-    }
-    
-    // Returns true if found in inventory (and added to that stack)
-    private boolean tryAddBlockToExistingStack(Block block) {
-        for (int y = inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < inventoryWidth; x++) {
-                if (inventory[x][y].toString().equals(block.toString()) && inventory[x][y].amount < 64) {
-                    inventory[x][y].incrementItemAmount();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    // Put block in some empty cell
-    private void putBlockInEmptyCell(Block block) {
-        // TODO: should also check for inventory spaces
-        for (int y = inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < inventoryWidth; x++) {
-                if (inventory[x][y].amount == 0) {
-                    inventory[x][y].item = block;
-                    inventory[x][y].amount = 1;
-                    return;
-                }
-            }
-        }     
-    }
-    
-    // Put block in a specified cell
-    private void putBlockInEmptyCell(Block block, int x, int y) {
-        if (inventory[x][y].amount == 0) {
-            inventory[x][y].item = block;
-            inventory[x][y].amount = 1;
-        }
-    }
-    
-    void setCraftingGridEmpty() {
-        for (int i = 0; i < 4; i++) {
-            craftingGrid[i] = new ItemSlot();
-        }
-    }
-    
-    void setInventoryEmpty() {
-        for (int y = 0; y < inventoryHeight; y++) {
-            for (int x = 0; x < inventoryWidth; x++) {
-                inventory[x][y] = new ItemSlot();
-            }
-        }
     }
     
     void move() {
@@ -167,8 +35,8 @@ public class Player {
         float yPrevious = coords.y;
         
         // Change coords
-        coords.x += v*(int(isRight) - int(isLeft));
-        coords.y += v*(int(isDown)  - int(isUp));
+        coords.x += v*(int(D_IsPressed) - int(A_isPressed));
+        coords.y += v*(int(S_isPressed)  - int(W_isPressed));
         // If new coords are inside wall, go back to old coords
         float playerWidthInBlocks = playerWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
         
@@ -183,26 +51,30 @@ public class Player {
         }
     }
     
-    boolean setMove(final int k, final boolean b) {
-        switch (k) {
-            case +'W':
+    void setMove(final int keyWhichWasPressed, final boolean bool) {
+        switch (keyWhichWasPressed) {
+            case 'W':
             case UP:
-                  return isUp = b;
+                  W_isPressed = bool;
+                  return;
          
-            case +'S':
+            case 'S':
             case DOWN:
-                  return isDown = b;
+                  S_isPressed = bool;
+                  return;
          
-            case +'A':
+            case 'A':
             case LEFT:
-                  return isLeft = b;
+                  A_isPressed = bool;
+                  return;
          
-            case +'D':
+            case 'D':
             case RIGHT:
-                  return isRight = b;
+                  D_IsPressed = bool;
+                  return;
          
             default:
-                  return b;
+                  return;
         }
     }
 }

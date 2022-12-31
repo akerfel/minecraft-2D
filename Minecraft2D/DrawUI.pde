@@ -14,7 +14,7 @@ void drawInventoryIfOpen() {
         stroke(0);
         for (int y = 0; y < inventoryHeight; y++) {
             for (int x = 0; x < inventoryWidth; x++) {
-                ItemSlot itemSlot = player.inventory[x][y];
+                ItemSlot itemSlot = player.inventory.grid[x][y];
                 int xPixel = inventoryUpperLeftXPixel + x * pixelsPerItemSlot;
                 int yPixel = inventoryUpperLeftYPixel + y * pixelsPerItemSlot;
                 drawItemSlot(itemSlot, xPixel, yPixel, false);
@@ -33,9 +33,9 @@ void drawHotbar() {
     int yPixel = height - pixelsPerItemSlot;
     for (int x = 0; x < inventoryWidth; x++) {
         int xPixel = inventoryUpperLeftXPixel + x * pixelsPerItemSlot;
-        ItemSlot itemSlot = player.getHotbarSlot(x);
+        ItemSlot itemSlot = player.inventory.getHotbarSlot(x);
         boolean highlightBackground = false;
-        if (x == player.hotbarIndexSelected) {
+        if (x == player.inventory.hotbarIndexSelected) {
             highlightBackground = true;
         }
         drawItemSlot(itemSlot, xPixel, yPixel, highlightBackground);
@@ -47,8 +47,8 @@ void drawHotbar() {
 
 void drawMouseItemSlot() {
     stroke(0);
-    if (player.mouseHeldItemSlot.amount != 0) {
-        drawItemInItemSlot(player.mouseHeldItemSlot, mouseX, mouseY);
+    if (player.inventory.mouseHeldItemSlot.amount != 0) {
+        drawItemInItemSlot(player.inventory.mouseHeldItemSlot, mouseX, mouseY);
     }
     if (noStrokeMode) {
         noStroke();   

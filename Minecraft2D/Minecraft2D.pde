@@ -35,6 +35,7 @@ ArrayList<Mob> mobs;
 ArrayList<Block> damagedBlocks;
 boolean rightMouseButtonDown;
 boolean leftMouseButtonDown;
+boolean A_isPressed, D_IsPressed, W_isPressed, S_isPressed;
 boolean inventoryIsOpen;
 
 // This function is called once, at startup
@@ -83,16 +84,16 @@ void setup() {
     inventoryIsOpen = false;
 
     // Adding some items to the hotbar
-    player.addItemToInventory(new Tool("iron", "sword"));
-    player.addItemToInventory(new Tool("diamond", "pick"));
-    player.addItemToInventory(new Tool("stone", "shovel"));
-    player.addItemToInventory(new Tool("diamond", "axe"));
-    player.addItemToInventory(new Dirt());
-    player.addItemToInventory(new Sand());
-    player.addItemToInventory(new Wood());
-    player.addItemToInventory(new Planks());
-    player.addItemToInventory(new Grass());
-    player.addItemToInventory(new Leaves());
+    player.inventory.addItemToInventory(new Tool("iron", "sword"));
+    player.inventory.addItemToInventory(new Tool("diamond", "pick"));
+    player.inventory.addItemToInventory(new Tool("stone", "shovel"));
+    player.inventory.addItemToInventory(new Tool("diamond", "axe"));
+    player.inventory.addItemToInventory(new Dirt());
+    player.inventory.addItemToInventory(new Sand());
+    player.inventory.addItemToInventory(new Wood());
+    player.inventory.addItemToInventory(new Planks());
+    player.inventory.addItemToInventory(new Grass());
+    player.inventory.addItemToInventory(new Leaves());
     
     // Adding some items to the inventory
     //player.addItemToInventory(new Tool("iron", "sword"), 1, 2);
