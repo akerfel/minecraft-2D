@@ -14,7 +14,7 @@ float baseChanceTree;
 float chanceRiver;
 float chanceForestChunk;
 float chanceBigTreesChunk;
-int gameSeed;
+int worldSeed;
 float mobSpawnChance;    // Chance each frame, so should be pretty low
 int maxMobs;
 int mobSpawnRange;    // In blocks
@@ -48,7 +48,8 @@ void setup() {
     chanceRiver = 0.00004;
     chanceForestChunk = 0.17;
     chanceBigTreesChunk = 0.20;
-    gameSeed = int(random(0, 100000000));
+    worldSeed = int(random(0, 100000000));
+    println("worldSeed: " + worldSeed);
     mobSpawnChance = 0.01;
     maxMobs = 30;
     mobSpawnRange = 50;

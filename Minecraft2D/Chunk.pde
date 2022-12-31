@@ -8,7 +8,7 @@ public class Chunk {
     
     public Chunk(PVector coords) {
         blocks = new Block[blocksPerChunk][blocksPerChunk];
-        long chunkSeed = gameSeed + int(coords.x) + int(coords.y) * 1000;
+        long chunkSeed = worldSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);
 
         // Place grass and stone 
