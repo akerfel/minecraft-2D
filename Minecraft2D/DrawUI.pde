@@ -1,6 +1,6 @@
 void drawUI() {
+    drawInventoryIfOpen();
     drawHotbar();
-    drawInventory();
     drawFPS();    
 }
 
@@ -9,13 +9,16 @@ void drawFPS() {
   text(int(frameRate), 20, 30); 
 }
 
-void drawInventory() {
+void drawInventoryIfOpen() {
     if (inventoryIsOpen) {
         stroke(0);
         rectMode(CENTER);
         for (int y = 0; y < inventoryHeight; y++) {
             for (int x = 0; x < inventoryWidth; x++) {
-                drawItemSlotInInventory(x, y);
+                ItemSlot itemSlot = player.inventory[x][y];
+                int xPixel = width / 2 + (x - 4) * pixelsPerItemSlot;
+                int yPixel = height / 2 + (y - inventoryHeight / 2) * pixelsPerItemSlot;
+                drawItemSlot(itemSlot, xPixel, yPixel, false);
             }
         }
         rectMode(CORNER);
@@ -25,121 +28,78 @@ void drawInventory() {
     }
 }
 
-void drawItemSlotInInventory(int xIndex, int yIndex) {
-    fill(150, 150, 150);
-    int x = width/2 + (xIndex - 4) * pixelsPerItemSlot;
-    int y = height / 3 + yIndex * pixelsPerItemSlot;
-    square(x, y, pixelsPerItemSlot);
-    drawItemInInventory(x, y, xIndex, yIndex, pixelsPerItemSlot);
-}
-
-void drawItemInInventory(int x, int y, int xIndex, int yIndex, int pixelsPerItemSlot) {
-    Item item = player.inventory[xIndex][yIndex].item;
-    if (!(player.inventory[xIndex][yIndex].amount == 0)) {
-        switch (item.type) {
-            case "block":
-                drawBlockInInventory(x, y, xIndex, yIndex, pixelsPerItemSlot);
-                break;
-            case "tool":
-                drawToolInInventory(x, y, xIndex, yIndex, pixelsPerItemSlot);
-                break;
-        }  
+// This function is similar to drawInventoryIfOpen, except the y coordinate is fixed,
+// and the currently selected hotbar slot will be highlighted.
+void drawHotbar() {
+    stroke(0);
+    rectMode(CENTER);
+    int yPixel = height - pixelsPerItemSlot / 2;
+    for (int x = 0; x < inventoryWidth; x++) {
+        int xPixel = width / 2 + (x - 4) * pixelsPerItemSlot;
+        ItemSlot itemSlot = player.getHotbarSlot(x);
+        boolean highlightBackground = false;
+        if (x == player.hotbarIndexSelected) {
+            highlightBackground = true;
+        }
+        drawItemSlot(itemSlot, xPixel, yPixel, highlightBackground);
+    }
+    rectMode(CORNER);
+    if (noStrokeMode) {
+        noStroke();   
     }
 }
 
-void drawBlockInInventory(int x, int y, int xIndex, int yIndex, int pixelsPerItemSlot) {
-    Block block = (Block) player.inventory[xIndex][yIndex].item;
+// Draws an itemSlot with center at (xPixel, yPixel)
+void drawItemSlot(ItemSlot itemSlot, int xPixel, int yPixel, boolean highlightBackground) {
+    drawItemSlotBackground(xPixel, yPixel, highlightBackground);
+    drawItemInItemSlot(itemSlot, xPixel, yPixel);
+}
+
+void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground) {
+    fill(150, 150, 150);    
+    if (highlightBackground) {
+        fill(210, 210, 210);
+    }
+    square(xPixel, yPixel, pixelsPerItemSlot);    
+}
+
+void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    Item item = itemSlot.item;
+    if (itemSlot.amount != 0) {
+        switch (item.type) {
+            case "block":
+                drawBlockInItemSlot(itemSlot, xPixel, yPixel);
+                break;
+            case "tool":
+                drawToolInItemSlot(itemSlot, xPixel, yPixel);
+                break;
+        }
+    }
+}
+
+void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    Block block = (Block) itemSlot.item;
     
     // Can not call drawBlock() function here, because that ones size changes with pixelsPerBlock
     fill(block.c);
-    square(x, y, pixelsPerItemSlot / 2);
+    square(xPixel, yPixel, pixelsPerItemSlot / 2);
     
-    // Draw amount (text)
+    // Write amount
     textSize(24);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(player.inventory[xIndex][yIndex].amount, x, y + pixelsPerItemSlot / 2);
+    text(itemSlot.amount, xPixel, yPixel + pixelsPerItemSlot / 2);
 }
 
-void drawToolInInventory(int x, int y, int xIndex, int yIndex, int pixelsPerItemSlot) {
-    Tool tool = (Tool) player.inventory[xIndex][yIndex].item;
+void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    Tool tool = (Tool) itemSlot.item;
     
     fill(tool.c);
-    circle(x, y, pixelsPerItemSlot / 2);
+    circle(xPixel, yPixel, pixelsPerItemSlot / 2);
     
-    // Draw letter for tool type (Temporary solution, before I add specific images for tools) 
+    // Write tool name (temporary solution, until specific images for tools are added) 
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(tool.toolType, x, y + pixelsPerItemSlot / 2);
-}
-
-
-void drawItemSlotInHotbar(int hotbarIndex) {
-    if (hotbarIndex == player.hotbarIndexSelected) {
-        fill(210, 210, 210);
-    }
-    else {
-        fill(150, 150, 150);
-    }
-    int x = width/2 + (hotbarIndex - 4) * pixelsPerItemSlot;
-    int y = height - pixelsPerItemSlot / 2;
-    square(x, y, pixelsPerItemSlot);
-    drawItemInHotbar(x, y, hotbarIndex, pixelsPerItemSlot);    
-}
-
-void drawItemInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
-    Item item = player.getHotbarSlot(hotbarIndex).item;
-    if (!(player.getHotbarSlot(hotbarIndex).amount == 0)) {
-        switch (item.type) {
-            case "block":
-                drawBlockInHotbar(x, y, hotbarIndex, pixelsPerItemSlot);
-                break;
-            case "tool":
-                drawToolInHotbar(x, y, hotbarIndex, pixelsPerItemSlot);
-                break;
-        }  
-    }
-}
-
-void drawBlockInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
-    Block block = (Block) player.getHotbarSlot(hotbarIndex).item;
-    
-    // Can not call drawBlock() here, because the block size in that function depends on pixelsPerBlock
-    fill(block.c);
-    square(x, y, pixelsPerItemSlot / 2);
-    
-    // Draw amount (text)
-    textSize(24);
-    textAlign(CENTER, BOTTOM);
-    fill(255, 255, 255);
-    text(player.getHotbarSlot(hotbarIndex).amount, x, height);
-}
-
-void drawToolInHotbar(int x, int y, int hotbarIndex, int pixelsPerItemSlot) {
-    Tool tool = (Tool) player.getHotbarSlot(hotbarIndex).item;
-    
-    fill(tool.c);
-    circle(x, y, pixelsPerItemSlot / 2);
-    
-    // Draw letter for tool type (Temporary solution, before I add specific images for tools) 
-    textSize(20);
-    textAlign(CENTER, BOTTOM);
-    fill(255, 255, 255);
-    text(tool.toolType, x, height);
-}
-
-void drawHotbar() {
-    if (!inventoryIsOpen) {
-        stroke(0);
-        rectMode(CENTER);
-        for (int i = 0; i < 9; i++) {
-            drawItemSlotInHotbar(i);
-            
-        }
-        rectMode(CORNER);
-        if (noStrokeMode) {
-            noStroke();   
-        }
-    }
+    text(tool.toolType, xPixel, yPixel + pixelsPerItemSlot / 2);
 }
