@@ -27,7 +27,7 @@ public class Mob {
             slightlyShiftDirection();
             maybeStopMoving();
             
-            float mobWidthInBlocks = mobWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
+            float mobWidthInBlocks = mobWidth / pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
             if (getBlock(coords.x, coords.y).isWallOrWater() 
                 || getBlock(coords.x + mobWidthInBlocks, coords.y).isWallOrWater() 
                 || getBlock(coords.x, coords.y + mobWidthInBlocks).isWallOrWater() 

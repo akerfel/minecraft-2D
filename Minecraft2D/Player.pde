@@ -35,10 +35,10 @@ public class Player {
         float yPrevious = coords.y;
         
         // Change coords
-        coords.x += v*(int(D_IsPressed) - int(A_isPressed));
-        coords.y += v*(int(S_isPressed)  - int(W_isPressed));
+        coords.x += v*(int(state.D_IsPressed) - int(state.A_isPressed));
+        coords.y += v*(int(state.S_isPressed)  - int(state.W_isPressed));
         // If new coords are inside wall, go back to old coords
-        float playerWidthInBlocks = playerWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
+        float playerWidthInBlocks = playerWidth / pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
         
         if (!cheats.canWalkThroughWalls 
             && (getBlock(coords.x, coords.y).isWall 
@@ -55,22 +55,22 @@ public class Player {
         switch (keyWhichWasPressed) {
             case 'W':
             case UP:
-                  W_isPressed = bool;
+                  state.W_isPressed = bool;
                   return;
          
             case 'S':
             case DOWN:
-                  S_isPressed = bool;
+                  state.S_isPressed = bool;
                   return;
          
             case 'A':
             case LEFT:
-                  A_isPressed = bool;
+                  state.A_isPressed = bool;
                   return;
          
             case 'D':
             case RIGHT:
-                  D_IsPressed = bool;
+                  state.D_IsPressed = bool;
                   return;
          
             default:

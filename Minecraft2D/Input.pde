@@ -2,15 +2,15 @@ void keyPressed() {
     
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
-            player.inventory.addBlock(new Stone());
+            state.player.inventory.addBlock(new Stone());
         }
     }
     
-    player.setMove(keyCode, true);
+    state.player.setMove(keyCode, true);
     
     int numberKeyClicked = int(key) - 49;
     if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
-        player.inventory.hotbarIndexSelected = numberKeyClicked;
+        state.player.inventory.hotbarIndexSelected = numberKeyClicked;
     }
     
     if (key == '+') {
@@ -21,10 +21,10 @@ void keyPressed() {
     }
     
     if (key == 'e') {
-        if (inventoryIsOpen) {
-            player.inventory.returnMouseGrabbedItemToInventory();
+        if (state.inventoryIsOpen) {
+            state.player.inventory.returnMouseGrabbedItemToInventory();
         }
-        inventoryIsOpen = !inventoryIsOpen;
+        state.inventoryIsOpen = !state.inventoryIsOpen;
     }
     
     if (key == '.') {
@@ -32,7 +32,7 @@ void keyPressed() {
     }
     
     if (key == 'f') {
-        rightMouseButtonDown = true;   
+        state.rightMouseButtonDown = true;   
     }
     
     // hacks
@@ -49,47 +49,47 @@ void keyPressed() {
     
     if (key == CODED) {
         if (keyCode == SHIFT) {
-            player.isRunning = true;    
+            state.player.isRunning = true;    
         }
         if (keyCode == ALT) {
-            player.isRunningSuperSpeed = true;    
+            state.player.isRunningSuperSpeed = true;    
         }
     }
 }
 
 void keyReleased() {
-    player.setMove(keyCode, false);
+    state.player.setMove(keyCode, false);
     
     if (key == 'f') {
-        rightMouseButtonDown = false;   
+        state.rightMouseButtonDown = false;   
     }
     
     if (key == CODED) {
         if (keyCode == SHIFT) {
-            player.isRunning = false;    
+            state.player.isRunning = false;    
         }
         if (keyCode == ALT) {
-            player.isRunningSuperSpeed = false;    
+            state.player.isRunningSuperSpeed = false;    
         }
     }
 }
 
 void mousePressed() {
     if (mouseButton == RIGHT) {
-        rightMouseButtonDown = true;
+        state.rightMouseButtonDown = true;
     }
     else if (mouseButton == LEFT) {
-        leftMouseButtonDown = true;
-        if (inventoryIsOpen) {
+        state.leftMouseButtonDown = true;
+        if (state.inventoryIsOpen) {
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
             if (clickedItemSlot != null) {
-                ItemSlot currentMouseHeldItemSlot = player.inventory.mouseHeldItemSlot;
+                ItemSlot currentMouseHeldItemSlot = state.player.inventory.mouseHeldItemSlot;
                 int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
                 int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
-                player.inventory.grabbedXindex = inventoryXindex;
-                player.inventory.grabbedYindex = inventoryYindex;
-                player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
-                player.inventory.mouseHeldItemSlot = clickedItemSlot;
+                state.player.inventory.grabbedXindex = inventoryXindex;
+                state.player.inventory.grabbedYindex = inventoryYindex;
+                state.player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
+                state.player.inventory.mouseHeldItemSlot = clickedItemSlot;
             }
         }
     }
@@ -97,10 +97,10 @@ void mousePressed() {
 
 void mouseReleased() {
     if (mouseButton == RIGHT) {
-        rightMouseButtonDown = false;
+        state.rightMouseButtonDown = false;
     }
     else if (mouseButton == LEFT) {
-        leftMouseButtonDown = false;
+        state.leftMouseButtonDown = false;
     }
 }
 
@@ -118,16 +118,16 @@ void mouseWheel(MouseEvent event) {
     else {
         // Scroll up
         if (event.getCount() > 0) {
-            player.inventory.hotbarIndexSelected++;
-            if (player.inventory.hotbarIndexSelected >= inventoryWidth) {
-                player.inventory.hotbarIndexSelected = 0;    
+            state.player.inventory.hotbarIndexSelected++;
+            if (state.player.inventory.hotbarIndexSelected >= inventoryWidth) {
+                state.player.inventory.hotbarIndexSelected = 0;    
             }
         }
         // Scroll down
         else {
-            player.inventory.hotbarIndexSelected--;
-            if (player.inventory.hotbarIndexSelected < 0) {
-                player.inventory.hotbarIndexSelected = inventoryWidth - 1;    
+            state.player.inventory.hotbarIndexSelected--;
+            if (state.player.inventory.hotbarIndexSelected < 0) {
+                state.player.inventory.hotbarIndexSelected = inventoryWidth - 1;    
             }
         }
     }

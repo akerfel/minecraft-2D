@@ -28,7 +28,6 @@ void intializeSettings() {
     chanceRiver = 0.00004;
     chanceForestChunk = 0.17;
     chanceBigTreesChunk = 0.20;
-    println("worldSeed: " + worldSeed);
     mobSpawnChance = 0.01;
     maxMobs = 30;
     mobSpawnRange = 50;

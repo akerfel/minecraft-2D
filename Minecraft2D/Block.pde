@@ -23,7 +23,7 @@ public class Block extends Item {
     }
     
     boolean isHoldingCorrectToolType() {
-        return (toolTypeForMining.equals(((Tool) player.inventory.getHeldItem()).toolType));
+        return (toolTypeForMining.equals(((Tool) state.player.inventory.getHeldItem()).toolType));
     }
     
     public void mineBlock() {
@@ -34,9 +34,9 @@ public class Block extends Item {
         else {
             float toolTypeMult = 5;            // Higher = slower. 1.5 longer timer for correct tool type, 5 for incorrect tool type
             float toolMaterialMult = 1;        // Higher = faster. wood/stone/iron
-            if (player.inventory.isHoldingTool() && isHoldingCorrectToolType()) {
+            if (state.player.inventory.isHoldingTool() && isHoldingCorrectToolType()) {
                 toolTypeMult = 1.5;
-                toolMaterialMult = ((Tool) player.inventory.getHeldItem()).mult;
+                toolMaterialMult = ((Tool) state.player.inventory.getHeldItem()).mult;
             }
             
             // ODD BEHAVIOR: Increasing numBreakingStages also increases breaking time.

@@ -1,14 +1,14 @@
 import java.util.Iterator;
 
 void updateLogic() {
-    player.move();
+    state.player.move();
     updateBlocks();
     updateMobs();
 }
 
 void updateBlocks() {
     loadVisibleBlocks();
-    if (!inventoryIsOpen) {
+    if (!state.inventoryIsOpen) {
         placeBlocksWithMouse();
         mineBlocksWithMouse();
     }
@@ -27,12 +27,12 @@ void makeViewDistanceFitZoomLevel() {
 }
 
 // This function is called each frame.
-// I tried to only call this each time the player stepped on a new block, but it did not seem to improve the fps.
+// I tried to only call this each time the state.player stepped on a new block, but it did not seem to improve the fps.
 // That also introduced other problems (block would not be mined until stepped new block), so I chose to keep it like this.
 void loadVisibleBlocks() {
     for (int x = 0; x < viewDistance; x++) {
         for (int y = 0; y < viewDistance; y++) {
-            visibleBlocks[x][y] = getBlock(player.coords.x + x - viewDistance/2, player.coords.y + y - viewDistance/2);
+            state.visibleBlocks[x][y] = getBlock(state.player.coords.x + x - viewDistance/2, state.player.coords.y + y - viewDistance/2);
         }
     }    
 }
@@ -59,20 +59,20 @@ void zoom(int changeInPixelsPerBlock) {
 void setViewDistance(int newViewDistance) {
     if (newViewDistance > 3) {
         viewDistance = newViewDistance;
-        visibleBlocks = new Block[viewDistance][viewDistance];
+        state.visibleBlocks = new Block[viewDistance][viewDistance];
         println("Blocks rendered: " + viewDistance + "x" + viewDistance + " = " + (viewDistance * viewDistance));
     }
 }
 
 void updateMobsPos() {
-    for (Mob mob : mobs) {
+    for (Mob mob : state.mobs) {
         mob.update();    
     }
 }
 
 void removeBlockDamageIfNotMining() {
-    if (!leftMouseButtonDown) {
-        Iterator<Block> it = damagedBlocks.iterator();
+    if (!state.leftMouseButtonDown) {
+        Iterator<Block> it = state.damagedBlocks.iterator();
         while (it.hasNext()) {
             it.next().removeDamage();
             it.remove();            
@@ -81,26 +81,26 @@ void removeBlockDamageIfNotMining() {
 }
 
 void removeFarMobs() {
-    Iterator<Mob> it = mobs.iterator();
+    Iterator<Mob> it = state.mobs.iterator();
     while (it.hasNext()) {
         Mob mob = it.next();
-        if (player.coords.dist(mob.coords) > mobDespawnRange) {
+        if (state.player.coords.dist(mob.coords) > mobDespawnRange) {
             it.remove();
         }
     }
 }
 
 void maybeSpawnMob() {
-    if (mobs.size() < maxMobs && random(0, 1) < mobSpawnChance) {
+    if (state.mobs.size() < maxMobs && random(0, 1) < mobSpawnChance) {
         spawnMob();    
     }
 }
 
 void spawnMob() {
-    float xSpawn = int(player.coords.x + random(-mobSpawnRange, mobSpawnRange));
-    float ySpawn = int(player.coords.y + random(-mobSpawnRange, mobSpawnRange));
+    float xSpawn = int(state.player.coords.x + random(-mobSpawnRange, mobSpawnRange));
+    float ySpawn = int(state.player.coords.y + random(-mobSpawnRange, mobSpawnRange));
     if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
-        mobs.add(new Mob(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
+        state.mobs.add(new Mob(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
     }
 }
 
@@ -110,12 +110,12 @@ void resetObjectsDependingOnPixelsPerBlock() {
 }
 
 void placeBlocksWithMouse() {
-    if (rightMouseButtonDown) {
-        ItemSlot cell = player.inventory.getHotbarSlot(player.inventory.hotbarIndexSelected);
+    if (state.rightMouseButtonDown) {
+        ItemSlot cell = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
         if (cell.item.type.equals("block")) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < player.reach && getMouseBlock().stringID.equals("grass") && setMouseBlock(generateBlockObject(block.stringID))) {
+                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && getMouseBlock().stringID.equals("grass") && setMouseBlock(generateBlockObject(block.stringID))) {
                     cell.amount--;
                 }
             }
@@ -146,16 +146,16 @@ Block generateBlockObject(String stringID) {
 }
 
 void mineBlocksWithMouse() {
-    if (leftMouseButtonDown) {
+    if (state.leftMouseButtonDown) {
         Block mouseBlock = getMouseBlock();
-        if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < player.reach) {
+        if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < state.player.reach) {
             if (mouseBlock.prcntBroken >= 1) {
-                player.inventory.addBlock(mouseBlock);
+                state.player.inventory.addBlock(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
             }
             else {
                 mouseBlock.mineBlock();  
-                damagedBlocks.add(mouseBlock);
+                state.damagedBlocks.add(mouseBlock);
             }
         }
     }
@@ -163,30 +163,30 @@ void mineBlocksWithMouse() {
 
 Block getMouseBlock() {
     PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
-    return getBlock(int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));
+    return getBlock(int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
 }
 
 // Returns the inventory slot which the mouse currently hovers. 
-// Note that this is not the same as player.mouseItemSlot
+// Note that this is not the same as state.player.mouseItemSlot
 ItemSlot getInventorySlotWhichMouseHovers() {
-    if (inventoryIsOpen) {
+    if (state.inventoryIsOpen) {
         if (mouseX < inventoryUpperLeftXPixel || mouseY < inventoryUpperLeftYPixel) return null;
         int inventoryXindex = (mouseX - inventoryUpperLeftXPixel) / pixelsPerItemSlot;
         int inventoryYindex = (mouseY - inventoryUpperLeftYPixel) / pixelsPerItemSlot;
         if (inventoryXindex < 0 || inventoryXindex >= inventoryWidth || inventoryYindex < 0 || inventoryYindex >= inventoryHeight) {
             return null;    
         }
-        if (player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
-            System.out.println("Grabbed item: " + (player.inventory.grid[inventoryXindex][inventoryYindex].item));
+        if (state.player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
+            System.out.println("Grabbed item: " + (state.player.inventory.grid[inventoryXindex][inventoryYindex].item));
         }
-        return player.inventory.grid[inventoryXindex][inventoryYindex];
+        return state.player.inventory.grid[inventoryXindex][inventoryYindex];
     }
     return null;
 }
 
 boolean setMouseBlock(Block block) {
     PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
-    return setBlock(block, int(player.coords.x - distancePlayerToMouse.x), int(player.coords.y - distancePlayerToMouse.y));
+    return setBlock(block, int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
 }
 
 PVector getVector_BlocksFromPlayerToMouse() {
@@ -197,7 +197,7 @@ PVector getVector_BlocksFromPlayerToMouse() {
     return new PVector(xBlocksFromPlayerToMouse, yBlocksFromPlayerToMouse);
 }
 
-// Returns a float, total distance (in block lengths) from mouse to player
+// Returns a float, total distance (in block lengths) from mouse to state.player
 float getDistance_BlocksFromPlayerToMouse() {
     PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
     return distancePlayerToMouse.dist(new PVector(0, 0));    // simply pyth. theorem
@@ -222,8 +222,8 @@ boolean setBlock(Block block, float x, float y) {
     return false;
 }
 
-// Takes player coords, converts them into chunkCoords and loads that chunk from generatedChunks. 
-// If chunk has not yet been generated, create it and add it to generatedChunks (chunkCoords is key).
+// Takes state.player coords, converts them into chunkCoords and loads that chunk from state.generatedChunks. 
+// If chunk has not yet been generated, create it and add it to state.generatedChunks (chunkCoords is key).
 Chunk getChunk(PVector coords) {
     PVector chunkCoords = calcChunkCoords(coords);
     // The next two if statements ensure that the same chunk wont be loaded
@@ -235,12 +235,12 @@ Chunk getChunk(PVector coords) {
         chunkCoords.y--;    
     }
     // Create chunk if does not exist
-    if (!generatedChunks.containsKey(chunkCoords)) {
-        generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
-        println("Generated chunks: " + generatedChunks.size());
-        //println(generatedChunks.keySet());
+    if (!state.generatedChunks.containsKey(chunkCoords)) {
+        state.generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
+        println("Generated chunks: " + state.generatedChunks.size());
+        //println(state.generatedChunks.keySet());
     }
-    return generatedChunks.get(chunkCoords);
+    return state.generatedChunks.get(chunkCoords);
 }
 
 PVector calcChunkCoords(PVector coords) {
@@ -253,9 +253,9 @@ Block getBlock(float x, float y) {
 }
 
 void setPlayerBlock(Block block) {
-    setBlock(block, player.coords.x, player.coords.y);
+    setBlock(block, state.player.coords.x, state.player.coords.y);
 }
 
 Block getPlayerBlock() {
-    return getBlock(player.coords.x, player.coords.y);
+    return getBlock(state.player.coords.x, state.player.coords.y);
 }
