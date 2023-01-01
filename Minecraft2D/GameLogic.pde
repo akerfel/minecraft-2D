@@ -271,15 +271,10 @@ void chunkToFile(Chunk chunk) {
         chunkString[y] = "";    
     }
     
-    
     for (int y = 0; y < settings.blocksPerChunk; y++) {
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             chunkString[y] += chunk.blocks[x][y] + " ";
         }
-    }
-    
-    for (int y = 0; y < settings.blocksPerChunk; y++) {
-        println(chunkString[y]);    
     }
     
     saveStrings("savedChunks/chunkString.txt", chunkString);
