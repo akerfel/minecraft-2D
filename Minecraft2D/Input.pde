@@ -1,91 +1,103 @@
 void keyPressed() {
-    
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
-            player.addBlockToInventory(new Stone());
+            state.player.inventory.addBlock(new Stone());
         }
     }
-    
-    player.setMove(keyCode, true);
-    
+
+    state.player.setMove(keyCode, true);
+
     int numberKeyClicked = int(key) - 49;
     if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
-        player.hotbarIndexSelected = numberKeyClicked;
+        state.player.inventory.hotbarIndexSelected = numberKeyClicked;
     }
-    
+
     if (key == '+') {
         zoom(1);
-    }
-    else if (key == '-') {
+    } else if (key == '-') {
         zoom(-1);
     }
-    
+
     if (key == 'e') {
-        inventoryIsOpen = !inventoryIsOpen;    
+        if (state.inventoryIsOpen) {
+            state.player.inventory.returnMouseGrabbedItemToInventory();
+        }
+        state.inventoryIsOpen = !state.inventoryIsOpen;
     }
-    
+
     if (key == '.') {
-        setViewDistance(viewDistance - 2);   
+        setViewDistance(settings.viewDistance - 2);
     }
-    
+
     if (key == 'f') {
-        rightMouseButtonDown = true;   
+        state.rightMouseButtonDown = true;
     }
     
-    // hacks
-    
+    if (key == 'g') {
+        chunkToFile(getPlayerChunk());
+    }
+
     if (key == 'h') {
-        cheatWalkThroughWalls = !cheatWalkThroughWalls;
-        if (cheatWalkThroughWalls) {
-            println("Player can walk through walls");    
-        }
-        else {
-            println("Player can not walk through walls");    
+        cheats.canWalkThroughWalls = !cheats.canWalkThroughWalls;
+        if (cheats.canWalkThroughWalls) {
+            println("Player can walk through walls");
+        } else {
+            println("Player can not walk through walls");
         }
     }
-    
+
     if (key == CODED) {
         if (keyCode == SHIFT) {
-            player.isRunning = true;    
+            state.player.isRunning = true;
         }
         if (keyCode == ALT) {
-            player.isRunningSuperSpeed = true;    
+            state.player.isRunningSuperSpeed = true;
         }
     }
 }
 
 void keyReleased() {
-    player.setMove(keyCode, false);
-    
+    state.player.setMove(keyCode, false);
+
     if (key == 'f') {
-        rightMouseButtonDown = false;   
+        state.rightMouseButtonDown = false;
     }
-    
+
     if (key == CODED) {
         if (keyCode == SHIFT) {
-            player.isRunning = false;    
+            state.player.isRunning = false;
         }
         if (keyCode == ALT) {
-            player.isRunningSuperSpeed = false;    
+            state.player.isRunningSuperSpeed = false;
         }
     }
 }
 
 void mousePressed() {
     if (mouseButton == RIGHT) {
-        rightMouseButtonDown = true;
-    }
-    else if (mouseButton == LEFT) {
-        leftMouseButtonDown = true;
+        state.rightMouseButtonDown = true;
+    } else if (mouseButton == LEFT) {
+        state.leftMouseButtonDown = true;
+        if (state.inventoryIsOpen) {
+            ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
+            if (clickedItemSlot != null) {
+                ItemSlot currentMouseHeldItemSlot = state.player.inventory.mouseHeldItemSlot;
+                int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
+                int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
+                state.player.inventory.grabbedXindex = inventoryXindex;
+                state.player.inventory.grabbedYindex = inventoryYindex;
+                state.player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
+                state.player.inventory.mouseHeldItemSlot = clickedItemSlot;
+            }
+        }
     }
 }
 
 void mouseReleased() {
     if (mouseButton == RIGHT) {
-        rightMouseButtonDown = false;
-    }
-    else if (mouseButton == LEFT) {
-        leftMouseButtonDown = false;
+        state.rightMouseButtonDown = false;
+    } else if (mouseButton == LEFT) {
+        state.leftMouseButtonDown = false;
     }
 }
 
@@ -99,23 +111,20 @@ void mouseWheel(MouseEvent event) {
         else {
             zoom(1);
         }
-    }
-    else {
+    } else {
         // Scroll up
         if (event.getCount() > 0) {
-            player.hotbarIndexSelected++;
-            if (player.hotbarIndexSelected >= inventoryWidth) {
-                player.hotbarIndexSelected = 0;    
+            state.player.inventory.hotbarIndexSelected++;
+            if (state.player.inventory.hotbarIndexSelected >= settings.inventoryWidth) {
+                state.player.inventory.hotbarIndexSelected = 0;
             }
         }
         // Scroll down
         else {
-            player.hotbarIndexSelected--;
-            if (player.hotbarIndexSelected < 0) {
-                player.hotbarIndexSelected = inventoryWidth - 1;    
+            state.player.inventory.hotbarIndexSelected--;
+            if (state.player.inventory.hotbarIndexSelected < 0) {
+                state.player.inventory.hotbarIndexSelected = settings.inventoryWidth - 1;
             }
         }
     }
 }
-
- 

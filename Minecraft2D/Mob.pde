@@ -6,7 +6,7 @@ public class Mob {
     float chanceStartMoving;    // chance each frame when standing still
     float chanceStopMoving;     // chance each frame when moving
     public color c;
-   
+
     public Mob(float x, float y) {
         coords = new PVector(x, y);
         direction = new PVector(0, 0);
@@ -16,7 +16,7 @@ public class Mob {
         chanceStopMoving = 0.01;
         c = color(255, 192, 203);
     }
-    
+
     void update() {
         if (isMoving) {
             float xPrevious = coords.x;
@@ -26,26 +26,25 @@ public class Mob {
             coords.y += direction.y * speedFactor;
             slightlyShiftDirection();
             maybeStopMoving();
-            
-            float mobWidthInBlocks = mobWidth / pixelsPerBlock; // How much the player width is in blocks (ex 0.5 blocks)
-            if (getBlock(coords.x, coords.y).isWallOrWater() 
-                || getBlock(coords.x + mobWidthInBlocks, coords.y).isWallOrWater() 
-                || getBlock(coords.x, coords.y + mobWidthInBlocks).isWallOrWater() 
+
+            float mobWidthInBlocks = settings.mobWidth / settings.pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
+            if (getBlock(coords.x, coords.y).isWallOrWater()
+                || getBlock(coords.x + mobWidthInBlocks, coords.y).isWallOrWater()
+                || getBlock(coords.x, coords.y + mobWidthInBlocks).isWallOrWater()
                 || getBlock(coords.x + mobWidthInBlocks, coords.y + mobWidthInBlocks).isWallOrWater())
-                {
+            {
                 coords.x = xPrevious;
                 coords.y = yPrevious;
                 direction.x *= -1;
                 direction.y *= -1;
             }
-        }
-        else {
+        } else {
             if (random(0, 1) < chanceStartMoving) {
                 startMovingSequence();
             }
         }
     }
-    
+
     void slightlyShiftDirection() {
         if (random(0, 1) < 0.7) {
             direction.x += random(-0.15, 0.15);
@@ -56,13 +55,13 @@ public class Mob {
         direction.x = constrain(direction.x, -1, 1);
         direction.y = constrain(direction.y, -1, 1);
     }
-    
+
     void maybeStopMoving() {
         if (random(0, 1) < chanceStopMoving) {
-                isMoving = false;    
-        }    
+            isMoving = false;
+        }
     }
-    
+
     void startMovingSequence() {
         isMoving = true;
         direction = new PVector(random(-1, 1), random(-1, 1));
