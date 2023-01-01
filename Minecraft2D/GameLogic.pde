@@ -257,3 +257,30 @@ void setPlayerBlock(Block block) {
 Block getPlayerBlock() {
     return getBlock(state.player.coords.x, state.player.coords.y);
 }
+
+Chunk getPlayerChunk() {
+    return getChunk(state.player.coords);
+}
+
+// Saves a chunk as a file
+void chunkToFile(Chunk chunk) {
+    String[] chunkString = new String[settings.blocksPerChunk];
+    
+    // Initialize the strings (otherwise they would all start with 'null');
+    for (int y = 0; y < settings.blocksPerChunk; y++) {
+        chunkString[y] = "";    
+    }
+    
+    
+    for (int y = 0; y < settings.blocksPerChunk; y++) {
+        for (int x = 0; x < settings.blocksPerChunk; x++) {
+            chunkString[y] += chunk.blocks[x][y] + " ";
+        }
+    }
+    
+    for (int y = 0; y < settings.blocksPerChunk; y++) {
+        println(chunkString[y]);    
+    }
+    
+    saveStrings("savedChunks/chunkString.txt", chunkString);
+}

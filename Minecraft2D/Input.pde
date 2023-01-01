@@ -32,6 +32,10 @@ void keyPressed() {
     if (key == 'f') {
         state.rightMouseButtonDown = true;
     }
+    
+    if (key == 'g') {
+        chunkToFile(getPlayerChunk());
+    }
 
     if (key == 'h') {
         cheats.canWalkThroughWalls = !cheats.canWalkThroughWalls;

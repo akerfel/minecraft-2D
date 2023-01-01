@@ -23,7 +23,7 @@ public class Settings {
 
 void initializeSettings() {
     settings.pixelsPerBlock = 25;
-    settings.blocksPerChunk = 512;
+    settings.blocksPerChunk = 256;
     resetObjectsDependingOnPixelsPerBlock();
     settings.baseChanceStone = 0.005;
     settings.baseChanceTree = 0.02;
