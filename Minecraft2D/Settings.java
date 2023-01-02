@@ -1,3 +1,7 @@
+import java.util.Map;
+import java.util.stream.Collectors;
+import static java.util.Map.entry;
+
 public class Settings {
     int pixelsPerBlock;            // pixels per side of block
     int blocksPerChunk;            // blocks per side of chunk
@@ -19,6 +23,9 @@ public class Settings {
     int inventoryHeight;
     int inventoryUpperLeftXPixel;  // The x pixel coordinate of the upper left corner of the inventory
     int inventoryUpperLeftYPixel;  // The y pixel coordinate of the upper left corner of the inventory
+    
+    Map<String, Character> blockNamesToChars;
+    Map<Character, String> blockCharsToNames;
 }
 
 void initializeSettings() {
@@ -42,4 +49,24 @@ void initializeSettings() {
     settings.inventoryUpperLeftYPixel = height / 2 - settings.pixelsPerItemSlot * settings.inventoryHeight / 2;
     settings.noStrokeMode = true;
     setNoStrokeModeDependingOnSetting();
+    
+    
+    // Maps block names to block characters. 
+    // E.g. "wood" could map to "w". 
+    settings.blockNamesToChars = Map.ofEntries(
+        entry("dirt", 'd'),
+        entry("grass", '_'),
+        entry("leaves", 'l'),
+        entry("planks", 'p'),
+        entry("sand", 's'),
+        entry("stone", 'S'),
+        entry("water", '~'),
+        entry("wood", 'w')
+    );
+    
+    // blockCharsToNames is a reverses map of blockNamesToChars
+    settings.blockCharsToNames = 
+    settings.blockNamesToChars.entrySet()
+       .stream()
+       .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
 }

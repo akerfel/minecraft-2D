@@ -1,4 +1,6 @@
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     Inventory inventory;
     PVector coords;
     int reach;
@@ -26,7 +28,7 @@ public class Player {
         if (isRunningSuperSpeed) {
             v *= superSpeedFactor;
         }
-        if (getPlayerBlock().stringID.equals("water")) {
+        if (getPlayerBlock().name.equals("water")) {
             v *= 0.5;
         }
 

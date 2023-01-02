@@ -1,4 +1,6 @@
-void keyPressed() {
+import java.io.*;
+
+void keyPressed()  {
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
             state.player.inventory.addBlock(new Stone());
@@ -33,8 +35,24 @@ void keyPressed() {
         state.rightMouseButtonDown = true;
     }
     
+    if (key == 't') {
+        try {
+            saveChunkToFile(getPlayerChunk());
+        }
+        catch(Exception e) {
+            println("@@@ ERROR WHILE SAVING");
+            println(e);
+        }
+    }
+    
     if (key == 'g') {
-        chunkToFile(getPlayerChunk());
+        try {
+            loadPreviousGameState();
+        }
+        catch(Exception e) {
+            println("@@@ ERROR WHILE LOADING");
+            println(e);
+        }
     }
 
     if (key == 'h') {

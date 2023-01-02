@@ -1,4 +1,6 @@
-public class State {
+import java.io.Serializable;
+
+public class State implements Serializable {
     // Will be stored in the game save
     int worldSeed;
     HashMap<PVector, Chunk> generatedChunks;

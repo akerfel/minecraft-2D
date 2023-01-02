@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.io.*;
 
 void updateLogic() {
     state.player.move();
@@ -74,7 +75,7 @@ void removeBlockDamageIfNotMining() {
     if (!state.leftMouseButtonDown) {
         Iterator<Block> it = state.damagedBlocks.iterator();
         while (it.hasNext()) {
-            it.next().removeDamage();
+            removeDamage(it.next());
             it.remove();
         }
     }
@@ -99,7 +100,7 @@ void maybeSpawnMob() {
 void spawnMob() {
     float xSpawn = int(state.player.coords.x + random(-settings.mobSpawnRange, settings.mobSpawnRange));
     float ySpawn = int(state.player.coords.y + random(-settings.mobSpawnRange, settings.mobSpawnRange));
-    if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
+    if (!isWallOrWater(getBlock(xSpawn, ySpawn))) {
         state.mobs.add(new Mob(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
     }
 }
@@ -115,34 +116,12 @@ void placeBlocksWithMouse() {
         if (cell.item.type.equals("block")) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && getMouseBlock().stringID.equals("grass") && setMouseBlock(generateBlockObject(block.stringID))) {
+                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && getMouseBlock().name.equals("grass") && setMouseBlock(generateBlockObject(block.name))) {
                     cell.amount--;
                 }
             }
         }
     }
-}
-
-Block generateBlockObject(String stringID) {
-    switch (stringID) {
-    case "dirt":
-        return new Dirt();
-    case "grass":
-        return new Grass();
-    case "leaves":
-        return new Leaves();
-    case "planks":
-        return new Planks();
-    case "sand":
-        return new Sand();
-    case "stone":
-        return new Stone();
-    case "water":
-        return new Water();
-    case "wood":
-        return new Wood();
-    }
-    return new Grass();
 }
 
 void mineBlocksWithMouse() {
@@ -153,7 +132,7 @@ void mineBlocksWithMouse() {
                 state.player.inventory.addBlock(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
             } else {
-                mouseBlock.mineBlock();
+                mineBlock(mouseBlock);
                 state.damagedBlocks.add(mouseBlock);
             }
         }
@@ -211,7 +190,7 @@ boolean setBlock(Block block, float x, float y) {
     if (!block.toString().equals(chunk.blocks[xInChunk][yInChunk].toString())) {
         // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
         if (block.toString().equals("grass")) {
-            chunk.blocks[xInChunk][yInChunk] = new Grass(getChunk(new PVector(x, y)).grassColorScheme);
+            chunk.blocks[xInChunk][yInChunk] = new Grass();
         } else {
             chunk.blocks[xInChunk][yInChunk] = block;
         }
@@ -263,7 +242,7 @@ Chunk getPlayerChunk() {
 }
 
 // Saves a chunk as a file
-void chunkToFile(Chunk chunk) {
+void saveChunkToFile(Chunk chunk) throws IOException, ClassNotFoundException  {
     String[] chunkString = new String[settings.blocksPerChunk];
     
     // Initialize the strings (otherwise they would all start with 'null');
@@ -273,9 +252,87 @@ void chunkToFile(Chunk chunk) {
     
     for (int y = 0; y < settings.blocksPerChunk; y++) {
         for (int x = 0; x < settings.blocksPerChunk; x++) {
-            chunkString[y] += chunk.blocks[x][y] + " ";
+            chunkString[y] += getBlockChar(chunk.blocks[x][y]);
         }
     }
-    
     saveStrings("savedChunks/chunkString.txt", chunkString);
+    
+    
+    //println("SERIALIZING generatedChunks");
+    println("SERIALIZING");
+    //Item someItem = new Item("someType");
+    //SimpleClass simpleObject = new SimpleClass(44);
+    FileOutputStream fos = new FileOutputStream("serializedGameState.ser");
+    ObjectOutputStream oos = new ObjectOutputStream(fos);
+    oos.writeObject(state);
+    oos.close();
+}
+
+void loadPreviousGameState() throws IOException, ClassNotFoundException {
+    println("### LOADING GAME STATE");
+    // Deserialize the object
+    FileInputStream fis = new FileInputStream("serializedGameState.ser");
+    ObjectInputStream ois = new ObjectInputStream(fis);
+    state = (State) ois.readObject();
+    ois.close();
+}
+
+char getBlockChar(Block block) {
+    return getBlockChar(block.name);  
+}
+
+char getBlockChar(String blockName) {
+    return settings.blockNamesToChars.get(blockName);    
+}
+
+String getBlockName(char blockChar) {
+    return settings.blockCharsToNames.get(blockChar);    
+}
+
+color convertJavaColorToProcessingColor(Color javaColor) {
+    return color(javaColor.getRed(), javaColor.getGreen(), javaColor.getBlue());
+}
+
+boolean isWallOrWater(Block block) {
+    return (block.isWall || block.name.equals("water"));
+}
+
+boolean isHoldingCorrectToolType(Block block) {
+    return (block.toolTypeForMining.equals(((Tool) state.player.inventory.getHeldItem()).toolType));
+}
+
+public void mineBlock(Block block) {
+    if (block.prcntBroken == 0) {
+        block.timeDamagedLastTime = millis();
+        block.prcntBroken = 0.1;
+    } else {
+        float toolTypeMult = 5;            // Higher = slower. 1.5 longer timer for correct tool type, 5 for incorrect tool type
+        float toolMaterialMult = 1;        // Higher = faster. wood/stone/iron
+        if (state.player.inventory.isHoldingTool() && isHoldingCorrectToolType(block)) {
+            toolTypeMult = 1.5;
+            toolMaterialMult = ((Tool) state.player.inventory.getHeldItem()).mult;
+        }
+
+        // ODD BEHAVIOR: Increasing numBreakingStages also increases breaking time.
+        // Especially for high values. Keep numBreakingStages at <= 10 for now.
+        float numBreakingStages = 10;
+        if (millis() - block.timeDamagedLastTime > block.hardness * 1.5 * toolTypeMult / toolMaterialMult * (1000.0 / numBreakingStages)) {
+            if (block.prcntBroken < 1) {
+                block.timeDamagedLastTime = millis();
+                block.prcntBroken += 1.0 / numBreakingStages;
+                if (block.prcntBroken > 1) {
+                    block.prcntBroken = 1;
+                }
+            }
+        }
+    }
+}
+
+public void removeDamage(Block block) {
+    if (block.prcntBroken > 0) {
+        block.prcntBroken -= 0.1;
+        if (block.prcntBroken < 0) {
+            block.prcntBroken = 0;
+        }
+    }
 }

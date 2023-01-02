@@ -25,7 +25,7 @@ void drawVisibleBlocks() {
 }
 
 void drawBlock(Block block, float xPixel, float yPixel) {
-    fill(block.c);
+    fill(convertJavaColorToProcessingColor(block.colorRGB));
     square(xPixel, yPixel, settings.pixelsPerBlock + 1);
     if (block.prcntBroken > 0) {
         drawBlockBreakingTexture(block, xPixel, yPixel);
@@ -33,8 +33,8 @@ void drawBlock(Block block, float xPixel, float yPixel) {
 }
 
 void drawBlockBreakingTexture(Block block, float xPixel, float yPixel) {
-    fill(block.prcntBroken * 255);
-    circle(xPixel + settings.pixelsPerBlock/2, yPixel + settings.pixelsPerBlock/2, (block.prcntBroken * settings.pixelsPerBlock));
+    fill((float) block.prcntBroken * 255);
+    circle((float) xPixel + settings.pixelsPerBlock/2, (float) yPixel + settings.pixelsPerBlock/2, (float) (block.prcntBroken * settings.pixelsPerBlock));
 }
 
 void drawMobs() {

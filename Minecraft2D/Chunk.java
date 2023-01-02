@@ -1,6 +1,10 @@
-public class Chunk {
+import java.io.Serializable;
+import java.awt.Color;
+import processing.core.*;
+
+public class Chunk implements Serializable {
     public Block[][] blocks;
-    public color grassColorScheme;         // Each chunk has a special color for grass
+    public Color grassColorScheme;         // Each chunk has a special color for grass
     float chanceStone;                     // for each block
     float chanceTree;
     boolean isForestChunk;                 // true means much higher tree density
@@ -32,14 +36,15 @@ public class Chunk {
     }
 
     void placeGrassAndStone() {
-        grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
+        grassColorScheme = new Color(random(0, 40), random(0, 40), random(0, 40));
         chanceStone = settings.baseChanceStone * random(0.1, 1.3);
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
                 if (random(0, 1) < chanceStone) {
                     blocks[x][y] = new Stone();
                 } else {
-                    blocks[x][y] = new Grass(grassColorScheme);
+                    //blocks[x][y] = new Grass(grassColorScheme);
+                    blocks[x][y] = new Grass();
                 }
             }
         }
@@ -150,7 +155,7 @@ public class Chunk {
     }
 
     void makeLeaf(int x, int y) {
-        if (!blocks[x][y].stringID.equals("wood")) {
+        if (!blocks[x][y].name.equals("wood")) {
             blocks[x][y] = new Leaves();
         }
     }

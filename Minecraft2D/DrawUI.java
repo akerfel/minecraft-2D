@@ -94,7 +94,7 @@ void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     Block block = (Block) itemSlot.item;
 
     // Can not call drawBlock() function here, because that ones size changes with settings.pixelsPerBlock
-    fill(block.c);
+    fill(convertJavaColorToProcessingColor(block.colorRGB));
     square(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
 
     // Write amount
@@ -116,7 +116,7 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Tool tool = (Tool) itemSlot.item;
 
-    fill(tool.c);
+    fill(convertJavaColorToProcessingColor(tool.colorRGB));
     circle(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
 
     textSize(20);

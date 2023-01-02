@@ -12,27 +12,27 @@ public class Tool extends Item {
         switch (material) {
         case "wood":
             mult = 2;
-            c = color(143, 119, 72);
+            colorRGB = new Color(143, 119, 72);
             break;
         case "stone":
             mult = 4;
-            c = color(112, 112, 112);
+            colorRGB = new Color(112, 112, 112);
             break;
         case "iron":
             mult = 6;
-            c = color(167, 167, 167);
+            colorRGB = new Color(167, 167, 167);
             break;
         case "diamond":
             mult = 8;
-            c = color(92, 219, 213);
+            colorRGB = new Color(92, 219, 213);
             break;
         case "netherite":
             mult = 8;
-            c = color(25, 25, 25);
+            colorRGB = new Color(25, 25, 25);
             break;
         case "gold":
             mult = 12;
-            c = color(250, 238, 77);
+            colorRGB = new Color(250, 238, 77);
             break;
         }
     }

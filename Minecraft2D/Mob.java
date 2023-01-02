@@ -1,4 +1,6 @@
-public class Mob {
+import java.io.Serializable;
+
+public class Mob implements Serializable {
     public PVector coords;
     PVector direction;          // Both x and y are always between -1 and 1
     float speedFactor;
@@ -28,10 +30,10 @@ public class Mob {
             maybeStopMoving();
 
             float mobWidthInBlocks = settings.mobWidth / settings.pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
-            if (getBlock(coords.x, coords.y).isWallOrWater()
-                || getBlock(coords.x + mobWidthInBlocks, coords.y).isWallOrWater()
-                || getBlock(coords.x, coords.y + mobWidthInBlocks).isWallOrWater()
-                || getBlock(coords.x + mobWidthInBlocks, coords.y + mobWidthInBlocks).isWallOrWater())
+            if (isWallOrWater(getBlock(coords.x, coords.y))
+                || isWallOrWater(getBlock(coords.x + mobWidthInBlocks, coords.y))
+                || isWallOrWater(getBlock(coords.x, coords.y + mobWidthInBlocks))
+                || isWallOrWater(getBlock(coords.x + mobWidthInBlocks, coords.y + mobWidthInBlocks)))
             {
                 coords.x = xPrevious;
                 coords.y = yPrevious;
