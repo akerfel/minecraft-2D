@@ -150,7 +150,7 @@ public class Chunk {
     }
 
     void makeLeaf(int x, int y) {
-        if (!blocks[x][y].stringID.equals("wood")) {
+        if (!blocks[x][y].name.equals("wood")) {
             blocks[x][y] = new Leaves();
         }
     }

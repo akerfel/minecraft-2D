@@ -12,13 +12,14 @@ public class State {
     boolean leftMouseButtonDown;
     boolean A_isPressed, D_IsPressed, W_isPressed, S_isPressed;
     boolean inventoryIsOpen;
+    boolean debugScreenIsShowing;
 }
 
 void intializeState() {
     // Will be stored in the game save
     state.worldSeed = int(random(0, 100000000));
     state.generatedChunks = new HashMap<PVector, Chunk>();
-    state.player = new Player(1000000, 1000000);
+    state.player = new Player(11111, 11111);
     state.mobs = new ArrayList<Mob>();
 
     // Will not be stored in the game save
@@ -30,6 +31,7 @@ void intializeState() {
     state.leftMouseButtonDown = false;
     setPlayerBlock(new Grass());
     state.inventoryIsOpen = false;
+    state.debugScreenIsShowing = false;
 
     // Add some items to inventory
     state.player.inventory.addItem(new Tool("iron", "sword"));

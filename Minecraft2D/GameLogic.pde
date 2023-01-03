@@ -115,7 +115,7 @@ void placeBlocksWithMouse() {
         if (cell.item.type.equals("block")) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && getMouseBlock().stringID.equals("grass") && setMouseBlock(generateBlockObject(block.stringID))) {
+                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && getMouseBlock().name.equals("grass") && setMouseBlock(generateBlockObject(block.name))) {
                     cell.amount--;
                 }
             }
@@ -250,6 +250,7 @@ Block getBlock(float x, float y) {
     return chunk.blocks[int(x) % settings.blocksPerChunk][int(y) % settings.blocksPerChunk];
 }
 
+
 void setPlayerBlock(Block block) {
     setBlock(block, state.player.coords.x, state.player.coords.y);
 }
@@ -262,20 +263,53 @@ Chunk getPlayerChunk() {
     return getChunk(state.player.coords);
 }
 
-// Saves a chunk as a file
-void chunkToFile(Chunk chunk) {
-    String[] chunkString = new String[settings.blocksPerChunk];
+// Saves all generated chunks to a file. One row of blocks is saved as one line of characters.
+// Each block is represented by the their respective characters as defined in
+// the hashmap blockNamesToChars.
+void saveGeneratedChunksToFile() {
+    int numberOfLines = 2 + (2 + settings.blocksPerChunk) * state.generatedChunks.size();
+    String[] chunkStrings = new String[numberOfLines];
+    int currentLineNum = 0;
     
-    // Initialize the strings (otherwise they would all start with 'null');
-    for (int y = 0; y < settings.blocksPerChunk; y++) {
-        chunkString[y] = "";    
+    // Initialize the strings. This allows for usage of += without first using = when settings values for strings.
+    for (int y = 0; y < numberOfLines; y++) {
+        chunkStrings[y] = "";    
     }
     
+    // Header of file
+    chunkStrings[currentLineNum++] = "Saved " + state.generatedChunks.size() + " chunks.";
+    currentLineNum++; // empty line
+    
+    // Chunks
+    for (Map.Entry<PVector, Chunk> entry : state.generatedChunks.entrySet()) {
+        PVector chunkCoords = entry.getKey();
+        Chunk chunk = entry.getValue();
+        chunkStrings[currentLineNum++] = "Chunk at chunk coordinates (" + int(chunkCoords.x) + "," + int(chunkCoords.y) + ")";
+        addChunkStringsToArray(chunkStrings, currentLineNum, chunk);
+        currentLineNum += settings.blocksPerChunk;
+        currentLineNum++; // empty line
+    }
+    
+    saveStrings("saves/myGameSave/chunkStrings.txt", chunkStrings);
+}
+
+// Converts the given chunk to strings and adds them to the given array, starting at startIndex.
+void addChunkStringsToArray(String[] arrayToAddTo, int startIndex, Chunk chunk) {
     for (int y = 0; y < settings.blocksPerChunk; y++) {
         for (int x = 0; x < settings.blocksPerChunk; x++) {
-            chunkString[y] += chunk.blocks[x][y] + " ";
+            arrayToAddTo[startIndex + y] += getBlockChar(chunk.blocks[x][y]);
         }
     }
-    
-    saveStrings("savedChunks/chunkString.txt", chunkString);
+}
+
+char getBlockChar(Block block) {
+    return getBlockChar(block.name);  
+}
+
+char getBlockChar(String blockName) {
+    return settings.blockNamesToChars.get(blockName);    
+}
+
+String getBlockName(char blockChar) {
+    return settings.blockCharsToNames.get(blockChar);    
 }

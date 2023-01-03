@@ -1,2 +1,3 @@
 *.autosave
-Minecraft2D/savedChunks/*
+Minecraft2D/saves/*
+Minecraft2D/saves

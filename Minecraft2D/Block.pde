@@ -1,5 +1,5 @@
 public class Block extends Item {
-    String stringID;
+    String name;
     public boolean isWall;
     float prcntBroken;
     float timeDamagedLastTime;    // millis
@@ -7,9 +7,9 @@ public class Block extends Item {
     String toolTypeForMining;
     boolean isMineable;
 
-    public Block(String stringID, color c, boolean isWall, String toolTypeForMining, boolean isMineable) {
+    public Block(String name, color c, boolean isWall, String toolTypeForMining, boolean isMineable) {
         super("block");
-        this.stringID = stringID;
+        this.name = name;
         this.c = c;
         this.isWall = isWall;
         this.prcntBroken = 0;
@@ -19,7 +19,7 @@ public class Block extends Item {
     }
 
     boolean isWallOrWater() {
-        return (isWall || stringID.equals("water"));
+        return (isWall || name.equals("water"));
     }
 
     boolean isHoldingCorrectToolType() {

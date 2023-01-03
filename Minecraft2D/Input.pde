@@ -33,8 +33,8 @@ void keyPressed() {
         state.rightMouseButtonDown = true;
     }
     
-    if (key == 'g') {
-        chunkToFile(getPlayerChunk());
+    if (key == 't') {
+        saveGeneratedChunksToFile();
     }
 
     if (key == 'h') {
@@ -45,6 +45,8 @@ void keyPressed() {
             println("Player can not walk through walls");
         }
     }
+    
+    
 
     if (key == CODED) {
         if (keyCode == SHIFT) {
@@ -52,6 +54,10 @@ void keyPressed() {
         }
         if (keyCode == ALT) {
             state.player.isRunningSuperSpeed = true;
+        }
+        // F3 has keycode 114
+        if (keyCode == 114) {
+            state.debugScreenIsShowing = !state.debugScreenIsShowing;
         }
     }
 }
