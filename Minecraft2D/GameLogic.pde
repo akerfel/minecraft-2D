@@ -271,7 +271,7 @@ void saveGeneratedChunksToFile() {
     String[] chunkStrings = new String[numberOfLines];
     int currentLineNum = 0;
     
-    // Initialize the strings. This allows for usage of += without first using = when settings values for strings.
+    // Initialize the strings. This allows for usage of += without first using = when setting values for strings.
     for (int y = 0; y < numberOfLines; y++) {
         chunkStrings[y] = "";    
     }
