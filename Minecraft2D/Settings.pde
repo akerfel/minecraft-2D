@@ -63,7 +63,7 @@ void initializeSettings() {
         entry("wood", 'w')
     );
     
-    // blockCharsToNames is a reverses map of blockNamesToChars
+    // blockCharsToNames is a reverse map of blockNamesToChars
     settings.blockCharsToNames = 
     settings.blockNamesToChars.entrySet()
        .stream()
