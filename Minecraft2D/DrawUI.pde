@@ -2,6 +2,7 @@ void drawUI() {
     drawInventoryIfOpen();
     drawHotbar();
     drawDebugMenuIfOpen();
+    drawMouseItemSlot();
 }
 
 void drawDebugMenuIfOpen() {
