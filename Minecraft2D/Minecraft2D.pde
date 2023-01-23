@@ -21,3 +21,15 @@ void draw() {
     updateLogic();
     drawEverything();
 }
+
+void updateLogic() {
+    state.player.move();
+    updateBlocks();
+    updateMobs();
+}
+
+void drawEverything() {
+    background(0, 0, 0);
+    drawWorld();
+    drawUI();
+}

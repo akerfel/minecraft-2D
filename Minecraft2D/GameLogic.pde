@@ -1,11 +1,5 @@
 import java.util.Iterator;
 
-void updateLogic() {
-    state.player.move();
-    updateBlocks();
-    updateMobs();
-}
-
 void updateBlocks() {
     loadVisibleBlocks();
     if (!state.inventoryIsOpen) {
