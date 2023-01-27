@@ -26,7 +26,22 @@ void makeViewDistanceFitZoomLevel() {
 void loadVisibleBlocks() {
     for (int x = 0; x < settings.viewDistance; x++) {
         for (int y = 0; y < settings.viewDistance; y++) {
-            state.visibleBlocks[x][y] = getBlock(state.player.coords.x + x - settings.viewDistance/2, state.player.coords.y + y - settings.viewDistance/2);
+            Block block = getBlock(state.player.coords.x + x - settings.viewDistance/2, state.player.coords.y + y - settings.viewDistance/2);
+            if (block.toString() == "grass") {
+                if (random(1) < 1) {
+                    //println("---");
+                    //println(red(block.c) + " " + green(block.c) + " " + blue(block.c));
+                    int diff = 2;
+                    int r = int(red(block.c)) + int(random(-diff, diff));
+                    int g = int(green(block.c)) + int(random(-diff, diff));
+                    int b = int(blue(block.c)) + int(random(-diff, diff));
+                    block.c = color(r, g, b);
+                    //println(r + " " + g + " " + b);
+                    //println(red(block.c) + " " + green(block.c) + " " + blue(block.c));
+                    //println("---");
+                }
+            }
+            state.visibleBlocks[x][y] = block;
         }
     }
 }
