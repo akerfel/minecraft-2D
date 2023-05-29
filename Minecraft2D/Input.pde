@@ -32,7 +32,7 @@ void keyPressed() {
     if (key == 'f') {
         state.rightMouseButtonDown = true;
     }
-    
+
     if (key == 't') {
         saveGeneratedChunksToFile();
     }
@@ -45,8 +45,8 @@ void keyPressed() {
             println("Player can not walk through walls");
         }
     }
-    
-    
+
+
 
     if (key == CODED) {
         if (keyCode == SHIFT) {

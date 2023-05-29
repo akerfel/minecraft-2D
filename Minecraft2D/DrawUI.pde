@@ -9,13 +9,13 @@ void drawDebugMenuIfOpen() {
     if (state.debugScreenIsShowing) {
         fill(240);
         textAlign(CORNER);
-        
+
         // FPS
         text("fps: " + int(frameRate), 5, 20);
-        
+
         // The player's current block coordinates
         text("Block: " + int(state.player.coords.x) + " / " + int(state.player.coords.y), 5, 40);
-        
+
         // The player's current chunk coordinates
         //PVector playerChunkCoords = blockCoordsToChunkCoords(state.player.coords);
         //text("Chunk: " + int(playerChunkCoords.x) + " / " + int(playerChunkCoords.y), 5, 60);

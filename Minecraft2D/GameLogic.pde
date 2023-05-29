@@ -279,16 +279,16 @@ void saveGeneratedChunksToFile() {
     int numberOfLines = 2 + (2 + settings.blocksPerChunk) * state.generatedChunks.size();
     String[] chunkStrings = new String[numberOfLines];
     int currentLineNum = 0;
-    
+
     // Initialize the strings. This allows for usage of += without first using = when setting values for strings.
     for (int y = 0; y < numberOfLines; y++) {
-        chunkStrings[y] = "";    
+        chunkStrings[y] = "";
     }
-    
+
     // Header of file
     chunkStrings[currentLineNum++] = "Saved " + state.generatedChunks.size() + " chunks.";
     currentLineNum++; // empty line
-    
+
     // Chunks
     for (Map.Entry<PVector, Chunk> entry : state.generatedChunks.entrySet()) {
         PVector chunkCoords = entry.getKey();
@@ -298,7 +298,7 @@ void saveGeneratedChunksToFile() {
         currentLineNum += settings.blocksPerChunk;
         currentLineNum++; // empty line
     }
-    
+
     saveStrings("saves/myGameSave/chunkStrings.txt", chunkStrings);
 }
 
@@ -312,13 +312,13 @@ void addChunkStringsToArray(String[] arrayToAddTo, int startIndex, Chunk chunk) 
 }
 
 char getBlockChar(Block block) {
-    return getBlockChar(block.name);  
+    return getBlockChar(block.name);
 }
 
 char getBlockChar(String blockName) {
-    return settings.blockNamesToChars.get(blockName);    
+    return settings.blockNamesToChars.get(blockName);
 }
 
 String getBlockName(char blockChar) {
-    return settings.blockCharsToNames.get(blockChar);    
+    return settings.blockCharsToNames.get(blockChar);
 }
