@@ -19,13 +19,13 @@ public class Mob {
 
     void update() {
         if (isMoving) {
+            maybeStopMoving();
             float xPrevious = coords.x;
             float yPrevious = coords.y;
             // Change coords
             coords.x += direction.x * speedFactor;
             coords.y += direction.y * speedFactor;
             slightlyShiftDirection();
-            maybeStopMoving();
 
             float mobWidthInBlocks = settings.mobWidth / settings.pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
             if (getBlock(int(coords.x), int(coords.y)).isWallOrWater()
@@ -39,9 +39,7 @@ public class Mob {
                 direction.y *= -1;
             }
         } else {
-            if (random(0, 1) < chanceStartMoving) {
-                startMovingSequence();
-            }
+            maybeStartMoving();
         }
     }
 
@@ -59,6 +57,12 @@ public class Mob {
     void maybeStopMoving() {
         if (random(0, 1) < chanceStopMoving) {
             isMoving = false;
+        }
+    }
+    
+    void maybeStartMoving() {
+        if (random(0, 1) < chanceStartMoving) {
+            startMovingSequence();
         }
     }
 

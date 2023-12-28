@@ -9,13 +9,13 @@ void drawDebugMenuIfOpen() {
     if (state.debugScreenIsShowing) {
         fill(240);
         textAlign(CORNER);
-        
+
         // FPS
         text("fps: " + int(frameRate), 5, 20);
-        
+
         // The player's current block coordinates
         text("Block: " + int(state.player.coords.x) + " / " + int(state.player.coords.y), 5, 40);
-        
+
         // The player's current chunk coordinates
         //PVector playerChunkCoords = blockCoordsToChunkCoords(state.player.coords);
         //text("Chunk: " + int(playerChunkCoords.x) + " / " + int(playerChunkCoords.y), 5, 60);
@@ -135,6 +135,6 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(tool.toolType, xPixel, yPixel + settings.pixelsPerItemSlot / 2);
+    text(tool.toString(), xPixel, yPixel + settings.pixelsPerItemSlot / 2);
     rectMode(CORNER);
 }

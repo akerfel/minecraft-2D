@@ -1,11 +1,11 @@
 public class Tool extends Item {
-    String toolType;     // E.g. "pick", "shovel" or "axe"
+    ToolType toolType;     // E.g. "pick", "shovel" or "axe"
     String material;     // E.g. "wood", "stone" or "iron"
     int mult;            // Mining speed multiplier
 
     // E.g. for making new tool:
     // Tool diamondPick = new Tool("diamond", "pick");
-    public Tool(String material, String toolType) {
+    public Tool(String material, ToolType toolType) {
         super("tool");
         this.toolType = toolType;
         this.material = material;
@@ -38,6 +38,17 @@ public class Tool extends Item {
     }
 
     public String toString() {
-        return toolType;
+        switch(toolType) {
+            case PICK:
+                return "pick";
+            case SHOVEL:
+                return "shovel";
+            case AXE:
+                return "axe";
+            case SWORD:
+                return "sword";
+            default:
+                return "";
+        }
     }
 }

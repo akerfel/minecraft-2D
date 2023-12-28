@@ -4,10 +4,10 @@ public class Block extends Item {
     float prcntBroken;
     float timeDamagedLastTime;    // millis
     float hardness;
-    String toolTypeForMining;
+    ToolType toolTypeForMining;
     boolean isMineable;
 
-    public Block(String name, color c, boolean isWall, String toolTypeForMining, boolean isMineable) {
+    public Block(String name, color c, boolean isWall, ToolType toolTypeForMining, boolean isMineable) {
         super("block");
         this.name = name;
         this.c = c;
@@ -66,7 +66,7 @@ public class Block extends Item {
 
 public class Dirt extends Block {
     public Dirt() {
-        super("dirt", color(151, 109, 77), false, "shovel", true);
+        super("dirt", color(151, 109, 77), false, ToolType.SHOVEL, true);
     }
 
     public String toString() {
@@ -76,11 +76,11 @@ public class Dirt extends Block {
 
 public class Grass extends Block {
     public Grass() {
-        super("grass", color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, "shovel", false);
+        super("grass", color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
     }
 
     public Grass(color colorScheme) {
-        super("grass", color(127, 178, 56) + colorScheme + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, "shovel", false);
+        super("grass", color(127, 178, 56) + colorScheme + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
     }
 
     public String toString() {
@@ -90,7 +90,7 @@ public class Grass extends Block {
 
 public class Leaves extends Block {
     public Leaves() {
-        super("leaves", color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, "axe", true);
+        super("leaves", color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, ToolType.AXE, true);
         this.hardness = 0.2;
     }
 
@@ -101,7 +101,7 @@ public class Leaves extends Block {
 
 public class Planks extends Block {
     public Planks() {
-        super("planks", color(194, 155, 115), true, "axe", true);
+        super("planks", color(194, 155, 115), true, ToolType.AXE, true);
     }
 
     public String toString() {
@@ -111,7 +111,7 @@ public class Planks extends Block {
 
 public class Sand extends Block {
     public Sand() {
-        super("sand", color(247, 233, 163), false, "shovel", true);
+        super("sand", color(247, 233, 163), false, ToolType.SHOVEL, true);
     }
 
     public String toString() {
@@ -121,7 +121,7 @@ public class Sand extends Block {
 
 public class Stone extends Block {
     public Stone() {
-        super("stone", color(112, 112, 112), true, "pick", true);
+        super("stone", color(112, 112, 112), true, ToolType.PICK, true);
     }
 
     public String toString() {
@@ -131,7 +131,7 @@ public class Stone extends Block {
 
 public class Water extends Block {
     public Water() {
-        super("water", color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, "nothing", false);
+        super("water", color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, ToolType.NOTYPE, false);
         hardness = 100000;
     }
 
@@ -142,7 +142,7 @@ public class Water extends Block {
 
 public class Wood extends Block {
     public Wood() {
-        super("wood", color(174, 125, 90), true, "axe", true);
+        super("wood", color(174, 125, 90), true, ToolType.AXE, true);
     }
 
     public String toString() {
