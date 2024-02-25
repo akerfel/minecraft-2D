@@ -33,8 +33,8 @@ public class Chunk {
     private void placeBlocks() {
         float stoneNoiseScale = 0.07;
         float riverNoiseScale = 0.01;
-        float ironNoiseScale = 0.13;
-        float ironThreshold = 0.8;
+        float ironNoiseScale = 0.1;
+        float ironThreshold = 0.79;
     
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
@@ -45,10 +45,10 @@ public class Chunk {
                 if (stoneNoiseVal < chanceStone) {
                     blocks[x][y] = new Stone();
                     if (ironNoiseVal > ironThreshold) {
-                        int ironOreGroupSize = (int)(Math.random() * 7) + 2; // Randomize group size between 2 and 8
+                        int ironOreGroupSize = (int)(Math.random() * 7) + 2;
                         for (int i = 0; i < ironOreGroupSize; i++) {
                             if (x + i < settings.blocksPerChunk && y + i < settings.blocksPerChunk) {
-                                blocks[x + i][y + i] = new IronOre(); // Place iron ore blocks in a diagonal pattern
+                                blocks[x + i][y + i] = new IronOre();
                             }
                         }
                     }
