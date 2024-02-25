@@ -1,7 +1,7 @@
 # minecraft-2D
 A top-down minecraft-esque game with an infinite and randomly generated world. Made with Java/Processing.
 
-![java_iNpaFTUuma](https://user-images.githubusercontent.com/45148959/205670770-726a353d-85be-45d4-b660-f789061718e5.png)
+![ezgif-3-6c8385861d](https://github.com/akerfel/minecraft-2D/assets/45148959/94e0995a-d569-4ace-8449-1f432e0a2ca6)
 
 ## Tips
-* Zoom by holding `T` and using the **Mouse Wheel**.
+* Zoom with `+` and `-`
