@@ -8,10 +8,14 @@ public class Settings {
     float playerWidth;             // will change depending on zoom level
     float mobWidth;                // will change depending on zoom level
     float baseChanceStone;
+    float chanceStoneInMountainChunk;
     float baseChanceTree;
+    float chanceTreeInForestChunk;
+    float chanceTreeInMountainChunk;
     float chanceRiver;
     float chanceForestChunk;
     float chanceBigTreesChunk;
+    float chanceMountainChunk;
     float mobSpawnChance;          // Chance each frame, so should be pretty low
     int maxMobs;
     int mobSpawnRange;             // In blocks
@@ -29,28 +33,51 @@ public class Settings {
 }
 
 void initializeSettings() {
+    
+    // Visuals
     settings.pixelsPerBlock = 25;
-    settings.blocksPerChunk = 128;
+    settings.blocksPerChunk = 16;
+    settings.noStrokeMode = true;
+    setNoStrokeModeDependingOnSetting();
     resetObjectsDependingOnPixelsPerBlock();
+    
+    // Default/base chunk 
     settings.baseChanceStone = 0.005;
     settings.baseChanceTree = 0.02;
-    settings.chanceRiver = 0.00004;
-    settings.chanceForestChunk = 0.17;
+    
+    // Big trees chunks
     settings.chanceBigTreesChunk = 0.20;
+    
+    // Forest chunk
+    settings.chanceForestChunk = 0.17;
+    settings.chanceTreeInForestChunk = 0.02;
+    
+    // Mountain chunk
+    settings.chanceMountainChunk = 0.80;
+    settings.chanceStoneInMountainChunk = 0.80;
+    settings.chanceTreeInMountainChunk = 0;
+    
+    // Other
+    settings.chanceRiver = 0.00004;
+    
+    // Mobs
     settings.mobSpawnChance = 0.01;
     settings.maxMobs = 30;
     settings.mobSpawnRange = 50;
     settings.mobDespawnRange = 100;
     settings.viewDistance = 250;
     settings.pixelsPerItemSlot = 60;
+    
+    // Inventory
     settings.inventoryWidth = 9;
     settings.inventoryHeight = 4;
     settings.inventoryUpperLeftXPixel = width / 2 - settings.pixelsPerItemSlot * settings.inventoryWidth / 2;
     settings.inventoryUpperLeftYPixel = height / 2 - settings.pixelsPerItemSlot * settings.inventoryHeight / 2;
-    settings.noStrokeMode = true;
-    setNoStrokeModeDependingOnSetting();
+    
+    mapBlockNamesToCharacters();
+}
 
-    // Maps block names to block characters.
+private void mapBlockNamesToCharacters() {// Maps block names to block characters.
     // E.g. "wood" could map to "w".
     settings.blockNamesToChars = Map.ofEntries(
         entry("dirt", 'd'),

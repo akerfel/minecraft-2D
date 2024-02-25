@@ -3,37 +3,54 @@ public class Chunk {
     public color grassColorScheme;         // Each chunk has a special color for grass
     float chanceStone;                     // for each block
     float chanceTree;
-    boolean isForestChunk;                 // true means much higher tree density
-    boolean isBigTreesChunk;               // true means only big trees
+    ChunkType type;
 
     public Chunk(PVector coords) {
-        blocks = new Block[settings.blocksPerChunk][settings.blocksPerChunk];
-        long chunkSeed = state.worldSeed + int(coords.x) + int(coords.y) * 1000;
-        randomSeed(chunkSeed);
-
-        // Place grass and stone
+        // Setup
+        setupBlockMatrix();
+        setupSeed(coords);
+        setupChunkType();
+        setupColorScheme();
+        
+        // Place blocks
         placeGrassAndStone();
-
-        // Place trees or big trees. A forest chunk can not also be a big trees chunk.
-        isForestChunk = false;
-        chanceTree = settings.baseChanceTree * random(0.1, 1.3);
-        isBigTreesChunk = random(0, 1) < settings.chanceBigTreesChunk;
-        if (isBigTreesChunk) placeBigTrees();
-        else {
-            isForestChunk = random(0, 1) < settings.chanceForestChunk;
-            if (isForestChunk) {
-                chanceTree = 0.2 + random(-0.05, 0.05);
-            }
-            placeTrees();
-        }
-
-        // Water
+        placeTrees();
         placeRivers();
     }
-
-    void placeGrassAndStone() {
-        grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
+    
+    private void setupBlockMatrix() {
+        blocks = new Block[settings.blocksPerChunk][settings.blocksPerChunk];    
+    }
+    
+    private void setupSeed(PVector coords) {
+        long chunkSeed = state.worldSeed + int(coords.x) + int(coords.y) * 1000;
+        randomSeed(chunkSeed);    
+    }
+    
+    private void setupChunkType() {
+        type = ChunkType.DEFAULT;    
         chanceStone = settings.baseChanceStone * random(0.1, 1.3);
+        chanceTree = settings.baseChanceTree * random(0.1, 1.3);
+        
+        if (random(0, 1) < settings.chanceBigTreesChunk) {
+            type = ChunkType.BIG_TREES;
+        }
+        else if (random(0, 1) < settings.chanceForestChunk) {
+            type = ChunkType.FOREST;
+            chanceTree = settings.chanceTreeInForestChunk + random(-0.05, 0.05);
+        }
+        else if (random(0, 1) < settings.chanceMountainChunk) {
+            type = ChunkType.MOUNTAIN;
+            chanceStone = settings.chanceStoneInMountainChunk + random(-0.05, 0.05);
+            chanceTree = settings.chanceTreeInMountainChunk;
+        }
+    }
+    
+    private void setupColorScheme() {
+        grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
+    }
+    
+    private void placeGrassAndStone() {
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
                 if (random(0, 1) < chanceStone) {
@@ -44,8 +61,8 @@ public class Chunk {
             }
         }
     }
-
-    void placeRivers() {
+    
+    private void placeRivers() {
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
                 if (random(0, 1) < settings.chanceRiver) {
@@ -55,7 +72,7 @@ public class Chunk {
         }
     }
 
-    void makeRiver(int xCord, int yCord) {
+     private void makeRiver(int xCord, int yCord) {
         int startWidth = int(random(3, 5));
         int currentWidth = startWidth;
         int lengthRiver = constrain(int(random(40, 400)), 1, settings.blocksPerChunk - yCord - 3);
@@ -83,7 +100,15 @@ public class Chunk {
         }
     }
 
-    void placeTrees() {
+     private void placeTrees() {
+        if (type == ChunkType.BIG_TREES) {
+            placeBigTrees();
+            return;
+        }
+        placeNormalTrees();
+    }
+    
+    private void placeNormalTrees() {
         for (int x = 0; x < settings.blocksPerChunk - 2; x++) {
             for (int y = 0; y < settings.blocksPerChunk - 2; y++) {
                 if (random(0, 1) < chanceTree) {
@@ -93,7 +118,7 @@ public class Chunk {
         }
     }
 
-    void placeBigTrees() {
+     private void placeBigTrees() {
         for (int x = 0; x < settings.blocksPerChunk - 5; x++) {
             for (int y = 0; y < settings.blocksPerChunk - 5; y++) {
                 if (random(0, 1) < chanceTree) {
@@ -104,7 +129,7 @@ public class Chunk {
     }
 
     // (x, y) is the top left square of the tree
-    void makeTree(int x, int y) {
+     private void makeTree(int x, int y) {
         // Top row
         makeLeaf(x, y);
         makeLeaf(x+1, y);
@@ -122,7 +147,7 @@ public class Chunk {
     }
 
     // (x, y) is the top left square of the tree
-    void makeBigTree(int x, int y) {
+     private void makeBigTree(int x, int y) {
 
         // Horizontal row 1 of 4
         makeLeaf(x, y);
@@ -149,7 +174,7 @@ public class Chunk {
         makeLeaf(x+3, y+3);
     }
 
-    void makeLeaf(int x, int y) {
+     private void makeLeaf(int x, int y) {
         if (!blocks[x][y].name.equals("wood")) {
             blocks[x][y] = new Leaves();
         }

@@ -16,7 +16,7 @@ void setup() {
     intializeState();
 }
 
-// This is the main game loop (called 60 times per second)
+// This is the main game loop (called ~60 times per second)
 void draw() {
     updateLogic();
     drawEverything();
