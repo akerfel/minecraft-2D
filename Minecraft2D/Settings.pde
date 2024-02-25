@@ -95,7 +95,8 @@ private void mapBlockNamesToCharacters() {// Maps block names to block chars.
         entry("sand", 's'),
         entry("stone", 'S'),
         entry("water", '~'),
-        entry("wood", 'w')
+        entry("wood", 'w'),
+        entry("ironore", 'i')
         );
 
     // blockCharsToNames is a reverse map of blockNamesToChars

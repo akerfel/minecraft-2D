@@ -35,13 +35,25 @@ public class Chunk {
     private void placeGrassAndStoneAndWater() {
         float stoneNoiseScale = 0.07; 
         float riverNoiseScale = 0.01; 
+        float ironNoiseScale = 0.08; // Adjust as needed for rarity of iron ore
+        float ironThreshold = 0.8;  // Adjust as needed for rarity of iron ore
+    
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
                 float stoneNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * stoneNoiseScale, (y + coords.y * settings.blocksPerChunk) * stoneNoiseScale);
                 float riverNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * riverNoiseScale, (y + coords.y * settings.blocksPerChunk) * riverNoiseScale);
+                float ironNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * ironNoiseScale, (y + coords.y * settings.blocksPerChunk) * ironNoiseScale);
                 
                 if (stoneNoiseVal < chanceStone) {
                     blocks[x][y] = new Stone();
+                    if (ironNoiseVal > ironThreshold) {
+                        int ironOreGroupSize = (int)(Math.random() * 7) + 2; // Randomize group size between 2 and 8
+                        for (int i = 0; i < ironOreGroupSize; i++) {
+                            if (x + i < settings.blocksPerChunk && y + i < settings.blocksPerChunk) {
+                                blocks[x + i][y + i] = new IronOre(); // Place iron ore blocks in a diagonal pattern
+                            }
+                        }
+                    }
                 } else {
                     blocks[x][y] = new Grass(grassColorScheme);
                 }
@@ -49,6 +61,8 @@ public class Chunk {
                 if (riverNoiseVal > 0.5 && riverNoiseVal < 0.55) {
                     blocks[x][y] = new Water(); 
                 }
+    
+                
             }
         }
     }
