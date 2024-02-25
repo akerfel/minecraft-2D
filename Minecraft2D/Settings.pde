@@ -28,7 +28,6 @@ public class Settings {
     // Mountain chunk
     float chanceMountainChunk;
     float chanceStone;
-    float chanceTree;
     
     // Other
     float chanceRiver;
@@ -62,8 +61,7 @@ void initializeSettings() {
     settings.viewDistance = 250;
     
     // Block chances
-    settings.chanceStone = 0.45;
-    settings.chanceTree = 0;
+    settings.chanceStone = 0.38;
     
     // Other
     settings.chanceRiver = 0.00004;

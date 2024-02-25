@@ -2,14 +2,12 @@ public class Chunk {
     public Block[][] blocks;
     public color grassColorScheme;         // Each chunk has a special color for grass
     float chanceStone;                     // for each block
-    float chanceTree;
     PVector coords;
 
     public Chunk(PVector coords) {
         // Setup
         this.coords = coords;
         chanceStone = settings.chanceStone + random(-0.05, 0.05);
-        chanceTree = settings.chanceTree;
         setupBlockMatrix();
         setupSeed();
         setupColorScheme();
@@ -33,10 +31,10 @@ public class Chunk {
     }
     
     private void placeBlocks() {
-        float stoneNoiseScale = 0.07; 
-        float riverNoiseScale = 0.01; 
-        float ironNoiseScale = 0.08; // Adjust as needed for rarity of iron ore
-        float ironThreshold = 0.8;  // Adjust as needed for rarity of iron ore
+        float stoneNoiseScale = 0.07;
+        float riverNoiseScale = 0.01;
+        float ironNoiseScale = 0.13;
+        float ironThreshold = 0.8;
     
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
@@ -79,19 +77,9 @@ public class Chunk {
             }
         }
     }
-
-     private void placeBigTrees() {
-        for (int x = 0; x < settings.blocksPerChunk - 5; x++) {
-            for (int y = 0; y < settings.blocksPerChunk - 5; y++) {
-                if (random(0, 1) < chanceTree) {
-                    makeBigTree(x, y);
-                }
-            }
-        }
-    }
-
+    
     // (x, y) is the top left square of the tree
-     private void makeTree(int x, int y) {
+    private void makeTree(int x, int y) {
         // Top row
         makeLeaf(x, y);
         makeLeaf(x+1, y);
