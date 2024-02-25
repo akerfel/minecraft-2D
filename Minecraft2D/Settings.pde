@@ -55,7 +55,7 @@ void initializeSettings() {
     
     // Visuals
     settings.pixelsPerBlock = 25;
-    settings.blocksPerChunk = 16;
+    settings.blocksPerChunk = 64;
     settings.noStrokeMode = true;
     setNoStrokeModeDependingOnSetting();
     resetObjectsDependingOnPixelsPerBlock();
@@ -73,8 +73,8 @@ void initializeSettings() {
     settings.chanceTreeInForestChunk = 0.02;
     
     // Mountain chunk
-    settings.chanceMountainChunk = 0.80;
-    settings.chanceStoneInMountainChunk = 0.80;
+    settings.chanceMountainChunk = 0.20;
+    settings.chanceStoneInMountainChunk = 0.45;
     settings.chanceTreeInMountainChunk = 0;
     
     // Other
