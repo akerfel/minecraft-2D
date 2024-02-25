@@ -33,23 +33,21 @@ public class Chunk {
     }
     
     private void placeGrassAndStoneAndWater() {
-        float stoneNoiseScale = 0.07; // Adjust this scale to change the noise frequency for stone
-        float riverNoiseScale = 0.02; // Adjust this scale to change the noise frequency for river
+        float stoneNoiseScale = 0.07; 
+        float riverNoiseScale = 0.01; 
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
                 float stoneNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * stoneNoiseScale, (y + coords.y * settings.blocksPerChunk) * stoneNoiseScale);
                 float riverNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * riverNoiseScale, (y + coords.y * settings.blocksPerChunk) * riverNoiseScale);
                 
-                // Place stone and grass blocks independently
                 if (stoneNoiseVal < chanceStone) {
                     blocks[x][y] = new Stone();
                 } else {
                     blocks[x][y] = new Grass(grassColorScheme);
                 }
     
-                // Check for river placement independently based on a separate noise field
-                if (riverNoiseVal > 0.5 && riverNoiseVal < 0.55) { // Adjusted threshold for river placement
-                    blocks[x][y] = new Water(); // Place water block for river
+                if (riverNoiseVal > 0.5 && riverNoiseVal < 0.55) {
+                    blocks[x][y] = new Water(); 
                 }
             }
         }
@@ -61,7 +59,7 @@ public class Chunk {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
                 if (x < settings.blocksPerChunk - 2 && y < settings.blocksPerChunk - 2) {
                     float treeNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * treeNoiseScale, (y + coords.y * settings.blocksPerChunk) * treeNoiseScale);
-                    float treeChance = map(treeNoiseVal, 0, 1, 0, 0.01); // Adjusted likelihood of tree placement based on noise
+                    float treeChance = map(treeNoiseVal, 0, 1, 0, 0.01);
                     if (random(1) < treeChance && blocks[x][y] instanceof Grass) {
                         makeTree(x, y);
                     }
