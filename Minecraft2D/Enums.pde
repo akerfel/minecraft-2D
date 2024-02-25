@@ -5,10 +5,3 @@ enum ToolType {
     SWORD,
     NOTYPE
 }
-
-enum ChunkType {
-    DEFAULT,
-    FOREST,
-    BIG_TREES,
-    MOUNTAIN
-}

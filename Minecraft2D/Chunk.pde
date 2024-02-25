@@ -3,21 +3,20 @@ public class Chunk {
     public color grassColorScheme;         // Each chunk has a special color for grass
     float chanceStone;                     // for each block
     float chanceTree;
-    ChunkType type;
     PVector coords;
 
     public Chunk(PVector coords) {
         // Setup
         this.coords = coords;
+        chanceStone = settings.chanceStone + random(-0.05, 0.05);
+        chanceTree = settings.chanceTree;
         setupBlockMatrix();
         setupSeed();
-        setupChunkType();
         setupColorScheme();
         
         // Place blocks
         placeGrassAndStoneAndWater();
-        placeTrees();
-        //placeRivers();
+        placeNormalTrees();
     }
     
     private void setupBlockMatrix() {
@@ -27,27 +26,6 @@ public class Chunk {
     private void setupSeed() {
         long chunkSeed = state.worldSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);    
-    }
-    
-    private void setupChunkType() {
-        type = ChunkType.DEFAULT;    
-        chanceStone = settings.baseChanceStone * random(0.1, 1.3);
-        chanceTree = settings.baseChanceTree * random(0.1, 1.3);
-        
-        /*
-        if (random(0, 1) < settings.chanceBigTreesChunk) {
-            type = ChunkType.BIG_TREES;
-        }
-        else if (random(0, 1) < settings.chanceForestChunk) {
-            type = ChunkType.FOREST;
-            chanceTree = settings.chanceTreeInForestChunk + random(-0.05, 0.05);
-        }
-        */
-        if (true) {
-            type = ChunkType.MOUNTAIN;
-            chanceStone = settings.chanceStoneInMountainChunk + random(-0.05, 0.05);
-            chanceTree = settings.chanceTreeInMountainChunk;
-        }
     }
     
     private void setupColorScheme() {
@@ -77,57 +55,16 @@ public class Chunk {
         }
     }
     
-    private void placeRivers() {
+    private void placeNormalTrees() {
+        float treeNoiseScale = 0.05;
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
-                if (random(0, 1) < settings.chanceRiver) {
-                    makeRiver(x, y);
-                }
-            }
-        }
-    }
-
-     private void makeRiver(int xCord, int yCord) {
-        int startWidth = int(random(3, 5));
-        int currentWidth = startWidth;
-        int lengthRiver = constrain(int(random(40, 400)), 1, settings.blocksPerChunk - yCord - 3);
-        float chanceTurnRight = 0.2;
-        float chanceTurnLeft = 0.2;
-        for (int y = 0; y < lengthRiver; y++) {
-            for (int x = 0; x < currentWidth; x++) {
-                // Place row of wates (unless too close to edge of chunk)
-                if (xCord + x > 1 && xCord + x < settings.blocksPerChunk) {
-                    blocks[xCord + x][yCord + y] = new Water();
-                }
-            }
-            // Change width of river
-            if (random(0, 1) < 0.2) {
-                currentWidth += int(random(-2, 2));
-                currentWidth = constrain(currentWidth, startWidth - 1, startWidth + 1);
-            }
-            // Change start xpos of the next row of water
-            if (random(0, 1) < chanceTurnRight) {
-                xCord++;
-            }
-            if (random(0, 1) <= chanceTurnLeft) {
-                xCord--;
-            }
-        }
-    }
-
-     private void placeTrees() {
-        if (type == ChunkType.BIG_TREES) {
-            placeBigTrees();
-            return;
-        }
-        placeNormalTrees();
-    }
-    
-    private void placeNormalTrees() {
-        for (int x = 0; x < settings.blocksPerChunk - 2; x++) {
-            for (int y = 0; y < settings.blocksPerChunk - 2; y++) {
-                if (random(0, 1) < chanceTree) {
-                    makeTree(x, y);
+                if (x < settings.blocksPerChunk - 2 && y < settings.blocksPerChunk - 2) {
+                    float treeNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * treeNoiseScale, (y + coords.y * settings.blocksPerChunk) * treeNoiseScale);
+                    float treeChance = map(treeNoiseVal, 0, 1, 0, 0.01); // Adjusted likelihood of tree placement based on noise
+                    if (random(1) < treeChance && blocks[x][y] instanceof Grass) {
+                        makeTree(x, y);
+                    }
                 }
             }
         }

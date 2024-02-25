@@ -27,8 +27,8 @@ public class Settings {
     
     // Mountain chunk
     float chanceMountainChunk;
-    float chanceStoneInMountainChunk;
-    float chanceTreeInMountainChunk;
+    float chanceStone;
+    float chanceTree;
     
     // Other
     float chanceRiver;
@@ -61,21 +61,9 @@ void initializeSettings() {
     resetObjectsDependingOnPixelsPerBlock();
     settings.viewDistance = 250;
     
-    // Default/base chunk 
-    settings.baseChanceStone = 0.005;
-    settings.baseChanceTree = 0.02;
-    
-    // Big trees chunks
-    settings.chanceBigTreesChunk = 0.20;
-    
-    // Forest chunk
-    settings.chanceForestChunk = 0.17;
-    settings.chanceTreeInForestChunk = 0.02;
-    
-    // Mountain chunk
-    settings.chanceMountainChunk = 0.20;
-    settings.chanceStoneInMountainChunk = 0.45;
-    settings.chanceTreeInMountainChunk = 0;
+    // Block chances
+    settings.chanceStone = 0.45;
+    settings.chanceTree = 0;
     
     // Other
     settings.chanceRiver = 0.00004;
