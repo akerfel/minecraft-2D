@@ -15,7 +15,7 @@ public class Chunk {
         setupColorScheme();
         
         // Place blocks
-        placeGrassAndStoneAndWater();
+        placeBlocks();
         placeNormalTrees();
     }
     
@@ -32,7 +32,7 @@ public class Chunk {
         grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
     }
     
-    private void placeGrassAndStoneAndWater() {
+    private void placeBlocks() {
         float stoneNoiseScale = 0.07; 
         float riverNoiseScale = 0.01; 
         float ironNoiseScale = 0.08; // Adjust as needed for rarity of iron ore
@@ -61,8 +61,6 @@ public class Chunk {
                 if (riverNoiseVal > 0.5 && riverNoiseVal < 0.55) {
                     blocks[x][y] = new Water(); 
                 }
-    
-                
             }
         }
     }

@@ -184,7 +184,7 @@ boolean setMouseBlock(Block block) {
 
 PVector getVector_BlocksFromPlayerToMouse() {
     float xPixelsFromPlayerToMouse = width / 2 - mouseX;
-    float yPixelsFromPlayerToMouse = width / 2 - mouseY;
+    float yPixelsFromPlayerToMouse = height / 2 - mouseY;
     float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / settings.pixelsPerBlock;
     float yBlocksFromPlayerToMouse = yPixelsFromPlayerToMouse / settings.pixelsPerBlock;
     return new PVector(xBlocksFromPlayerToMouse, yBlocksFromPlayerToMouse);

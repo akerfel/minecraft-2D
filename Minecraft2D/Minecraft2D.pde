@@ -5,7 +5,8 @@ State state;            // Game state
 
 // This function is called once, at startup
 void setup() {
-    size(1200, 1200);
+    fullScreen();
+    //size(1200, 1200);
 
     // Initialize cheats, settings and state
     cheats = new Cheats();
