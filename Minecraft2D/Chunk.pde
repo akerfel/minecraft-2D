@@ -4,25 +4,27 @@ public class Chunk {
     float chanceStone;                     // for each block
     float chanceTree;
     ChunkType type;
+    PVector coords;
 
     public Chunk(PVector coords) {
         // Setup
+        this.coords = coords;
         setupBlockMatrix();
-        setupSeed(coords);
+        setupSeed();
         setupChunkType();
         setupColorScheme();
         
         // Place blocks
-        placeGrassAndStone();
+        placeGrassAndStoneAndWater();
         placeTrees();
-        placeRivers();
+        //placeRivers();
     }
     
     private void setupBlockMatrix() {
         blocks = new Block[settings.blocksPerChunk][settings.blocksPerChunk];    
     }
     
-    private void setupSeed(PVector coords) {
+    private void setupSeed() {
         long chunkSeed = state.worldSeed + int(coords.x) + int(coords.y) * 1000;
         randomSeed(chunkSeed);    
     }
@@ -32,6 +34,7 @@ public class Chunk {
         chanceStone = settings.baseChanceStone * random(0.1, 1.3);
         chanceTree = settings.baseChanceTree * random(0.1, 1.3);
         
+        /*
         if (random(0, 1) < settings.chanceBigTreesChunk) {
             type = ChunkType.BIG_TREES;
         }
@@ -39,7 +42,8 @@ public class Chunk {
             type = ChunkType.FOREST;
             chanceTree = settings.chanceTreeInForestChunk + random(-0.05, 0.05);
         }
-        else if (random(0, 1) < settings.chanceMountainChunk) {
+        */
+        if (true) {
             type = ChunkType.MOUNTAIN;
             chanceStone = settings.chanceStoneInMountainChunk + random(-0.05, 0.05);
             chanceTree = settings.chanceTreeInMountainChunk;
@@ -50,13 +54,24 @@ public class Chunk {
         grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
     }
     
-    private void placeGrassAndStone() {
+    private void placeGrassAndStoneAndWater() {
+        float stoneNoiseScale = 0.07; // Adjust this scale to change the noise frequency for stone
+        float riverNoiseScale = 0.02; // Adjust this scale to change the noise frequency for river
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
-                if (random(0, 1) < chanceStone) {
+                float stoneNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * stoneNoiseScale, (y + coords.y * settings.blocksPerChunk) * stoneNoiseScale);
+                float riverNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * riverNoiseScale, (y + coords.y * settings.blocksPerChunk) * riverNoiseScale);
+                
+                // Place stone and grass blocks independently
+                if (stoneNoiseVal < chanceStone) {
                     blocks[x][y] = new Stone();
                 } else {
                     blocks[x][y] = new Grass(grassColorScheme);
+                }
+    
+                // Check for river placement independently based on a separate noise field
+                if (riverNoiseVal > 0.5 && riverNoiseVal < 0.55) { // Adjusted threshold for river placement
+                    blocks[x][y] = new Water(); // Place water block for river
                 }
             }
         }
