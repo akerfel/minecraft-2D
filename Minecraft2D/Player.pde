@@ -6,7 +6,7 @@ public class Player {
     boolean isRunning;
     boolean isRunningSuperSpeed;
     float runningFactor;                    // 1.5 gives 50% speed increase when running
-    float superSpeedFactor;                 // 1.5 gives 50% speed increase when running
+    float superSpeedFactor;
     public Player(float x, float y) {
         inventory = new Inventory();
         coords = new PVector(x, y);
@@ -17,7 +17,7 @@ public class Player {
         runningFactor = 2;
         superSpeedFactor = 200;
     }
-
+    
     void move() {
         float v = speed;
         if (isRunning) {

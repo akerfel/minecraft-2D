@@ -2,10 +2,7 @@ import java.util.Iterator;
 
 void updateBlocks() {
     loadVisibleBlocks();
-    if (!state.inventoryIsOpen) {
-        placeBlocksWithMouse();
-        mineBlocksWithMouse();
-    }
+    placeOrMineBlock();
     removeBlockDamageIfNotMining();
 }
 
@@ -13,6 +10,13 @@ void updateMobs() {
     maybeSpawnMob();
     removeFarMobs();
     updateMobsPos();
+}
+
+void placeOrMineBlock() {
+    if (!state.inventoryIsOpen) {
+        placeBlockWithMouse();
+        mineBlockWithMouse();
+    }    
 }
 
 void makeViewDistanceFitZoomLevel() {
@@ -103,7 +107,7 @@ void resetObjectsDependingOnPixelsPerBlock() {
     settings.mobWidth = settings.pixelsPerBlock / 2;
 }
 
-void placeBlocksWithMouse() {
+void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
         ItemSlot cell = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
         if (cell.item.type.equals("block")) {
@@ -139,7 +143,7 @@ Block generateBlockObject(String stringID) {
     return new Grass();
 }
 
-void mineBlocksWithMouse() {
+void mineBlockWithMouse() {
     if (state.leftMouseButtonDown) {
         Block mouseBlock = getMouseBlock();
         if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < state.player.reach) {
@@ -300,8 +304,8 @@ char getBlockChar(Block block) {
     return getBlockChar(block.name);
 }
 
-char getBlockChar(String blockName) {
-    return settings.blockNamesToChars.get(blockName);
+char getBlockChar(String blockID) {
+    return settings.blockNamesToChars.get(blockID);
 }
 
 String getBlockName(char blockChar) {

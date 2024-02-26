@@ -1,5 +1,5 @@
 public class Block extends Item {
-    String name;
+    final String name;            // unique identifier   
     public boolean isWall;
     float prcntBroken;
     float timeDamagedLastTime;    // millis
