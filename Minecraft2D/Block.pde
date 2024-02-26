@@ -105,7 +105,7 @@ public class Sand extends Block {
 
 public class Stone extends Block {
     public Stone() {
-        super("stone", color(112, 112, 112), true, ToolType.PICK, true);
+        super("stone", color(112, 112, 112) + color(random(-8, 8), random(-8, 8), random(-8, 8)), true, ToolType.PICK, true);
     }
 }
 

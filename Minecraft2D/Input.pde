@@ -46,15 +46,13 @@ void keyPressed() {
         }
     }
 
-
-
     if (key == CODED) {
         if (keyCode == SHIFT) {
             state.player.isRunning = true;
         }
-        if (keyCode == ALT) {
-            state.player.isRunningSuperSpeed = true;
-        }
+        //if (keyCode == ALT) {
+        //    state.player.isRunningSuperSpeed = true;
+        //}
         // F3 has keycode 114
         if (keyCode == 114) {
             state.debugScreenIsShowing = !state.debugScreenIsShowing;

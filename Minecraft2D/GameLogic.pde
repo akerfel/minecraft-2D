@@ -109,7 +109,7 @@ void placeBlocksWithMouse() {
         if (cell.item.type.equals("block")) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && getMouseBlock().name.equals("grass") && setMouseBlock(generateBlockObject(block.name))) {
+                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && (getMouseBlock().name.equals("grass") || getMouseBlock().name.equals("water")) && setMouseBlock(generateBlockObject(block.name))) {
                     cell.amount--;
                 }
             }
