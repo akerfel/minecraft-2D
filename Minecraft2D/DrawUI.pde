@@ -135,6 +135,6 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     textSize(20);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(tool.toString(), xPixel, yPixel + settings.pixelsPerItemSlot / 2);
+    text(tool.getInventoryLabel(), xPixel, yPixel + settings.pixelsPerItemSlot / 2);
     rectMode(CORNER);
 }

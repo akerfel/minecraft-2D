@@ -103,16 +103,6 @@ public class Inventory {
         updateCraftableItems();
     }
 
-    // Add block to a specified inventory slot
-    private void addBlock(Block block, int x, int y) {
-        if (grid[x][y].toString().equals(block.toString()) && grid[x][y].amount < 64) {
-            grid[x][y].incrementItemAmount();
-        } else {
-            putBlockInEmptyCell(block, x, y);
-        }
-        updateCraftableItems();
-    }
-    
     // Add item to some empty inventory slot
     public void addItem(Item item) {
         if (item.type.equals("block")) {
@@ -120,17 +110,6 @@ public class Inventory {
         }
         if (item.type.equals("tool")) {
             addTool((Tool) item);
-        }
-        updateCraftableItems();
-    }
-
-    // Add item to a specified inventory slot
-    private void addItem(Item item, int x, int y) {
-        if (item.type.equals("block")) {
-            addBlock((Block) item, x, y);
-        }
-        if (item.type.equals("tool")) {
-            addTool((Tool) item, x, y);
         }
         updateCraftableItems();
     }

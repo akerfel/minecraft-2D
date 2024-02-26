@@ -6,13 +6,10 @@ enum ToolType {
     NOTYPE
 }
 
-enum ItemID {
-    STONE_PICK,
-    IRON_PICK,
-    GOLD_PICK,
-    DIAMOND_PICK,
-    SHOVEL,
-    AXE,
-    SWORD,
-    NOTYPE
+enum ToolMaterial {
+    WOOD,
+    STONE,
+    IRON,
+    GOLD,
+    DIAMOND
 }
