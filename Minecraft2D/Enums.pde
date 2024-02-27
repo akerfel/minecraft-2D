@@ -2,10 +2,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 enum ToolType {
-    PICK,
+    SWORD,
+    PICKAXE,
     SHOVEL,
     AXE,
-    SWORD,
+    HOE,
     NOTYPE
 }
 
@@ -116,14 +117,6 @@ Set<ItemID> diamondToolIDs = new HashSet<>(Set.of(
     ItemID.DIAMOND_SWORD
 ));
 
-Set<ItemID> axeIDs = new HashSet<>(Set.of(
-    ItemID.WOOD_AXE,
-    ItemID.STONE_AXE,
-    ItemID.IRON_AXE,
-    ItemID.GOLD_AXE,
-    ItemID.DIAMOND_AXE
-));
-
 Set<ItemID> pickaxeIDs = new HashSet<>(Set.of(
     ItemID.WOOD_PICKAXE,
     ItemID.STONE_PICKAXE,
@@ -138,6 +131,14 @@ Set<ItemID> shovelIDs = new HashSet<>(Set.of(
     ItemID.IRON_SHOVEL,
     ItemID.GOLD_SHOVEL,
     ItemID.DIAMOND_SHOVEL
+));
+
+Set<ItemID> axeIDs = new HashSet<>(Set.of(
+    ItemID.WOOD_AXE,
+    ItemID.STONE_AXE,
+    ItemID.IRON_AXE,
+    ItemID.GOLD_AXE,
+    ItemID.DIAMOND_AXE
 ));
 
 Set<ItemID> hoeIDs = new HashSet<>(Set.of(

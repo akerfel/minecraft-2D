@@ -22,7 +22,7 @@ public class Block extends Item {
 
     boolean isHoldingCorrectToolType() {
         Item heldItem = state.player.inventory.getHeldItem();
-        Tool tool = (Tool) state.player.inventory.getHeldItem();
+        Tool tool = (Tool) heldItem;
         return (toolTypeForMining == tool.toolType); //<>//
     }
 
@@ -100,13 +100,13 @@ public class Sand extends Block {
 
 public class Stone extends Block {
     public Stone() {
-        super(ItemID.STONE, color(112, 112, 112) + color(random(-8, 8), random(-8, 8), random(-8, 8)), true, ToolType.PICK, true);
+        super(ItemID.STONE, color(112, 112, 112) + color(random(-8, 8), random(-8, 8), random(-8, 8)), true, ToolType.PICKAXE, true);
     }
 }
 
 public class IronOre extends Block {
     public IronOre() {
-        super(ItemID.IRON_ORE, color(223, 223, 225), true, ToolType.PICK, true);
+        super(ItemID.IRON_ORE, color(223, 223, 225), true, ToolType.PICKAXE, true);
     }
 }
 
