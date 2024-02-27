@@ -34,9 +34,9 @@ void intializeState() {
     state.debugScreenIsShowing = false;
 
     // Add some items to inventory
-    state.player.inventory.addItem(new Tool(ToolMaterial.IRON, ToolType.SWORD));
-    state.player.inventory.addItem(new Tool(ToolMaterial.DIAMOND, ToolType.PICK));
-    state.player.inventory.addItem(new Tool(ToolMaterial.STONE, ToolType.SHOVEL));
-    state.player.inventory.addItem(new Tool(ToolMaterial.DIAMOND, ToolType.AXE));
+    state.player.inventory.addItem(new Tool(ItemID.IRON_SWORD));
+    state.player.inventory.addItem(new Tool(ItemID.DIAMOND_PICKAXE));
+    state.player.inventory.addItem(new Tool(ItemID.STONE_SHOVEL));
+    state.player.inventory.addItem(new Tool(ItemID.DIAMOND_AXE));
     state.player.inventory.addBlock(new Planks(), 128);
 }

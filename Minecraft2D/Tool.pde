@@ -5,47 +5,25 @@ public class Tool extends Item {
 
     // E.g. for making new tool:
     // Tool diamondPick = new Tool("diamond", "pick");
-    public Tool(ToolMaterial material, ToolType toolType) {
-        super("tool", material.name() + "_" + toolType.name());
-        println(toolType.name());
-        this.toolType = toolType;
-        this.material = material;
-        switch (material) {
-        case WOOD:
+    public Tool(ItemID itemID) {
+        super("tool", itemID);
+        
+        if (woodToolIDs.contains(itemID)) {
             mult = 2;
             c = color(143, 119, 72);
-            break;
-        case STONE:
+            return;
+        } else if (stoneToolIDs.contains(itemID)) {
             mult = 4;
             c = color(112, 112, 112);
-            break;
-        case IRON:
+        } else if (ironToolIDs.contains(itemID)) {
             mult = 6;
             c = color(167, 167, 167);
-            break;
-        case GOLD:
+        } else if (goldToolIDs.contains(itemID)) {
             mult = 12;
             c = color(250, 238, 77);
-            break;
-        case DIAMOND:
+        } else if (diamondToolIDs.contains(itemID)) {
             mult = 8;
             c = color(92, 219, 213);
-            break;
-        }
-    }
-
-    public String getInventoryLabel() {
-        switch(toolType) {
-            case PICK:
-                return "PICK";
-            case SHOVEL:
-                return "SHVL";
-            case AXE:
-                return "AXE";
-            case SWORD:
-                return "SWRD";
-            default:
-                return "";
         }
     }
 }

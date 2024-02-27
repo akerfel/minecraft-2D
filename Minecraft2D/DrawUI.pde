@@ -132,9 +132,10 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     fill(tool.c);
     circle(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
 
-    textSize(20);
+    textSize(15);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(tool.getInventoryLabel(), xPixel, yPixel + settings.pixelsPerItemSlot / 2);
+    String toolName = tool.toString().substring(tool.toString().lastIndexOf("_") + 1);
+    text(toolName, xPixel, yPixel + settings.pixelsPerItemSlot / 2);
     rectMode(CORNER);
 }

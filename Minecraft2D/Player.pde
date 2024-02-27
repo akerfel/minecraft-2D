@@ -26,7 +26,7 @@ public class Player {
         if (isRunningSuperSpeed) {
             v *= superSpeedFactor;
         }
-        if (getPlayerBlock().name.equals("water")) {
+        if (getPlayerBlock().itemID == ItemID.WATER) {
             v *= 0.5;
         }
 

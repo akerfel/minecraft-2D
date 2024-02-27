@@ -6,8 +6,8 @@ public class Block extends Item {
     ToolType toolTypeForMining;
     boolean isMineable;
 
-    public Block(String name, color c, boolean isWall, ToolType toolTypeForMining, boolean isMineable) {
-        super("block", name);
+    public Block(ItemID ID, color c, boolean isWall, ToolType toolTypeForMining, boolean isMineable) {
+        super("block", ID);
         this.c = c;
         this.isWall = isWall;
         this.prcntBroken = 0;
@@ -17,7 +17,7 @@ public class Block extends Item {
     }
 
     boolean isWallOrWater() {
-        return (isWall || name.equals("water"));
+        return (isWall || itemID == ItemID.WATER);
     }
 
     boolean isHoldingCorrectToolType() {
@@ -59,68 +59,64 @@ public class Block extends Item {
             }
         }
     }
-    
-    public String toString() {
-        return name;    
-    }
 }
 
 public class Dirt extends Block {
     public Dirt() {
-        super(ItemIDs.DIRT, color(151, 109, 77), false, ToolType.SHOVEL, true);
+        super(ItemID.DIRT, color(151, 109, 77), false, ToolType.SHOVEL, true);
     }
 }
 
 public class Grass extends Block {
     public Grass() {
-        super(ItemIDs.GRASS, color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
+        super(ItemID.GRASS, color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
     }
 
     public Grass(color colorScheme) {
-        super(ItemIDs.GRASS, color(127, 178, 56) + colorScheme + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
+        super(ItemID.GRASS, color(127, 178, 56) + colorScheme + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
     }
 }
 
 public class Leaves extends Block {
     public Leaves() {
-        super(ItemIDs.LEAVES, color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, ToolType.AXE, true);
+        super(ItemID.LEAVES, color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, ToolType.AXE, true);
         this.hardness = 0.2;
     }
 }
 
 public class Planks extends Block {
     public Planks() {
-        super(ItemIDs.PLANKS, color(194, 155, 115), true, ToolType.AXE, true);
+        super(ItemID.PLANKS, color(194, 155, 115), true, ToolType.AXE, true);
     }
 }
 
 public class Sand extends Block {
     public Sand() {
-        super(ItemIDs.SAND, color(247, 233, 163), false, ToolType.SHOVEL, true);
+        super(ItemID.SAND, color(247, 233, 163), false, ToolType.SHOVEL, true);
     }
 }
 
 public class Stone extends Block {
     public Stone() {
-        super(ItemIDs.STONE, color(112, 112, 112) + color(random(-8, 8), random(-8, 8), random(-8, 8)), true, ToolType.PICK, true);
+        super(ItemID.STONE, color(112, 112, 112) + color(random(-8, 8), random(-8, 8), random(-8, 8)), true, ToolType.PICK, true);
     }
 }
 
 public class IronOre extends Block {
     public IronOre() {
-        super(ItemIDs.IRON_ORE, color(223, 223, 225), true, ToolType.PICK, true);
+        super(ItemID.IRON_ORE, color(223, 223, 225), true, ToolType.PICK, true);
     }
 }
 
 public class Water extends Block {
     public Water() {
-        super(ItemIDs.WATER, color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, ToolType.NOTYPE, false);
+        super(ItemID.WATER, color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, ToolType.NOTYPE, false);
         hardness = 100000;
     }
 }
 
 public class Wood extends Block {
     public Wood() {
-        super(ItemIDs.WOOD, color(174, 125, 90), true, ToolType.AXE, true);
+        super(ItemID.WOOD, color(174, 125, 90), true, ToolType.AXE, true);
     }
 }

@@ -1,15 +1,15 @@
 public class Item {
-    final String name;            // unique identifier   
+    public ItemID itemID;            // unique identifier   
     String type;
     color c;
 
-    public Item(String type, String name) {
+    public Item(String type, ItemID itemID) {
         this.type = type;
-        this.name = name;
+        this.itemID = itemID;
         c = color(255, 0, 0);
     }
     
     public String toString() {
-        return name;
+        return itemID.toString();
     }
 }

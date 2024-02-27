@@ -113,7 +113,9 @@ void placeBlockWithMouse() {
         if (cell.item.type.equals("block")) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && (getMouseBlock().name.equals("grass") || getMouseBlock().name.equals("water")) && setMouseBlock(generateBlockObject(block.name))) {
+                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && 
+                    (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) && 
+                    setMouseBlock(generateBlockObject(block.itemID))) {
                     cell.amount--;
                 }
             }
@@ -121,23 +123,23 @@ void placeBlockWithMouse() {
     }
 }
 
-Block generateBlockObject(String stringID) {
-    switch (stringID) {
-    case "dirt":
+Block generateBlockObject(ItemID itemID) {
+    switch (itemID) {
+    case DIRT:
         return new Dirt();
-    case "grass":
+    case GRASS:
         return new Grass();
-    case "leaves":
+    case LEAVES:
         return new Leaves();
-    case "planks":
+    case PLANKS:
         return new Planks();
-    case "sand":
+    case SAND:
         return new Sand();
-    case "stone":
+    case STONE:
         return new Stone();
-    case "water":
+    case WATER:
         return new Water();
-    case "wood":
+    case WOOD:
         return new Wood();
     }
     return new Grass();
@@ -295,19 +297,15 @@ void saveGeneratedChunksToFile() {
 void addChunkStringsToArray(String[] arrayToAddTo, int startIndex, Chunk chunk) {
     for (int y = 0; y < settings.blocksPerChunk; y++) {
         for (int x = 0; x < settings.blocksPerChunk; x++) {
-            arrayToAddTo[startIndex + y] += getBlockChar(chunk.blocks[x][y]);
+            arrayToAddTo[startIndex + y] += getBlockChar(chunk.blocks[x][y].itemID);
         }
     }
 }
 
-char getBlockChar(Block block) {
-    return getBlockChar(block.name);
+char getBlockChar(ItemID blockID) {
+    return settings.blockIDsToChars.get(blockID);
 }
 
-char getBlockChar(String blockID) {
-    return settings.blockNamesToChars.get(blockID);
-}
-
-String getBlockName(char blockChar) {
-    return settings.blockCharsToNames.get(blockChar);
+ItemID getBlockName(char blockChar) {
+    return settings.blockCharsToIDs.get(blockChar);
 }
