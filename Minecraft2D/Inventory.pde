@@ -105,10 +105,10 @@ public class Inventory {
 
     // Add item to some empty inventory slot
     public void addItem(Item item) {
-        if (item.type.equals("block")) {
+        if (item.itemType == ItemType.BLOCK) {
             addBlock((Block) item);
         }
-        if (item.type.equals("tool")) {
+        if (item.itemType == ItemType.TOOL) {
             addTool((Tool) item);
         }
         updateCraftableItems();

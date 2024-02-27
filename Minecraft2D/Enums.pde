@@ -2,10 +2,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 enum ToolType {
-    PICK,
+    SWORD,
+    PICKAXE,
     SHOVEL,
     AXE,
-    SWORD,
+    HOE,
     NOTYPE
 }
 
@@ -15,6 +16,11 @@ enum ToolMaterial {
     IRON,
     GOLD,
     DIAMOND
+}
+
+enum ItemType {
+    BLOCK,
+    TOOL
 }
 
 public enum ItemID {
@@ -59,6 +65,8 @@ public enum ItemID {
     DIAMOND_HOE
 }
 
+// Tools grouped by material
+
 Set<ItemID> woodToolIDs = new HashSet<>(Set.of(
     ItemID.WOOD_SWORD,
     ItemID.WOOD_PICKAXE,
@@ -96,5 +104,47 @@ Set<ItemID> diamondToolIDs = new HashSet<>(Set.of(
     ItemID.DIAMOND_PICKAXE,
     ItemID.DIAMOND_SHOVEL,
     ItemID.DIAMOND_AXE,
+    ItemID.DIAMOND_HOE
+));
+
+// Tools grouped by type
+
+ Set<ItemID> swordIDs = new HashSet<>(Set.of(
+    ItemID.WOOD_SWORD,
+    ItemID.STONE_SWORD,
+    ItemID.IRON_SWORD,
+    ItemID.GOLD_SWORD,
+    ItemID.DIAMOND_SWORD
+));
+
+Set<ItemID> pickaxeIDs = new HashSet<>(Set.of(
+    ItemID.WOOD_PICKAXE,
+    ItemID.STONE_PICKAXE,
+    ItemID.IRON_PICKAXE,
+    ItemID.GOLD_PICKAXE,
+    ItemID.DIAMOND_PICKAXE
+));
+
+Set<ItemID> shovelIDs = new HashSet<>(Set.of(
+    ItemID.WOOD_SHOVEL,
+    ItemID.STONE_SHOVEL,
+    ItemID.IRON_SHOVEL,
+    ItemID.GOLD_SHOVEL,
+    ItemID.DIAMOND_SHOVEL
+));
+
+Set<ItemID> axeIDs = new HashSet<>(Set.of(
+    ItemID.WOOD_AXE,
+    ItemID.STONE_AXE,
+    ItemID.IRON_AXE,
+    ItemID.GOLD_AXE,
+    ItemID.DIAMOND_AXE
+));
+
+Set<ItemID> hoeIDs = new HashSet<>(Set.of(
+    ItemID.WOOD_HOE,
+    ItemID.STONE_HOE,
+    ItemID.IRON_HOE,
+    ItemID.GOLD_HOE,
     ItemID.DIAMOND_HOE
 ));
