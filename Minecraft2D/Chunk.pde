@@ -27,7 +27,7 @@ public class Chunk {
     }
     
     private void setupColorScheme() {
-        grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
+        
     }
     
     private void placeBlocks() {
@@ -35,7 +35,8 @@ public class Chunk {
         float riverNoiseScale = 0.01;
         float ironNoiseScale = 0.1;
         float ironThreshold = 0.79;
-    
+        float waterColorScale = 0.1; // Adjust this scale for finer or coarser color variations
+        
         for (int x = 0; x < settings.blocksPerChunk; x++) {
             for (int y = 0; y < settings.blocksPerChunk; y++) {
                 float stoneNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * stoneNoiseScale, (y + coords.y * settings.blocksPerChunk) * stoneNoiseScale);
@@ -52,12 +53,23 @@ public class Chunk {
                             }
                         }
                     }
+                } 
+                else if (riverNoiseVal > 0.4 && riverNoiseVal < 0.45) {
+                    // Use Perlin noise for water color variations
+                    float waterNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * waterColorScale, (y + coords.y * settings.blocksPerChunk) * waterColorScale);
+                    float r = map(waterNoiseVal, 0, 1, 0, 64); // Map noise value to a suitable range for red channel
+                    float g = map(waterNoiseVal, 0, 1, 0, 64); // Map noise value to a suitable range for green channel
+                    float b = map(waterNoiseVal, 0, 1, 128, 255); // Map noise value to a suitable range for blue channel
+                    color waterColorScheme = color(r, g, b);
+                    blocks[x][y] = new Water(waterColorScheme); 
                 } else {
+                    // Use Perlin noise for grass color variations
+                    float grassNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * waterColorScale, (y + coords.y * settings.blocksPerChunk) * waterColorScale);
+                    float r = map(grassNoiseVal, 0, 1, 97, 157); // Map noise value to a suitable range for red channel
+                    float g = map(grassNoiseVal, 0, 1, 148, 208); // Map noise value to a suitable range for green channel
+                    float b = map(grassNoiseVal, 0, 1, 26, 86); // Map noise value to a suitable range for blue channel
+                    color grassColorScheme = color(r, g, b);
                     blocks[x][y] = new Grass(grassColorScheme);
-                }
-    
-                if (riverNoiseVal > 0.5 && riverNoiseVal < 0.55) {
-                    blocks[x][y] = new Water(); 
                 }
             }
         }

@@ -77,7 +77,7 @@ public class Grass extends Block {
     }
 
     public Grass(color colorScheme) {
-        super(ItemIDs.GRASS, color(127, 178, 56) + colorScheme + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
+        super(ItemIDs.GRASS, colorScheme, false, ToolType.SHOVEL, false);
     }
 }
 
@@ -113,9 +113,13 @@ public class IronOre extends Block {
 }
 
 public class Water extends Block {
-    public Water() {
-        super(ItemIDs.WATER, color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, ToolType.NOTYPE, false);
+    public Water(color colorScheme) {
+        super(ItemIDs.WATER, colorScheme, false, ToolType.NOTYPE, false);
         hardness = 100000;
+    }
+    
+    public Water() {
+        this(color(64, 64, 255));
     }
 }
 
