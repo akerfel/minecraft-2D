@@ -1,10 +1,10 @@
 public class Item {
     public ItemID itemID;            // unique identifier   
-    String type;
+    public ItemType itemType;
     color c;
 
-    public Item(String type, ItemID itemID) {
-        this.type = type;
+    public Item(ItemType itemType, ItemID itemID) {
+        this.itemType = itemType;
         this.itemID = itemID;
         c = color(255, 0, 0);
     }

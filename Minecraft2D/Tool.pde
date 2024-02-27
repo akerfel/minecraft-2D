@@ -1,12 +1,11 @@
 public class Tool extends Item {
-    ToolType toolType;     // E.g. "pick", "shovel" or "axe"
-    ToolMaterial material;     // E.g. "wood", "stone" or "iron"
+    ToolMaterial material; 
     int mult;            // Mining speed multiplier
 
     // E.g. for making new tool:
     // Tool diamondPick = new Tool("diamond", "pick");
     public Tool(ItemID itemID) {
-        super("tool", itemID);
+        super(ItemType.TOOL, itemID);
         
         if (woodToolIDs.contains(itemID)) {
             mult = 2;

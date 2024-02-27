@@ -90,11 +90,11 @@ void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Item item = itemSlot.item;
     if (itemSlot.amount != 0) {
-        switch (item.type) {
-        case "block":
+        switch (item.itemType) {
+        case BLOCK:
             drawBlockInItemSlot(itemSlot, xPixel, yPixel);
             break;
-        case "tool":
+        case TOOL:
             drawToolInItemSlot(itemSlot, xPixel, yPixel);
             break;
         }

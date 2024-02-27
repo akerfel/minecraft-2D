@@ -110,7 +110,7 @@ void resetObjectsDependingOnPixelsPerBlock() {
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
         ItemSlot cell = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
-        if (cell.item.type.equals("block")) {
+        if (cell.item.itemType == ItemType.BLOCK) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && 
