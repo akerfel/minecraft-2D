@@ -3,7 +3,7 @@ public class Item {
     public ItemType itemType;
     color c;
 
-    public Item(ItemType itemType, ItemID itemID) {
+    public Item(ItemID itemID,ItemType itemType) {
         this.itemType = itemType;
         this.itemID = itemID;
         c = color(255, 0, 0);

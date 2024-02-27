@@ -109,7 +109,7 @@ Set<ItemID> diamondToolIDs = new HashSet<>(Set.of(
 
 // Tools grouped by type
 
- Set<ItemID> swordIDs = new HashSet<>(Set.of(
+Set<ItemID> swordIDs = new HashSet<>(Set.of(
     ItemID.WOOD_SWORD,
     ItemID.STONE_SWORD,
     ItemID.IRON_SWORD,

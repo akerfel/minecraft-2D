@@ -7,7 +7,7 @@ public class Block extends Item {
     boolean isMineable;
 
     public Block(ItemID ID, color c, boolean isWall, ToolType toolTypeForMining, boolean isMineable) {
-        super(ItemType.BLOCK, ID);
+        super(ID, ItemType.BLOCK);
         this.c = c;
         this.isWall = isWall;
         this.prcntBroken = 0;
@@ -23,7 +23,7 @@ public class Block extends Item {
     boolean isHoldingCorrectToolType() {
         Item heldItem = state.player.inventory.getHeldItem();
         Tool tool = (Tool) heldItem;
-        return (toolTypeForMining == tool.toolType); //<>//
+        return (toolTypeForMining == tool.toolType); //<>// //<>//
     }
 
     public void mineBlock() {
