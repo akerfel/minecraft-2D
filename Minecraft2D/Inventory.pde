@@ -38,7 +38,7 @@ public class Inventory {
     private boolean tryAddBlockToExistingStack(Block block) {
         for (int y = settings.inventoryHeight - 1; y > -1; y--) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                if (grid[x][y].toString().equals(block.toString()) && grid[x][y].amount < 64) {
+                if (grid[x][y].item != null && grid[x][y].item.itemID == block.itemID && grid[x][y].amount < 64) {
                     grid[x][y].incrementItemAmount();
                     updateCraftableItems();
                     return true;
@@ -85,7 +85,8 @@ public class Inventory {
         int actualCount = 0;
         for (int y = 0; y < settings.inventoryHeight; y++) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                if (grid[x][y].toString().equals(item.toString())) {
+                Item gridItem = grid[x][y].item;
+                if (gridItem != null && gridItem.itemID == item.itemID) {
                     actualCount += grid[x][y].amount;
                     if (actualCount >= count) {
                         return true;    

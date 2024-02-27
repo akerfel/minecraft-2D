@@ -208,9 +208,9 @@ boolean setBlock(Block block, float x, float y) {
     Chunk chunk = getChunk(new PVector(x, y));
     int xInChunk = int(x) % settings.blocksPerChunk;
     int yInChunk = int(y) % settings.blocksPerChunk;
-    if (!block.toString().equals(chunk.blocks[xInChunk][yInChunk].toString())) {
+    if (block.itemID != chunk.blocks[xInChunk][yInChunk].itemID) {
         // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
-        if (block.toString().equals("grass")) {
+        if (block.itemID == ItemID.GRASS) {
             chunk.blocks[xInChunk][yInChunk] = new Grass(getChunk(new PVector(x, y)).grassColorScheme);
         } else {
             chunk.blocks[xInChunk][yInChunk] = block;
