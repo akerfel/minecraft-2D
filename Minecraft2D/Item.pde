@@ -2,8 +2,6 @@ public abstract class Item {
     public ItemID itemID;            // unique identifier   
     public ItemType itemType;
     color c;
-    boolean isStackable;
-    int count;
 
     public Item(ItemID itemID, ItemType itemType) {
         this.itemType = itemType;
