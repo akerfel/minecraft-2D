@@ -109,7 +109,7 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
-        ItemStack cell = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
+        ItemSlot cell = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
         if (cell.item.itemType == ItemType.BLOCK) {
             Block block = (Block) cell.item;
             if (cell.amount != 0) {
@@ -167,7 +167,7 @@ Block getMouseBlock() {
 
 // Returns the inventory slot which the mouse currently hovers.
 // Note that this is not the same as state.player.mouseItemSlot
-ItemStack getInventorySlotWhichMouseHovers() {
+ItemSlot getInventorySlotWhichMouseHovers() {
     if (state.inventoryIsOpen) {
         if (mouseX < settings.inventoryUpperLeftXPixel || mouseY < settings.inventoryUpperLeftYPixel) return null;
         int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;

@@ -27,7 +27,7 @@ void drawInventoryIfOpen() {
         stroke(0);
         for (int y = 0; y < settings.inventoryHeight; y++) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                ItemStack itemSlot = state.player.inventory.grid[x][y];
+                ItemSlot itemSlot = state.player.inventory.grid[x][y];
                 int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
                 int yPixel = settings.inventoryUpperLeftYPixel + y * settings.pixelsPerItemSlot;
                 drawItemSlot(itemSlot, xPixel, yPixel, false);
@@ -46,7 +46,7 @@ void drawHotbar() {
     int yPixel = height - settings.pixelsPerItemSlot;
     for (int x = 0; x < settings.inventoryWidth; x++) {
         int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
-        ItemStack itemSlot = state.player.inventory.getHotbarSlot(x);
+        ItemSlot itemSlot = state.player.inventory.getHotbarSlot(x);
         boolean highlightBackground = false;
         if (x == state.player.inventory.hotbarIndexSelected) {
             highlightBackground = true;
@@ -69,7 +69,7 @@ void drawMouseItemSlot() {
 }
 
 // Draws an itemSlot with center at (xPixel, yPixel)
-void drawItemSlot(ItemStack itemSlot, int xPixel, int yPixel, boolean highlightBackground) {
+void drawItemSlot(ItemSlot itemSlot, int xPixel, int yPixel, boolean highlightBackground) {
     drawItemSlotBackground(xPixel, yPixel, highlightBackground);
     // We will specifiy the center of each itemSlot
     int xPixelCenterOfItemSlot = xPixel + settings.pixelsPerItemSlot / 2;
@@ -86,7 +86,7 @@ void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground)
 }
 
 // (xPixel, yPixel) should be the center of the drawn Item.
-void drawItemInItemSlot(ItemStack itemSlot, int xPixel, int yPixel) {
+void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Item item = itemSlot.item;
     if (itemSlot.amount != 0) {
@@ -102,7 +102,7 @@ void drawItemInItemSlot(ItemStack itemSlot, int xPixel, int yPixel) {
     rectMode(CORNER);
 }
 
-void drawBlockInItemSlot(ItemStack itemSlot, int xPixel, int yPixel) {
+void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Block block = (Block) itemSlot.item;
 
@@ -125,7 +125,7 @@ void drawBlockInItemSlot(ItemStack itemSlot, int xPixel, int yPixel) {
     rectMode(CORNER);
 }
 
-void drawToolInItemSlot(ItemStack itemSlot, int xPixel, int yPixel) {
+void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Tool tool = (Tool) itemSlot.item;
 

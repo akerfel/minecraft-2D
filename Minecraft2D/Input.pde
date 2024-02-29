@@ -83,9 +83,9 @@ void mousePressed() {
     } else if (mouseButton == LEFT) {
         state.leftMouseButtonDown = true;
         if (state.inventoryIsOpen) {
-            ItemStack clickedItemSlot = getInventorySlotWhichMouseHovers();
+            ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
             if (clickedItemSlot != null) {
-                ItemStack currentMouseHeldItemSlot = state.player.inventory.mouseHeldItemSlot;
+                ItemSlot currentMouseHeldItemSlot = state.player.inventory.mouseHeldItemSlot;
                 int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
                 int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
                 state.player.inventory.grabbedXindex = inventoryXindex;

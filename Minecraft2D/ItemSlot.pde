@@ -1,8 +1,8 @@
-public class ItemStack {
+public class ItemSlot {
     Item item;
     int amount;
 
-    public ItemStack() {
+    public ItemSlot() {
         item = null;
         amount = 0;
     }

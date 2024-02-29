@@ -1,16 +1,16 @@
 public class Inventory {
     int hotbarIndexSelected;                // The currently selected hotbar index
-    ItemStack[][] grid;                      // The hotbar is the last row in the grid
-    ItemStack mouseHeldItemSlot;             // An itemSlot which is held by the mouse in the inventory (e.g. when reorganizing the inventory)
+    ItemSlot[][] grid;                      // The hotbar is the last row in the grid
+    ItemSlot mouseHeldItemSlot;             // An itemSlot which is held by the mouse in the inventory (e.g. when reorganizing the inventory)
     ArrayList<Item> craftableItems;
     int grabbedXindex;                      // the x index of the grid from which the mouse grabbed an item from
     int grabbedYindex;
 
     public Inventory() {
         hotbarIndexSelected = 0;
-        grid = new ItemStack[settings.inventoryWidth][settings.inventoryHeight];
+        grid = new ItemSlot[settings.inventoryWidth][settings.inventoryHeight];
         setInventoryEmpty();
-        mouseHeldItemSlot = new ItemStack();
+        mouseHeldItemSlot = new ItemSlot();
         craftableItems = new ArrayList<>();
     }
 
@@ -25,12 +25,12 @@ public class Inventory {
     public void returnMouseGrabbedItemToInventory() {
         if (mouseHeldItemSlot.amount > 0) {
             grid[grabbedXindex][grabbedYindex] = mouseHeldItemSlot;
-            mouseHeldItemSlot = new ItemStack();
+            mouseHeldItemSlot = new ItemSlot();
         }
         updateCraftableItems();
     }
 
-    private ItemStack getHotbarSlot(int x) {
+    private ItemSlot getHotbarSlot(int x) {
         return grid[x][settings.inventoryHeight - 1];
     }
 
@@ -75,7 +75,7 @@ public class Inventory {
     private void setInventoryEmpty() {
         for (int y = 0; y < settings.inventoryHeight; y++) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                grid[x][y] = new ItemStack();
+                grid[x][y] = new ItemSlot();
             }
         }
         updateCraftableItems();
