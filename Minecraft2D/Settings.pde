@@ -8,11 +8,17 @@ public class Settings {
     float playerWidth;
     float mobWidth;
     
+    // Dynamic
+    int viewDistance;
+    
+    // General
+    int blocksPerChunk;            // blocks per side of chunk;
+    
     // Visuals
     int pixelsPerBlock;            // pixels per side of block
-    int blocksPerChunk;            // blocks per side of chunk;
     boolean noStrokeMode;          // Setting this to false HALVES FPS (!), and makes things uglier. Keep it at true.
-    int viewDistance;
+    boolean drawInnerSquaresInBlocks;
+    float offsetInnerSquare;       // How far from the corner of the block the inner square should start, between 0 - 1. Default 0.1
     
     // Default/base chunk 
     float baseChanceStone;
@@ -52,13 +58,19 @@ public class Settings {
 
 void initializeSettings() {
     
+    // Dynamic
+    settings.viewDistance = 250;
+    
+    // General 
+    settings.blocksPerChunk = 64;
+    
     // Visuals
     settings.pixelsPerBlock = 25;
-    settings.blocksPerChunk = 64;
     settings.noStrokeMode = true;
     setNoStrokeModeDependingOnSetting();
     resetObjectsDependingOnPixelsPerBlock();
-    settings.viewDistance = 250;
+    settings.drawInnerSquaresInBlocks = true;
+    settings.offsetInnerSquare = 0.1;
     
     // Block chances
     settings.chanceStone = 0.38;

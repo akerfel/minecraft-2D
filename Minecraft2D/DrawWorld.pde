@@ -27,9 +27,25 @@ void drawVisibleBlocks() {
 void drawBlock(Block block, float xPixel, float yPixel) {
     fill(block.c);
     square(xPixel, yPixel, settings.pixelsPerBlock + 1);
+    
+    if (settings.drawInnerSquaresInBlocks) {
+        drawInnerSquareInBlock(block, xPixel, yPixel);
+    }
+    
     if (block.prcntBroken > 0) {
         drawBlockBreakingTexture(block, xPixel, yPixel);
     }
+}
+
+private void drawInnerSquareInBlock(Block block, float xPixel, float yPixel) {
+    int colorDiff = 10;
+    int innerRedValue = max(0, int(red(block.c)) - colorDiff);
+    int innerGreenValue = max(0, int(green(block.c)) - colorDiff);
+    int innerBlueValue = max(0, int(blue(block.c)) - colorDiff);
+    color innerColor = color(innerRedValue, innerGreenValue, innerBlueValue);
+    fill(innerColor);
+    int offset = int(settings.pixelsPerBlock * settings.offsetInnerSquare);
+    square(xPixel + offset, yPixel + offset, settings.pixelsPerBlock - offset * 2);
 }
 
 void drawBlockBreakingTexture(Block block, float xPixel, float yPixel) {

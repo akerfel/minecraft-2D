@@ -1,9 +1,11 @@
-public class Item {
+public abstract class Item {
     public ItemID itemID;            // unique identifier   
     public ItemType itemType;
     color c;
+    boolean isStackable;
+    int count;
 
-    public Item(ItemID itemID,ItemType itemType) {
+    public Item(ItemID itemID, ItemType itemType) {
         this.itemType = itemType;
         this.itemID = itemID;
         c = color(255, 0, 0);
