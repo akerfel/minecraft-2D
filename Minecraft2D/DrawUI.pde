@@ -1,5 +1,6 @@
 void drawUI() {
     drawInventoryIfOpen();
+    drawCraftingMenuIfOpen();
     drawHotbar();
     drawDebugMenuIfOpen();
     drawMouseItemSlot();
@@ -39,6 +40,19 @@ void drawInventoryIfOpen() {
     }
 }
 
+void drawCraftingMenuIfOpen() {
+        
+}
+
+public void printPlayerCraftableItemsInConsole() {
+    println("");
+    println("Craftable items:");
+    state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
+    for (ItemCount itemCount : state.player.inventory.getPlayerCraftableItems()) {
+        println(itemCount.item + " * " + itemCount.count);
+    }    
+}
+
 // This function is similar to drawInventoryIfOpen, except the y coordinate is fixed,
 // and the currently selected hotbar slot will be highlighted.
 void drawHotbar() {
@@ -60,7 +74,7 @@ void drawHotbar() {
 
 void drawMouseItemSlot() {
     stroke(0);
-    if (state.player.inventory.mouseHeldItemSlot.amount != 0) {
+    if (state.player.inventory.mouseHeldItemSlot.getCount() != 0) {
         drawItemInItemSlot(state.player.inventory.mouseHeldItemSlot, mouseX, mouseY);
     }
     if (settings.noStrokeMode) {
@@ -89,7 +103,7 @@ void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground)
 void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CENTER);
     Item item = itemSlot.item;
-    if (itemSlot.amount != 0) {
+    if (itemSlot.getCount() != 0) {
         switch (item.itemType) {
         case BLOCK:
             drawBlockInItemSlot(itemSlot, xPixel, yPixel);
@@ -114,7 +128,7 @@ void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     textSize(24);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
-    text(itemSlot.amount, xPixel, yPixel);
+    text(itemSlot.getCount(), xPixel, yPixel);
     rectMode(CORNER);
 
     // Write tool name (temporary solution, until specific images for tools are added)

@@ -1,10 +1,10 @@
 public class ItemSlot {
     private Item item;
-    private int amount;
+    public int count;
 
     public ItemSlot() {
         item = null;
-        amount = 0;
+        count = 0;
     }
     
     public void setItem(Item item) {
@@ -18,11 +18,15 @@ public class ItemSlot {
         return item.toString();
     }
 
-    void incrementItemAmount() {
-        amount++;
+    void incrementItemCount() {
+        count++;
+    }
+    
+    public int getCount() {
+        return count;    
     }
     
     public boolean isEmpty() {
-        return (amount == 0 || item == null);    
+        return (count == 0 || item == null);    
     }
 }

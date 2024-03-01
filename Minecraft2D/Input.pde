@@ -22,7 +22,12 @@ void keyPressed() {
         if (state.inventoryIsOpen) {
             state.player.inventory.returnMouseGrabbedItemToInventory();
         }
+        state.craftingMenuIsOpen = false;
         state.inventoryIsOpen = !state.inventoryIsOpen;
+    }
+    
+    if (key == 'c') {
+        printPlayerCraftableItemsInConsole();
     }
 
     if (key == '.') {

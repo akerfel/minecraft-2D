@@ -112,11 +112,11 @@ void placeBlockWithMouse() {
         ItemSlot cell = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
         if (cell.item.itemType == ItemType.BLOCK) {
             Block block = (Block) cell.item;
-            if (cell.amount != 0) {
+            if (cell.getCount() != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && 
                     (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) && 
                     setMouseBlock(generateBlockObject(block.itemID))) {
-                    cell.amount--;
+                    cell.count--;
                 }
             }
         }

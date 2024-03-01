@@ -5,6 +5,7 @@ public class Inventory {
     ArrayList<Item> craftableItems;
     int grabbedXindex;                      // the x index of the grid from which the mouse grabbed an item from
     int grabbedYindex;
+    CraftingMenu craftingMenu;
 
     public Inventory() {
         hotbarIndexSelected = 0;
@@ -12,6 +13,11 @@ public class Inventory {
         setInventoryEmpty();
         mouseHeldItemSlot = new ItemSlot();
         craftableItems = new ArrayList<>();
+        craftingMenu = new CraftingMenu();
+    }
+    
+    public ArrayList<ItemCount> getPlayerCraftableItems() {
+        return craftingMenu.getPlayerCraftableItems(this);    
     }
 
     public Item getHeldItem() {
@@ -23,7 +29,7 @@ public class Inventory {
     }
 
     public void returnMouseGrabbedItemToInventory() {
-        if (mouseHeldItemSlot.amount > 0) {
+        if (mouseHeldItemSlot.count > 0) {
             grid[grabbedXindex][grabbedYindex] = mouseHeldItemSlot;
             mouseHeldItemSlot = new ItemSlot();
         }
@@ -41,12 +47,32 @@ public class Inventory {
         }
     }
     
+    public boolean hasItem(ItemCount itemCount) {
+        return hasItem(itemCount.item, itemCount.count);    
+    }
+    
+    public boolean hasItem(Item item, int count) {
+        int foundItems = 0;
+        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
+                ItemSlot itemSlot = grid[x][y];
+                if (itemSlot.item != null && itemSlot.item.itemID == item.itemID) {
+                    foundItems += itemSlot.count;
+                    if (foundItems > count) {
+                        return true;    
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
     // Returns true if item could be addad to a stack
     private boolean tryAddItemToSomeStack(Item item) {
         for (int y = settings.inventoryHeight - 1; y > -1; y--) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                if (grid[x][y].item != null && grid[x][y].item.itemID == item.itemID && grid[x][y].amount < 64) {
-                    grid[x][y].incrementItemAmount();
+                if (grid[x][y].item != null && grid[x][y].item.itemID == item.itemID && grid[x][y].count < 64) {
+                    grid[x][y].incrementItemCount();
                     return true;
                 }
             }
@@ -57,7 +83,7 @@ public class Inventory {
     // Adds 'count' items to the inventory. Returns the amount of items which could not be added.
     public int addItem(Item item, int count) {
         for (int added = 0; added < count; added++) {
-            if (addItem(item)) {
+            if (!addItem(item)) {
                 return count - added;
             }
         }
@@ -69,7 +95,7 @@ public class Inventory {
             for (int x = 0; x < settings.inventoryWidth; x++) {
                 if (grid[x][y].isEmpty()) {
                     grid[x][y].item = item;
-                    grid[x][y].amount = 1;
+                    grid[x][y].count = 1;
                     return true;
                 }
             }
