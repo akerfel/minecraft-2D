@@ -58,7 +58,7 @@ public class Inventory {
                 ItemSlot itemSlot = grid[x][y];
                 if (itemSlot.item != null && itemSlot.item.itemID == item.itemID) {
                     foundItems += itemSlot.count;
-                    if (foundItems > count) {
+                    if (foundItems >= count) {
                         return true;    
                     }
                 }
