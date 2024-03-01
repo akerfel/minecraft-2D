@@ -16,8 +16,8 @@ public class Inventory {
         craftingMenu = new CraftingMenu();
     }
     
-    public ArrayList<ItemCount> getPlayerCraftableItems() {
-        return craftingMenu.getPlayerCraftableItems(this);    
+    public ArrayList<ItemCount> getHandCraftableItems() {
+        return craftingMenu.getHandCraftableItems(this);    
     }
 
     public Item getHeldItem() {

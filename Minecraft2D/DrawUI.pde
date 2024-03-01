@@ -48,7 +48,7 @@ public void printPlayerCraftableItemsInConsole() {
     println("");
     println("Craftable items:");
     state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
-    for (ItemCount itemCount : state.player.inventory.getPlayerCraftableItems()) {
+    for (ItemCount itemCount : state.player.inventory.getHandCraftableItems()) {
         println(itemCount.item + " * " + itemCount.count);
     }    
 }
