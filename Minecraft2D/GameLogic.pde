@@ -150,7 +150,7 @@ void mineBlockWithMouse() {
         Block mouseBlock = getMouseBlock();
         if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < state.player.reach) {
             if (mouseBlock.prcntBroken >= 1) {
-                state.player.inventory.addBlock(mouseBlock);
+                state.player.inventory.addItem(mouseBlock);
                 setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
             } else {
                 mouseBlock.mineBlock();

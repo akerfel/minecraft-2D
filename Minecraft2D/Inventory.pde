@@ -27,49 +27,10 @@ public class Inventory {
             grid[grabbedXindex][grabbedYindex] = mouseHeldItemSlot;
             mouseHeldItemSlot = new ItemSlot();
         }
-        updateCraftableItems();
     }
 
     private ItemSlot getHotbarSlot(int x) {
         return grid[x][settings.inventoryHeight - 1];
-    }
-
-    // Returns true if found in inventory (and added to that stack)
-    private boolean tryAddBlockToExistingStack(Block block) {
-        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < settings.inventoryWidth; x++) {
-                if (grid[x][y].item != null && grid[x][y].item.itemID == block.itemID && grid[x][y].amount < 64) {
-                    grid[x][y].incrementItemAmount();
-                    updateCraftableItems();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    // Put block in some empty cell
-    private void putBlockInEmptyCell(Block block) {
-        // TODO: should also check for inventory spaces
-        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
-            for (int x = 0; x < settings.inventoryWidth; x++) {
-                if (grid[x][y].amount == 0) {
-                    grid[x][y].item = block;
-                    grid[x][y].amount = 1;
-                    return;
-                }
-            }
-        }
-        updateCraftableItems();
-    }
-
-    // Put block in a specified cell
-    private void putBlockInEmptyCell(Block block, int x, int y) {
-        if (grid[x][y].amount == 0) {
-            grid[x][y].item = block;
-            grid[x][y].amount = 1;
-        }
-        updateCraftableItems();
     }
 
     private void setInventoryEmpty() {
@@ -78,75 +39,49 @@ public class Inventory {
                 grid[x][y] = new ItemSlot();
             }
         }
-        updateCraftableItems();
     }
     
-    public boolean hasItem(Item item, int count) {
-        int actualCount = 0;
-        for (int y = 0; y < settings.inventoryHeight; y++) {
+    // Returns true if item could be addad to a stack
+    private boolean tryAddItemToSomeStack(Item item) {
+        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                Item gridItem = grid[x][y].item;
-                if (gridItem != null && gridItem.itemID == item.itemID) {
-                    actualCount += grid[x][y].amount;
-                    if (actualCount >= count) {
-                        return true;    
-                    }
+                if (grid[x][y].item != null && grid[x][y].item.itemID == item.itemID && grid[x][y].amount < 64) {
+                    grid[x][y].incrementItemAmount();
+                    return true;
                 }
             }
         }
         return false;
     }
     
-    private void addBlock(Block block, int amount) {
-        for (int i = 0; i < amount; i++) {
-            addBlock(block);
+    // Adds 'count' items to the inventory. Returns the amount of items which could not be added.
+    public int addItem(Item item, int count) {
+        for (int added = 0; added < count; added++) {
+            if (addItem(item)) {
+                return count - added;
+            }
         }
-        updateCraftableItems();
+        return 0;
     }
-
-    // Add item to some empty inventory slot
-    public void addItem(Item item) {
-        if (item.itemType == ItemType.BLOCK) {
-            addBlock((Block) item);
-        }
-        if (item.itemType == ItemType.TOOL) {
-            addTool((Tool) item);
-        }
-        updateCraftableItems();
-    }
-
-    // Add tool to some empty inventory slot
-    private void addTool(Tool tool) {
+    
+    private boolean tryToAddUnstackableItem(Item item) {
         for (int y = settings.inventoryHeight - 1; y > -1; y--) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                if (grid[x][y].amount == 0) {
-                    grid[x][y].item = tool;
+                if (grid[x][y].isEmpty()) {
+                    grid[x][y].item = item;
                     grid[x][y].amount = 1;
-                    return;
+                    return true;
                 }
             }
         }
-        updateCraftableItems();
+        return false;
     }
-
-    // Add tool to a specified inventory slot
-    private void addTool(Tool tool, int x, int y) {
-        grid[x][y].item = tool;
-        grid[x][y].amount = 1;
-    }
-
-    // Add block to some empty inventory slot
-    private void addBlock(Block block) {
-        boolean foundInInventory = tryAddBlockToExistingStack(block);
-        if (!foundInInventory) {
-            putBlockInEmptyCell(block);
+    
+    // Add item to some empty inventory slot
+    public boolean addItem(Item item) {
+        if (item.isStackable() && tryAddItemToSomeStack(item)) {
+            return true;    
         }
-        updateCraftableItems();
+        return tryToAddUnstackableItem(item);
     }
-    
-    private void updateCraftableItems() {
-        
-    }
-    
-    
 }

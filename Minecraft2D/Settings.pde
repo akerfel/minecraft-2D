@@ -13,6 +13,7 @@ public class Settings {
     
     // General
     int blocksPerChunk;            // blocks per side of chunk;
+    int maxStackCount;
     
     // Visuals
     int pixelsPerBlock;            // pixels per side of block
@@ -63,6 +64,7 @@ void initializeSettings() {
     
     // General 
     settings.blocksPerChunk = 64;
+    settings.maxStackCount = 64;
     
     // Visuals
     settings.pixelsPerBlock = 25;

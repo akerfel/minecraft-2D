@@ -4,7 +4,7 @@ public class Tool extends Item {
     int mult;            // Mining speed multiplier
 
     public Tool(ItemID itemID) {
-        super(itemID, ItemType.TOOL);
+        super(itemID, ItemType.TOOL, false);
         setToolMaterial();
         setToolType();
     }
