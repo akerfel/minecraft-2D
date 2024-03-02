@@ -69,7 +69,7 @@ public enum ItemID {
     DIAMOND_HOE
 }
 
-Item itemFactory(ItemID itemID) {
+Item createItem(ItemID itemID) {
     switch (itemID) {
         case DIRT:
             return new Dirt();

@@ -115,7 +115,7 @@ void placeBlockWithMouse() {
             if (slot.getCount() != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && 
                     (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) && 
-                    setMouseBlock((Block) itemFactory(block.itemID))) {
+                    setMouseBlock((Block) createItem(block.itemID))) {
                     slot.count--;
                 }
             }
