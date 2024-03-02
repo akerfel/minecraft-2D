@@ -22,6 +22,13 @@ public class Settings {
     boolean drawInnerSquaresInBlocks;
     float offsetInnerSquare;       // How far from the corner of the block the inner square should start, between 0 - 1. Default 0.1
     
+    // Colors
+    color colorWoodTool;
+    color colorStoneTool;
+    color colorIronTool;
+    color colorGoldTool;
+    color colorDiamondTool;
+    
     // Default/base chunk 
     float baseChanceStone;
     float baseChanceTree;
@@ -45,6 +52,13 @@ public class Settings {
     int maxMobs;
     int mobSpawnRange;             // In blocks
     int mobDespawnRange;           // In blocks
+    
+    // Tools
+    int woodToolMiningMultiplier;
+    int stoneToolMiningMultiplier;
+    int ironToolMiningMultiplier;
+    int goldToolMiningMultiplier;
+    int diamondToolMiningMultiplier;
     
     // Inventory
     int pixelsPerItemSlot;
@@ -76,6 +90,13 @@ void initializeSettings() {
     settings.drawInnerSquaresInBlocks = true;
     settings.offsetInnerSquare = 0.1;
     
+    // colors
+    settings.colorWoodTool = color(143, 119, 72);
+    settings.colorStoneTool = color(112, 112, 112);
+    settings.colorIronTool = color(167, 167, 167);
+    settings.colorGoldTool = color(250, 238, 77);
+    settings.colorDiamondTool = color(92, 219, 213);
+    
     // Block chances
     settings.chanceStone = 0.38;
     
@@ -87,6 +108,13 @@ void initializeSettings() {
     settings.maxMobs = 30;
     settings.mobSpawnRange = 50;
     settings.mobDespawnRange = 100;
+    
+    // Tools
+    settings.woodToolMiningMultiplier = 2;
+    settings.stoneToolMiningMultiplier = 4;
+    settings.ironToolMiningMultiplier = 6;
+    settings.goldToolMiningMultiplier = 8;
+    settings.diamondToolMiningMultiplier = 10;
     
     // Inventory
     settings.pixelsPerItemSlot = 60;

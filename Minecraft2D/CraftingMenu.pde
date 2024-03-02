@@ -9,7 +9,7 @@ public class CraftingMenu {
         handRecipes.add(new Recipe(new Workbench(), 1).addCost(new Planks(), 4));
         
         // Workbench recipes
-        workbenchRecipes.add(new Recipe(new Tool(ItemID.STONE_PICKAXE), 1).addCost(new Planks(), 2).addCost(new Stone(), 3));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_PICKAXE), 1).addCost(new Planks(), 2).addCost(new Stone(), 3));
     }
     
     // Get list of items craftable by hand (i.e., while not using a workbench)
