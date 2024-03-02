@@ -6,7 +6,6 @@ public abstract class Item {
     boolean hasBlock;
     Block block;
     
-    
     public Item(ItemID itemID, ItemType itemType, boolean isStackable) {
         this.itemID = itemID;
         this.itemType = itemType;
@@ -23,6 +22,7 @@ public abstract class Item {
     }
 }
 
+// This method holds all item definitions. All item objects should be created with this method.
 Item createItem(ItemID itemID) {
     switch (itemID) {
         case DIRT:
