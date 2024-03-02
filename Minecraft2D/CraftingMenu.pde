@@ -5,11 +5,11 @@ public class CraftingMenu {
     public CraftingMenu() {
         
         // Player recipes
-        handRecipes.add(new Recipe(new Planks(), 4).addCost(new Wood(), 1));
-        handRecipes.add(new Recipe(new Workbench(), 1).addCost(new Planks(), 4));
+        handRecipes.add(new Recipe(createItem(ItemID.PLANKS), 4).addCost(createItem(ItemID.WOOD), 1));
+        handRecipes.add(new Recipe(createItem(ItemID.WORKBENCH), 1).addCost(createItem(ItemID.PLANKS), 4));
         
         // Workbench recipes
-        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_PICKAXE), 1).addCost(new Planks(), 2).addCost(new Stone(), 3));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_PICKAXE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 3));
     }
     
     // Get list of items craftable by hand (i.e., while not using a workbench)

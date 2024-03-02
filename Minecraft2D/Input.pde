@@ -1,7 +1,7 @@
 void keyPressed() {
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
-            state.player.inventory.addItem(new Stone());
+            state.player.inventory.addItem(createItem(ItemID.STONE));
         }
     }
 

@@ -1,6 +1,5 @@
 public class Chunk {
     public Block[][] blocks;
-    public color grassColorScheme;         // Each chunk has a special color for grass
     float chanceStone;                     // for each block
     PVector coords;
 
@@ -10,7 +9,6 @@ public class Chunk {
         chanceStone = settings.chanceStone + random(-0.05, 0.05);
         setupBlockMatrix();
         setupSeed();
-        setupColorScheme();
         
         // Place blocks
         placeBlocks();
@@ -26,10 +24,6 @@ public class Chunk {
         randomSeed(chunkSeed);    
     }
     
-    private void setupColorScheme() {
-        grassColorScheme = color(random(0, 40), random(0, 40), random(0, 40));
-    }
-    
     private void placeBlocks() {
         float stoneNoiseScale = 0.07;
         float riverNoiseScale = 0.01;
@@ -43,21 +37,21 @@ public class Chunk {
                 float ironNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * ironNoiseScale, (y + coords.y * settings.blocksPerChunk) * ironNoiseScale);
                 
                 if (stoneNoiseVal < chanceStone) {
-                    blocks[x][y] = new Stone();
+                    blocks[x][y] = (Block) createItem(ItemID.STONE);
                     if (ironNoiseVal > ironThreshold) {
                         int ironOreGroupSize = (int)(Math.random() * 7) + 2;
                         for (int i = 0; i < ironOreGroupSize; i++) {
                             if (x + i < settings.blocksPerChunk && y + i < settings.blocksPerChunk) {
-                                blocks[x + i][y + i] = new IronOre();
+                                blocks[x + i][y + i] = (Block) createItem(ItemID.IRON_ORE);
                             }
                         }
                     }
                 } else {
-                    blocks[x][y] = new Grass(grassColorScheme);
+                    blocks[x][y] = (Block) createItem(ItemID.GRASS);
                 }
     
                 if (riverNoiseVal > 0.5 && riverNoiseVal < 0.55) {
-                    blocks[x][y] = new Water(); 
+                    blocks[x][y] = (Block) createItem(ItemID.WATER); 
                 }
             }
         }
@@ -70,7 +64,7 @@ public class Chunk {
                 if (x < settings.blocksPerChunk - 2 && y < settings.blocksPerChunk - 2) {
                     float treeNoiseVal = noise((x + coords.x * settings.blocksPerChunk) * treeNoiseScale, (y + coords.y * settings.blocksPerChunk) * treeNoiseScale);
                     float treeChance = map(treeNoiseVal, 0, 1, 0, 0.01);
-                    if (random(1) < treeChance && blocks[x][y] instanceof Grass) {
+                    if (random(1) < treeChance && blocks[x][y].itemID == ItemID.GRASS) {
                         makeTree(x, y);
                     }
                 }
@@ -87,7 +81,7 @@ public class Chunk {
 
         // Middle row
         makeLeaf(x, y+1);
-        blocks[x+1][y+1] = new Wood();
+        blocks[x+1][y+1] = (Block) createItem(ItemID.WOOD);
         makeLeaf(x+2, y+1);
 
         // Bottom row
@@ -107,14 +101,14 @@ public class Chunk {
 
         // Horizontal row 2 of 4
         makeLeaf(x, y+1);
-        blocks[x+1][y+1] = new Wood();
-        blocks[x+2][y+1] = new Wood();
+        blocks[x+1][y+1] = (Block) createItem(ItemID.WOOD);
+        blocks[x+2][y+1] = (Block) createItem(ItemID.WOOD);
         makeLeaf(x+3, y+1);
 
         // Horizontal row 3 of 4
         makeLeaf(x, y+2);
-        blocks[x+1][y+2] = new Wood();
-        blocks[x+2][y+2] = new Wood();
+        blocks[x+1][y+2] = (Block) createItem(ItemID.WOOD);
+        blocks[x+2][y+2] = (Block) createItem(ItemID.WOOD);
         makeLeaf(x+3, y+2);
 
         // Horizontal row 4 of 4
@@ -126,7 +120,7 @@ public class Chunk {
 
      private void makeLeaf(int x, int y) {
         if (!(blocks[x][y].itemID == ItemID.WOOD)) {
-            blocks[x][y] = new Leaves();
+            blocks[x][y] = (Block) createItem(ItemID.LEAVES);
         }
     }
 }

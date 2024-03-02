@@ -30,7 +30,7 @@ void intializeState() {
     state.damagedBlocks = new ArrayList<Block>();
     state.rightMouseButtonDown = false;
     state.leftMouseButtonDown = false;
-    setPlayerBlock(new Grass());
+    setPlayerBlock((Block) createItem(ItemID.GRASS));
     state.inventoryIsOpen = false;
     state.debugScreenIsShowing = false;
 

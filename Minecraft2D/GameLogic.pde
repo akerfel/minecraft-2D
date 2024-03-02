@@ -109,7 +109,7 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
-        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>//
+        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>// //<>//
         if (slot.item.itemType == ItemType.BLOCK) {
             Block block = (Block) slot.item;
             if (slot.getCount() != 0) {
@@ -129,7 +129,7 @@ void mineBlockWithMouse() {
         if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < state.player.reach) {
             if (mouseBlock.prcntBroken >= 1) {
                 state.player.inventory.addItem(mouseBlock);
-                setMouseBlock(new Grass());    // Correct chunk grass color is handled inside function
+                setMouseBlock((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
             } else {
                 mouseBlock.mineBlock();
                 state.damagedBlocks.add(mouseBlock);
@@ -189,7 +189,7 @@ boolean setBlock(Block block, float x, float y) {
     if (block.itemID != chunk.blocks[xInChunk][yInChunk].itemID) {
         // Special case for grass. We need to access the special grassColorScheme for the chunk the block is placed in.
         if (block.itemID == ItemID.GRASS) {
-            chunk.blocks[xInChunk][yInChunk] = new Grass(getChunk(new PVector(x, y)).grassColorScheme);
+            chunk.blocks[xInChunk][yInChunk] = (Block) createItem(ItemID.GRASS);
         } else {
             chunk.blocks[xInChunk][yInChunk] = block;
         }
