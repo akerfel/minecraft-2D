@@ -109,40 +109,18 @@ void resetObjectsDependingOnPixelsPerBlock() {
 
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
-        ItemSlot cell = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
-        if (cell.item.itemType == ItemType.BLOCK) {
-            Block block = (Block) cell.item;
-            if (cell.getCount() != 0) {
+        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>//
+        if (slot.item.itemType == ItemType.BLOCK) {
+            Block block = (Block) slot.item;
+            if (slot.getCount() != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && 
                     (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) && 
-                    setMouseBlock(generateBlockObject(block.itemID))) {
-                    cell.count--;
+                    setMouseBlock((Block) itemFactory(block.itemID))) {
+                    slot.count--;
                 }
             }
         }
     }
-}
-
-Block generateBlockObject(ItemID itemID) {
-    switch (itemID) {
-    case DIRT:
-        return new Dirt();
-    case GRASS:
-        return new Grass();
-    case LEAVES:
-        return new Leaves();
-    case PLANKS:
-        return new Planks();
-    case SAND:
-        return new Sand();
-    case STONE:
-        return new Stone();
-    case WATER:
-        return new Water();
-    case WOOD:
-        return new Wood();
-    }
-    return new Grass();
 }
 
 void mineBlockWithMouse() {

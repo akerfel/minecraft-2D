@@ -69,6 +69,86 @@ public enum ItemID {
     DIAMOND_HOE
 }
 
+Item itemFactory(ItemID itemID) {
+    switch (itemID) {
+        case DIRT:
+            return new Dirt();
+        case GRASS:
+            return new Grass();
+        case LEAVES:
+            return new Leaves();
+        case PLANKS:
+            return new Planks();
+        case SAND:
+            return new Sand();
+        case STONE:
+            return new Stone();
+        case IRON_ORE:
+            return new IronOre();
+        case WATER:
+            return new Water();
+        case WOOD:
+            return new Wood();
+        case WORKBENCH:
+            return new Workbench();
+           
+        case WOOD_SWORD:
+            return new Tool(ItemID.WOOD_SWORD);
+        case WOOD_PICKAXE:
+            return new Tool(ItemID.WOOD_PICKAXE);
+        case WOOD_SHOVEL:
+            return new Tool(ItemID.WOOD_SHOVEL);
+        case WOOD_AXE:
+            return new Tool(ItemID.WOOD_AXE);
+        case WOOD_HOE:
+            return new Tool(ItemID.WOOD_HOE);
+        
+        case STONE_PICKAXE:
+            return new Tool(ItemID.STONE_PICKAXE);
+        case STONE_SHOVEL:
+            return new Tool(ItemID.STONE_SHOVEL);
+        case STONE_AXE:
+            return new Tool(ItemID.STONE_AXE);
+        case STONE_HOE:
+            return new Tool(ItemID.STONE_HOE);
+        
+        case IRON_SWORD:
+            return new Tool(ItemID.IRON_SWORD);
+        case IRON_PICKAXE:
+            return new Tool(ItemID.IRON_PICKAXE);
+        case IRON_SHOVEL:
+            return new Tool(ItemID.IRON_SHOVEL);
+        case IRON_AXE:
+            return new Tool(ItemID.IRON_AXE);
+        case IRON_HOE:
+            return new Tool(ItemID.IRON_HOE);
+            
+        case GOLD_SWORD:
+            return new Tool(ItemID.GOLD_SWORD);
+        case GOLD_PICKAXE:
+            return new Tool(ItemID.GOLD_PICKAXE);
+        case GOLD_SHOVEL:
+            return new Tool(ItemID.GOLD_SHOVEL);
+        case GOLD_AXE:
+            return new Tool(ItemID.GOLD_AXE);
+        case GOLD_HOE:
+            return new Tool(ItemID.GOLD_HOE);
+            
+        case DIAMOND_SWORD:
+            return new Tool(ItemID.DIAMOND_SWORD);
+        case DIAMOND_PICKAXE:
+            return new Tool(ItemID.DIAMOND_PICKAXE);
+        case DIAMOND_SHOVEL:
+            return new Tool(ItemID.DIAMOND_SHOVEL);
+        case DIAMOND_AXE:
+            return new Tool(ItemID.DIAMOND_AXE);
+        case DIAMOND_HOE:
+            return new Tool(ItemID.DIAMOND_HOE);
+        default:
+            throw new IllegalArgumentException("Invalid ItemID: " + itemID);
+    }
+}
+
 // Tools grouped by material
 
 Set<ItemID> woodToolIDs = new HashSet<>(Set.of(

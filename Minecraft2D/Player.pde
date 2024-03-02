@@ -28,6 +28,14 @@ public class Player {
         return craftableItems;
     }
     
+    public ArrayList<ItemCount> getCraftalbeItems() {
+        ArrayList<ItemCount> craftableItems = craftingMenu.getHandCraftableItems(inventory);    
+        if (canReachWorkbench()) {
+            craftableItems.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));
+        }
+        return craftableItems;
+    }
+    
     private boolean canReachWorkbench() {
         for (int y = -settings.craftingDistance; y <= settings.craftingDistance; y++) {
             for (int x = -settings.craftingDistance; x <= settings.craftingDistance; x++) {

@@ -27,6 +27,7 @@ void keyPressed() {
     }
     
     if (key == 'c') {
+        state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
         printPlayerCraftableItemsInConsole();
     }
 
