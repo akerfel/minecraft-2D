@@ -2,7 +2,6 @@ public class Inventory {
     int hotbarIndexSelected;                // The currently selected hotbar index
     ItemSlot[][] grid;                      // The hotbar is the last row in the grid
     ItemSlot mouseHeldItemSlot;             // An itemSlot which is held by the mouse in the inventory (e.g. when reorganizing the inventory)
-    ArrayList<Item> craftableItems;
     int grabbedXindex;                      // the x index of the grid from which the mouse grabbed an item from
     int grabbedYindex;
 
