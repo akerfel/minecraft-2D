@@ -87,7 +87,7 @@ void initializeSettings() {
     settings.noStrokeMode = true;
     setNoStrokeModeDependingOnSetting();
     resetObjectsDependingOnPixelsPerBlock();
-    settings.drawInnerSquaresInBlocks = true;
+    settings.drawInnerSquaresInBlocks = false;
     settings.offsetInnerSquare = 0.1;
     
     // colors

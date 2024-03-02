@@ -131,7 +131,7 @@ void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     rectMode(CORNER);
 
     // Write tool name (temporary solution, until specific images for tools are added)
-    textSize(20);
+    textSize(10);
     textAlign(CENTER, BOTTOM);
     fill(255, 255, 255);
     text(block.toString(), xPixel, yPixel + settings.pixelsPerItemSlot / 2);
