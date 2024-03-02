@@ -5,8 +5,8 @@ public abstract class Item {
     private boolean isStackable;
 
     public Item(ItemID itemID, ItemType itemType, boolean isStackable) {
-        this.itemType = itemType;
         this.itemID = itemID;
+        this.itemType = itemType;
         this.isStackable = isStackable;
         c = color(255, 0, 0);
     }

@@ -39,5 +39,5 @@ void intializeState() {
     state.player.inventory.addItem(new Tool(ItemID.DIAMOND_PICKAXE));
     state.player.inventory.addItem(new Tool(ItemID.STONE_SHOVEL));
     state.player.inventory.addItem(new Tool(ItemID.DIAMOND_AXE));
-    //state.player.inventory.addItem(new Planks(), 128);
+    state.player.inventory.addItem(new Planks(), 128);
 }

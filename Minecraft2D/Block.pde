@@ -122,3 +122,9 @@ public class Wood extends Block {
         super(ItemID.WOOD, color(174, 125, 90), true, ToolType.AXE, true);
     }
 }
+
+public class Workbench extends Block {
+    public Workbench() {
+        super(ItemID.WORKBENCH, color(217, 177, 140), true, ToolType.AXE, true);
+    }
+}

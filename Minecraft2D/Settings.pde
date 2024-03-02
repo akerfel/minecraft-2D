@@ -14,6 +14,7 @@ public class Settings {
     // General
     int blocksPerChunk;            // blocks per side of chunk;
     int maxStackCount;
+    int craftingDistance;          // Minimum distance (in blocks) to crafting table in order to use it
     
     // Visuals
     int pixelsPerBlock;            // pixels per side of block
@@ -65,6 +66,7 @@ void initializeSettings() {
     // General 
     settings.blocksPerChunk = 64;
     settings.maxStackCount = 64;
+    settings.craftingDistance = 5;
     
     // Visuals
     settings.pixelsPerBlock = 25;

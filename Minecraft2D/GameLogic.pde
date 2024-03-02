@@ -259,6 +259,10 @@ Block getPlayerBlock() {
     return getBlock(state.player.coords.x, state.player.coords.y);
 }
 
+Block getBlockRelativeToPlayer(int xdiff, int ydiff) {
+    return getBlock(state.player.coords.x + xdiff, state.player.coords.y + ydiff);
+}
+
 Chunk getPlayerChunk() {
     return getChunk(state.player.coords);
 }

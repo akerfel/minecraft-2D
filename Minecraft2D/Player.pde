@@ -1,5 +1,6 @@
 public class Player {
     Inventory inventory;
+    CraftingMenu craftingMenu;
     PVector coords;
     int reach;
     float speed;
@@ -9,6 +10,7 @@ public class Player {
     float superSpeedFactor;
     public Player(float x, float y) {
         inventory = new Inventory();
+        craftingMenu = new CraftingMenu();
         coords = new PVector(x, y);
         speed = 0.1;
         reach = 7;
@@ -17,6 +19,27 @@ public class Player {
         runningFactor = 2;
         superSpeedFactor = 200;
     }
+    
+    public ArrayList<ItemCount> getHandCraftableItems() {
+        ArrayList<ItemCount> craftableItems = craftingMenu.getHandCraftableItems(inventory);    
+        if (canReachWorkbench()) {
+            craftableItems.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));
+        }
+        return craftableItems;
+    }
+    
+    private boolean canReachWorkbench() {
+        for (int y = -settings.craftingDistance; y <= settings.craftingDistance; y++) {
+            for (int x = -settings.craftingDistance; x <= settings.craftingDistance; x++) {
+                Block block = getBlockRelativeToPlayer(x, y);
+                if (block.itemID == ItemID.WORKBENCH) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     
     void move() {
         float v = speed;

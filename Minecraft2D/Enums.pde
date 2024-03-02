@@ -20,10 +20,12 @@ enum ToolMaterial {
 
 enum ItemType {
     BLOCK,
-    TOOL
+    TOOL,
+    OTHER
 }
 
 public enum ItemID {
+    
     DIRT,
     GRASS,
     LEAVES,
@@ -33,6 +35,8 @@ public enum ItemID {
     IRON_ORE,
     WATER,
     WOOD,
+   
+    WORKBENCH,
     
     WOOD_SWORD,
     WOOD_PICKAXE,

@@ -5,21 +5,14 @@ public class Inventory {
     ArrayList<Item> craftableItems;
     int grabbedXindex;                      // the x index of the grid from which the mouse grabbed an item from
     int grabbedYindex;
-    CraftingMenu craftingMenu;
 
     public Inventory() {
         hotbarIndexSelected = 0;
         grid = new ItemSlot[settings.inventoryWidth][settings.inventoryHeight];
         setInventoryEmpty();
         mouseHeldItemSlot = new ItemSlot();
-        craftableItems = new ArrayList<>();
-        craftingMenu = new CraftingMenu();
     }
     
-    public ArrayList<ItemCount> getHandCraftableItems() {
-        return craftingMenu.getHandCraftableItems(this);    
-    }
-
     public Item getHeldItem() {
         return getHotbarSlot(hotbarIndexSelected).item;
     }
