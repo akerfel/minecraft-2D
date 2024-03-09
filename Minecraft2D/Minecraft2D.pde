@@ -10,11 +10,11 @@ void setup() {
 
     // Initialize cheats, settings and state
     cheats = new Cheats();
-    intializeCheats();
+    cheats.intialize();
     settings = new Settings();
-    settings.initializeSettings();
+    settings.initialize();
     state = new State();
-    state.intializeState();
+    state.intialize();
 }
 
 // This is the main game loop (called ~60 times per second)

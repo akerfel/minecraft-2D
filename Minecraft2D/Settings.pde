@@ -71,7 +71,7 @@ public class Settings {
     Map<ItemID, Character> blockIDsToChars;
     Map<Character, ItemID> blockCharsToIDs;
     
-    public void initializeSettings() {
+    public void initialize() {
         // Dynamic
         this.viewDistance = 250;
         

@@ -1,7 +1,7 @@
 public class Cheats {
     boolean canWalkThroughWalls;
-}
-
-public void intializeCheats() {
-    cheats.canWalkThroughWalls = false;
+    
+    public void intialize() {
+        this.canWalkThroughWalls = false;
+    }
 }

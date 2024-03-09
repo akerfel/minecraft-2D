@@ -15,7 +15,7 @@ public class State {
     boolean craftingMenuIsOpen;
     boolean debugScreenIsShowing;
     
-    void intializeState() {
+    public void intialize() {
         // Will be stored in the game save
         this.worldSeed = int(random(0, 100000000));
         this.generatedChunks = new HashMap<PVector, Chunk>();
