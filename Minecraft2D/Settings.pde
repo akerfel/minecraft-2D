@@ -70,62 +70,63 @@ public class Settings {
     // Mapping block to chars
     Map<ItemID, Character> blockIDsToChars;
     Map<Character, ItemID> blockCharsToIDs;
+    
+    public void initializeSettings() {
+        // Dynamic
+        this.viewDistance = 250;
+        
+        // General 
+        this.blocksPerChunk = 64;
+        this.maxStackCount = 64;
+        this.craftingDistance = 5;
+        
+        // Visuals
+        this.pixelsPerBlock = 25;
+        this.noStrokeMode = true;
+        setNoStrokeModeDependingOnSetting();
+        resetObjectsDependingOnPixelsPerBlock();
+        this.drawInnerSquaresInBlocks = false;
+        this.offsetInnerSquare = 0.1;
+        
+        // colors
+        this.colorWoodTool = color(143, 119, 72);
+        this.colorStoneTool = color(112, 112, 112);
+        this.colorIronTool = color(167, 167, 167);
+        this.colorGoldTool = color(250, 238, 77);
+        this.colorDiamondTool = color(92, 219, 213);
+        
+        // Block chances
+        this.chanceStone = 0.38;
+        
+        // Other
+        this.chanceRiver = 0.00004;
+        
+        // Mobs
+        this.mobSpawnChance = 0.01;
+        this.maxMobs = 30;
+        this.mobSpawnRange = 50;
+        this.mobDespawnRange = 100;
+        
+        // Tools
+        this.woodToolMiningMultiplier = 2;
+        this.stoneToolMiningMultiplier = 4;
+        this.ironToolMiningMultiplier = 6;
+        this.goldToolMiningMultiplier = 8;
+        this.diamondToolMiningMultiplier = 10;
+        
+        // Inventory
+        this.pixelsPerItemSlot = 60;
+        this.inventoryWidth = 9;
+        this.inventoryHeight = 4;
+        this.inventoryUpperLeftXPixel = width / 2 - settings.pixelsPerItemSlot * settings.inventoryWidth / 2;
+        this.inventoryUpperLeftYPixel = height / 2 - settings.pixelsPerItemSlot * settings.inventoryHeight / 2;
+        
+        // Mapping block to chars
+        mapBlockNamesToCharacters();
+    }    
 }
 
-void initializeSettings() {
-    
-    // Dynamic
-    settings.viewDistance = 250;
-    
-    // General 
-    settings.blocksPerChunk = 64;
-    settings.maxStackCount = 64;
-    settings.craftingDistance = 5;
-    
-    // Visuals
-    settings.pixelsPerBlock = 25;
-    settings.noStrokeMode = true;
-    setNoStrokeModeDependingOnSetting();
-    resetObjectsDependingOnPixelsPerBlock();
-    settings.drawInnerSquaresInBlocks = false;
-    settings.offsetInnerSquare = 0.1;
-    
-    // colors
-    settings.colorWoodTool = color(143, 119, 72);
-    settings.colorStoneTool = color(112, 112, 112);
-    settings.colorIronTool = color(167, 167, 167);
-    settings.colorGoldTool = color(250, 238, 77);
-    settings.colorDiamondTool = color(92, 219, 213);
-    
-    // Block chances
-    settings.chanceStone = 0.38;
-    
-    // Other
-    settings.chanceRiver = 0.00004;
-    
-    // Mobs
-    settings.mobSpawnChance = 0.01;
-    settings.maxMobs = 30;
-    settings.mobSpawnRange = 50;
-    settings.mobDespawnRange = 100;
-    
-    // Tools
-    settings.woodToolMiningMultiplier = 2;
-    settings.stoneToolMiningMultiplier = 4;
-    settings.ironToolMiningMultiplier = 6;
-    settings.goldToolMiningMultiplier = 8;
-    settings.diamondToolMiningMultiplier = 10;
-    
-    // Inventory
-    settings.pixelsPerItemSlot = 60;
-    settings.inventoryWidth = 9;
-    settings.inventoryHeight = 4;
-    settings.inventoryUpperLeftXPixel = width / 2 - settings.pixelsPerItemSlot * settings.inventoryWidth / 2;
-    settings.inventoryUpperLeftYPixel = height / 2 - settings.pixelsPerItemSlot * settings.inventoryHeight / 2;
-    
-    // Mapping block to chars
-    mapBlockNamesToCharacters();
-}
+
 
 private void mapBlockNamesToCharacters() {// Maps block names to block chars.
     // E.g. "wood" could map to "w".
