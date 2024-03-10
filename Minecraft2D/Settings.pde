@@ -125,26 +125,3 @@ public class Settings {
         mapBlockNamesToCharacters();
     }    
 }
-
-
-
-private void mapBlockNamesToCharacters() {// Maps block names to block chars.
-    // E.g. "wood" could map to "w".
-    settings.blockIDsToChars = Map.ofEntries(
-        entry(ItemID.DIRT, 'd'),
-        entry(ItemID.GRASS, '_'),
-        entry(ItemID.LEAVES, 'l'),
-        entry(ItemID.PLANKS, 'p'),
-        entry(ItemID.SAND, 's'),
-        entry(ItemID.STONE, 'S'),
-        entry(ItemID.WATER, '~'),
-        entry(ItemID.WOOD, 'w'),
-        entry(ItemID.IRON_ORE, 'i')
-    );
-
-    // blockCharsToNames is a reverse map of blockNamesToChars
-    settings.blockCharsToIDs =
-        settings.blockIDsToChars.entrySet()
-        .stream()
-        .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
-}

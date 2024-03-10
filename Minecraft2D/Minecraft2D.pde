@@ -1,7 +1,76 @@
+import java.util.Iterator;
+
 // Global variables
 Cheats cheats;
 Settings settings;
 State state;            // Game state
+
+enum ToolType {
+    SWORD,
+    PICKAXE,
+    SHOVEL,
+    AXE,
+    HOE,
+    NOTYPE
+}
+
+enum ToolMaterial {
+    WOOD,
+    STONE,
+    IRON,
+    GOLD,
+    DIAMOND
+}
+
+enum ItemType {
+    BLOCK,
+    TOOL,
+    OTHER
+}
+
+public enum ItemID {
+    DIRT,
+    GRASS,
+    LEAVES,
+    PLANKS,
+    SAND,
+    STONE,
+    IRON_ORE,
+    WATER,
+    WOOD,
+   
+    WORKBENCH,
+    
+    WOOD_SWORD,
+    WOOD_PICKAXE,
+    WOOD_SHOVEL,
+    WOOD_AXE,
+    WOOD_HOE,
+    
+    STONE_SWORD,
+    STONE_PICKAXE,
+    STONE_SHOVEL,
+    STONE_AXE,
+    STONE_HOE,
+    
+    IRON_SWORD,
+    IRON_PICKAXE,
+    IRON_SHOVEL,
+    IRON_AXE,
+    IRON_HOE,
+    
+    GOLD_SWORD,
+    GOLD_PICKAXE,
+    GOLD_SHOVEL,
+    GOLD_AXE,
+    GOLD_HOE,
+    
+    DIAMOND_SWORD,
+    DIAMOND_PICKAXE,
+    DIAMOND_SHOVEL,
+    DIAMOND_AXE,
+    DIAMOND_HOE
+}
 
 // This function is called once, at startup
 void setup() {
@@ -34,6 +103,8 @@ void drawEverything() {
     drawWorld();
     drawUI();
 }
+
+// --- Input.java ---
 
 void keyPressed() {
     if (key == 'x') {
@@ -175,6 +246,8 @@ void mouseWheel(MouseEvent event) {
         }
     }
 }
+
+// --- GameLogic.java
 
 void updateBlocks() {
     loadVisibleBlocks();
@@ -466,4 +539,343 @@ char getBlockChar(ItemID blockID) {
 
 ItemID getBlockName(char blockChar) {
     return settings.blockCharsToIDs.get(blockChar);
+}
+
+// This method holds all item definitions. All item objects should be created with this method.
+Item createItem(ItemID itemID) {
+    switch (itemID) {
+        case DIRT:
+            return new Block(itemID, color(151, 109, 77), false, ToolType.SHOVEL, true);
+        case GRASS:
+            return new Block(itemID, color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
+        case LEAVES:
+            return new Block(itemID, color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, ToolType.AXE, true);
+        case PLANKS:
+            return new Block(itemID, color(194, 155, 115), true, ToolType.AXE, true);
+        case SAND:
+            return new Block(itemID, color(247, 233, 163), false, ToolType.SHOVEL, true);
+        case STONE:
+            return new Block(itemID, color(112, 112, 112) + color(random(-8, 8), random(-8, 8), random(-8, 8)), true, ToolType.PICKAXE, true);
+        case IRON_ORE:
+            return new Block(itemID, color(223, 223, 225), true, ToolType.PICKAXE, true);
+        case WATER:
+            return new Block(itemID, color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, ToolType.NOTYPE, false);
+        case WOOD:
+            return new Block(itemID, color(174, 125, 90), true, ToolType.AXE, true);
+        case WORKBENCH:
+            return new Block(itemID, color(217, 177, 140), true, ToolType.AXE, true);
+
+        case WOOD_SWORD:
+            return new Tool(itemID, ToolType.SWORD, ToolMaterial.WOOD, settings.woodToolMiningMultiplier, settings.colorWoodTool);
+        case WOOD_PICKAXE:
+            return new Tool(itemID, ToolType.PICKAXE, ToolMaterial.WOOD, settings.woodToolMiningMultiplier, settings.colorWoodTool);
+        case WOOD_SHOVEL:
+            return new Tool(itemID, ToolType.SHOVEL, ToolMaterial.WOOD, settings.woodToolMiningMultiplier, settings.colorWoodTool);
+        case WOOD_AXE:
+            return new Tool(itemID, ToolType.AXE, ToolMaterial.WOOD, settings.woodToolMiningMultiplier, settings.colorWoodTool);
+        case WOOD_HOE:
+            return new Tool(itemID, ToolType.HOE, ToolMaterial.WOOD, settings.woodToolMiningMultiplier, settings.colorWoodTool);
+        
+        case STONE_SWORD:
+            return new Tool(itemID, ToolType.SWORD, ToolMaterial.STONE, settings.stoneToolMiningMultiplier, settings.colorStoneTool);
+        case STONE_PICKAXE:
+            return new Tool(itemID, ToolType.PICKAXE, ToolMaterial.STONE, settings.stoneToolMiningMultiplier, settings.colorStoneTool);
+        case STONE_SHOVEL:
+            return new Tool(itemID, ToolType.SHOVEL, ToolMaterial.STONE, settings.stoneToolMiningMultiplier, settings.colorStoneTool);
+        case STONE_AXE:
+            return new Tool(itemID, ToolType.AXE, ToolMaterial.STONE, settings.stoneToolMiningMultiplier, settings.colorStoneTool);
+        case STONE_HOE:
+            return new Tool(itemID, ToolType.HOE, ToolMaterial.STONE, settings.stoneToolMiningMultiplier, settings.colorStoneTool);
+        
+        case IRON_SWORD:
+            return new Tool(itemID, ToolType.SWORD, ToolMaterial.IRON, settings.ironToolMiningMultiplier, settings.colorIronTool);
+        case IRON_PICKAXE:
+            return new Tool(itemID, ToolType.PICKAXE, ToolMaterial.IRON, settings.ironToolMiningMultiplier, settings.colorIronTool);
+        case IRON_SHOVEL:
+            return new Tool(itemID, ToolType.SHOVEL, ToolMaterial.IRON, settings.ironToolMiningMultiplier, settings.colorIronTool);
+        case IRON_AXE:
+            return new Tool(itemID, ToolType.AXE, ToolMaterial.IRON, settings.ironToolMiningMultiplier, settings.colorIronTool);
+        case IRON_HOE:
+            return new Tool(itemID, ToolType.HOE, ToolMaterial.IRON, settings.ironToolMiningMultiplier, settings.colorIronTool);
+            
+        case GOLD_SWORD:
+            return new Tool(itemID, ToolType.SWORD, ToolMaterial.GOLD, settings.goldToolMiningMultiplier, settings.colorGoldTool);
+        case GOLD_PICKAXE:
+            return new Tool(itemID, ToolType.PICKAXE, ToolMaterial.GOLD, settings.goldToolMiningMultiplier, settings.colorGoldTool);
+        case GOLD_SHOVEL:
+            return new Tool(itemID, ToolType.SHOVEL, ToolMaterial.GOLD, settings.goldToolMiningMultiplier, settings.colorGoldTool);
+        case GOLD_AXE:
+            return new Tool(itemID, ToolType.AXE, ToolMaterial.GOLD, settings.goldToolMiningMultiplier, settings.colorGoldTool);
+        case GOLD_HOE:
+            return new Tool(itemID, ToolType.HOE, ToolMaterial.GOLD, settings.goldToolMiningMultiplier, settings.colorGoldTool);
+        
+        case DIAMOND_SWORD:
+            return new Tool(itemID, ToolType.SWORD, ToolMaterial.DIAMOND, settings.diamondToolMiningMultiplier, settings.colorDiamondTool);
+        case DIAMOND_PICKAXE:
+            return new Tool(itemID, ToolType.PICKAXE, ToolMaterial.DIAMOND, settings.diamondToolMiningMultiplier, settings.colorDiamondTool);
+        case DIAMOND_SHOVEL:
+            return new Tool(itemID, ToolType.SHOVEL, ToolMaterial.DIAMOND, settings.diamondToolMiningMultiplier, settings.colorDiamondTool);
+        case DIAMOND_AXE:
+            return new Tool(itemID, ToolType.AXE, ToolMaterial.DIAMOND, settings.diamondToolMiningMultiplier, settings.colorDiamondTool);
+        case DIAMOND_HOE:
+            return new Tool(itemID, ToolType.HOE, ToolMaterial.DIAMOND, settings.diamondToolMiningMultiplier, settings.colorDiamondTool);
+        
+        default:
+            throw new IllegalArgumentException("Invalid ItemID: " + itemID);
+    }
+}
+
+private void mapBlockNamesToCharacters() {// Maps block names to block chars.
+    // E.g. "wood" could map to "w".
+    settings.blockIDsToChars = Map.ofEntries(
+        entry(ItemID.DIRT, 'd'),
+        entry(ItemID.GRASS, '_'),
+        entry(ItemID.LEAVES, 'l'),
+        entry(ItemID.PLANKS, 'p'),
+        entry(ItemID.SAND, 's'),
+        entry(ItemID.STONE, 'S'),
+        entry(ItemID.WATER, '~'),
+        entry(ItemID.WOOD, 'w'),
+        entry(ItemID.IRON_ORE, 'i')
+    );
+
+    // blockCharsToNames is a reverse map of blockNamesToChars
+    settings.blockCharsToIDs =
+        settings.blockIDsToChars.entrySet()
+        .stream()
+        .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+}
+
+// DrawWorld.java
+
+void drawWorld() {
+    drawVisibleBlocks();
+    drawMobs();
+    drawPlayer();
+}
+
+void drawVisibleBlocks() {
+    // xPixels and yPixels store the top left corner pixel positions of each block
+    float[] xPixels = new float[settings.viewDistance];
+    float[] yPixels = new float[settings.viewDistance];
+    float xPlayerPixelOffset = (state.player.coords.x % 1) * settings.pixelsPerBlock;
+    float yPlayerPixelOffset = (state.player.coords.y % 1) * settings.pixelsPerBlock;
+    for (float i = 0; i < settings.viewDistance; i++) {
+        float xPos = width/2 + (i - settings.viewDistance/2) * settings.pixelsPerBlock;
+        float yPos = height/2 + (i - settings.viewDistance/2) * settings.pixelsPerBlock;
+        xPixels[int(i)] = xPos - xPlayerPixelOffset;
+        yPixels[int(i)] = yPos - yPlayerPixelOffset;
+    }
+
+    for (int y = 0; y < settings.viewDistance; y++) {
+        for (int x = 0; x < settings.viewDistance; x++) {
+            drawBlock(state.visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
+        }
+    }
+}
+
+void drawBlock(Block block, float xPixel, float yPixel) {
+    fill(block.c);
+    square(xPixel, yPixel, settings.pixelsPerBlock + 1);
+    
+    if (settings.drawInnerSquaresInBlocks) {
+        drawInnerSquareInBlock(block, xPixel, yPixel);
+    }
+    
+    if (block.prcntBroken > 0) {
+        drawBlockBreakingTexture(block, xPixel, yPixel);
+    }
+}
+
+private void drawInnerSquareInBlock(Block block, float xPixel, float yPixel) {
+    int colorDiff = 10;
+    int innerRedValue = max(0, int(red(block.c)) - colorDiff);
+    int innerGreenValue = max(0, int(green(block.c)) - colorDiff);
+    int innerBlueValue = max(0, int(blue(block.c)) - colorDiff);
+    color innerColor = color(innerRedValue, innerGreenValue, innerBlueValue);
+    fill(innerColor);
+    int offset = int(settings.pixelsPerBlock * settings.offsetInnerSquare);
+    square(xPixel + offset, yPixel + offset, settings.pixelsPerBlock - offset * 2);
+}
+
+void drawBlockBreakingTexture(Block block, float xPixel, float yPixel) {
+    fill(block.prcntBroken * 255);
+    circle(xPixel + settings.pixelsPerBlock/2, yPixel + settings.pixelsPerBlock/2, (block.prcntBroken * settings.pixelsPerBlock));
+}
+
+void drawMobs() {
+    for (Mob mob : state.mobs) {
+        drawMob(mob);
+    }
+}
+
+void drawMob(Mob mob) {
+    float xBlocksToPlayer = mob.coords.x - state.player.coords.x;
+    float yBlocksToPlayer = mob.coords.y - state.player.coords.y;
+    float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
+    float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
+    fill(mob.c);
+    square(x, y, settings.mobWidth);
+}
+
+void drawPlayer() {
+    fill(216, 127, 51);
+    square(width/2, height/2, settings.playerWidth);
+}
+
+// DrawUI.java
+
+void drawUI() {
+    drawInventoryIfOpen();
+    drawCraftingMenuIfOpen();
+    drawHotbar();
+    drawDebugMenuIfOpen();
+    drawMouseItemSlot();
+}
+
+void drawDebugMenuIfOpen() {
+    if (state.debugScreenIsShowing) {
+        fill(240);
+        textAlign(CORNER);
+
+        // FPS
+        text("fps: " + int(frameRate), 5, 20);
+
+        // The player's current block coordinates
+        text("Block: " + int(state.player.coords.x) + " / " + int(state.player.coords.y), 5, 40);
+
+        // The player's current chunk coordinates
+        //PVector playerChunkCoords = blockCoordsToChunkCoords(state.player.coords);
+        //text("Chunk: " + int(playerChunkCoords.x) + " / " + int(playerChunkCoords.y), 5, 60);
+    }
+}
+
+void drawInventoryIfOpen() {
+    if (state.inventoryIsOpen) {
+        stroke(0);
+        for (int y = 0; y < settings.inventoryHeight; y++) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
+                ItemSlot itemSlot = state.player.inventory.grid[x][y];
+                int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
+                int yPixel = settings.inventoryUpperLeftYPixel + y * settings.pixelsPerItemSlot;
+                drawItemSlot(itemSlot, xPixel, yPixel, false);
+            }
+        }
+        if (settings.noStrokeMode) {
+            noStroke();
+        }
+    }
+}
+
+void drawCraftingMenuIfOpen() {
+        
+}
+
+public void printPlayerCraftableItemsInConsole() {
+    println("");
+    println("Craftable items:");
+    for (ItemCount itemCount : state.player.getHandCraftableItems()) {
+        println(itemCount.item + " * " + itemCount.count);
+    }    
+}
+
+// This function is similar to drawInventoryIfOpen, except the y coordinate is fixed,
+// and the currently selected hotbar slot will be highlighted.
+void drawHotbar() {
+    stroke(0);
+    int yPixel = height - settings.pixelsPerItemSlot;
+    for (int x = 0; x < settings.inventoryWidth; x++) {
+        int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
+        ItemSlot itemSlot = state.player.inventory.getHotbarSlot(x);
+        boolean highlightBackground = false;
+        if (x == state.player.inventory.hotbarIndexSelected) {
+            highlightBackground = true;
+        }
+        drawItemSlot(itemSlot, xPixel, yPixel, highlightBackground);
+    }
+    if (settings.noStrokeMode) {
+        noStroke();
+    }
+}
+
+void drawMouseItemSlot() {
+    stroke(0);
+    if (state.player.inventory.mouseHeldItemSlot.getCount() != 0) {
+        drawItemInItemSlot(state.player.inventory.mouseHeldItemSlot, mouseX, mouseY);
+    }
+    if (settings.noStrokeMode) {
+        noStroke();
+    }
+}
+
+// Draws an itemSlot with center at (xPixel, yPixel)
+void drawItemSlot(ItemSlot itemSlot, int xPixel, int yPixel, boolean highlightBackground) {
+    drawItemSlotBackground(xPixel, yPixel, highlightBackground);
+    // We will specifiy the center of each itemSlot
+    int xPixelCenterOfItemSlot = xPixel + settings.pixelsPerItemSlot / 2;
+    int yPixelCenterOfItemSlot = yPixel + settings.pixelsPerItemSlot / 2;
+    drawItemInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
+}
+
+void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground) {
+    fill(150, 150, 150);
+    if (highlightBackground) {
+        fill(210, 210, 210);
+    }
+    square(xPixel, yPixel, settings.pixelsPerItemSlot);
+}
+
+// (xPixel, yPixel) should be the center of the drawn Item.
+void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    rectMode(CENTER);
+    Item item = itemSlot.item;
+    if (itemSlot.getCount() != 0) {
+        switch (item.itemType) {
+        case BLOCK:
+            drawBlockInItemSlot(itemSlot, xPixel, yPixel);
+            break;
+        case TOOL:
+            drawToolInItemSlot(itemSlot, xPixel, yPixel);
+            break;
+        }
+    }
+    rectMode(CORNER);
+}
+
+void drawBlockInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    rectMode(CENTER);
+    Block block = (Block) itemSlot.item;
+
+    // Can not call drawBlock() function here, because that ones size changes with settings.pixelsPerBlock
+    fill(block.c);
+    square(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
+
+    // Write amount
+    textSize(24);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    text(itemSlot.getCount(), xPixel, yPixel);
+    rectMode(CORNER);
+
+    // Write tool name (temporary solution, until specific images for tools are added)
+    textSize(10);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    text(block.toString(), xPixel, yPixel + settings.pixelsPerItemSlot / 2);
+    rectMode(CORNER);
+}
+
+void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    rectMode(CENTER);
+    Tool tool = (Tool) itemSlot.item;
+
+    fill(tool.c);
+    circle(xPixel, yPixel, settings.pixelsPerItemSlot / 2);
+
+    textSize(15);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    String toolName = tool.toString().substring(tool.toString().lastIndexOf("_") + 1);
+    text(toolName, xPixel, yPixel + settings.pixelsPerItemSlot / 2);
+    rectMode(CORNER);
 }
