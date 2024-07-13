@@ -53,6 +53,9 @@ public class Settings {
     int mobSpawnRange;             // In blocks
     int mobDespawnRange;           // In blocks
     
+    // Pig
+    float pigSpeedFactor = 0.1;
+    
     // Tools
     int woodToolMiningMultiplier;
     int stoneToolMiningMultiplier;

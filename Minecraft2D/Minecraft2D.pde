@@ -10,11 +10,12 @@ void setup() {
     //fullScreen();
     size(1200, 1200);
 
-    // Initialize cheats, settings and state
     cheats = new Cheats();
     cheats.intialize();
+    
     settings = new Settings();
     settings.initialize();
+    
     state = new State();
     state.intialize();
 }
@@ -277,18 +278,19 @@ void spawnMob() {
     float ySpawn = int(state.player.coords.y + random(-settings.mobSpawnRange, settings.mobSpawnRange));
     if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
         state.mobs.add(new Mob(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
+        state.mobs.add(new Pig(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
     }
 }
 
 void resetObjectsDependingOnPixelsPerBlock() {
-    settings.playerWidth = settings.pixelsPerBlock / 2;
-    settings.mobWidth = settings.pixelsPerBlock / 2;
+    settings.playerWidth = settings.pixelsPerBlock * 0.85;
+    settings.mobWidth = settings.pixelsPerBlock * 0.85;
 }
 
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
         ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>//
-        if (slot.item.itemType == ItemType.BLOCK) {
+        if (slot.item.itemType == ItemType.BLOCK) { //<>//
             Block block = (Block) slot.item;
             if (slot.getCount() != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && 

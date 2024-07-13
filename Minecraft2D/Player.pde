@@ -8,6 +8,7 @@ public class Player {
     boolean isRunningSuperSpeed;
     float runningFactor;                    // 1.5 gives 50% speed increase when running
     float superSpeedFactor;
+    
     public Player(float x, float y) {
         inventory = new Inventory();
         craftingMenu = new CraftingMenu();
