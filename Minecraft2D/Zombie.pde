@@ -4,7 +4,7 @@ public class Zombie extends Mob {
     public Zombie(float x, float y) {
         super(x, y, settings.zombieSpeedFactor);
         isMoving = false;
-        c = color(37, 87, 49);
+        c = color(102, 0, 0);
     }
 
     void update() {
