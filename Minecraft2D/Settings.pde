@@ -109,14 +109,12 @@ public class Settings {
         this.chanceRiver = 0.00004;
         
         // Mobs
-        this.maxMobs = 30;
+        this.maxMobs = 1000;
         this.mobSpawnRange = 50;
         this.mobDespawnRange = 100;
         
-        // Mobs
-        
         // Mob spawn chance
-        this.pigSpawnChance = 0.01;
+        this.pigSpawnChance = 0.05;
         this.zombieSpawnChance = 0.05;
         
         // Mob speeds

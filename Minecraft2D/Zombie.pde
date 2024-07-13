@@ -15,6 +15,7 @@ public class Zombie extends Mob {
         coords.y += direction.y * speedFactor;
         
         revertStepIfWalkedIntoWallOrWater(xPrevious, yPrevious);
+        revertStepIfWalkedIntoMob(xPrevious, yPrevious);
         
         determineDirection();
     }
@@ -29,16 +30,14 @@ public class Zombie extends Mob {
         }
         
         coords.x = xCollide;
-        if (!isCollidingWithWallOrWater()) {
-            return; // Collided with wall because of movement in y direction
+        if (isCollidingWithWallOrWater()) {
+            coords.x = xPrevious;
         }
-        coords.x = xPrevious;
         
         coords.y = yCollide;
-        if (!isCollidingWithWallOrWater()) {
-            return; // Collided with wall because of movement in x direction
+        if (isCollidingWithWallOrWater()) {
+            coords.y = yPrevious;
         }
-        coords.y = yPrevious;
     }
     
     void determineDirection() {

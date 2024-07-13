@@ -19,4 +19,33 @@ public abstract class Mob {
             || getBlock(int(coords.x), int(coords.y + mobWidthInBlocks)).isWallOrWater()
             || getBlock(int(coords.x + mobWidthInBlocks), int(coords.y + mobWidthInBlocks)).isWallOrWater();
     }
+    
+    public boolean isCollidingWithAnotherMob() {
+        for (Mob otherMob : state.mobs) {
+            if (mobsAreColliding(this, otherMob)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    void revertStepIfWalkedIntoMob(float xPrevious, float yPrevious) {
+        float xCollide = coords.x;
+        float yCollide = coords.y;
+        
+        if (isCollidingWithAnotherMob()) {
+            coords.x = xPrevious;
+            coords.y = yPrevious;
+        }
+        
+        coords.x = xCollide;
+        if (isCollidingWithAnotherMob()) {
+            coords.x = xPrevious;
+        }
+        
+        coords.y = yCollide;
+        if (isCollidingWithAnotherMob()) {
+            coords.y = yPrevious;
+        }
+    }
 }

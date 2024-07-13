@@ -36,6 +36,7 @@ void drawEverything() {
     background(0);
     drawWorld();
     drawUI();
+    println("mobs: " + state.mobs.size());
 }
 
 void keyPressed() {
@@ -284,18 +285,24 @@ void spawnMob(MobType mobType) {
     if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
         switch(mobType) {
         case PIG:
-            state.mobs.add(new Pig(xSpawn + 0.1, ySpawn + 0.1));
+            spawnMobIfNotCollidingWithAnother(new Pig(xSpawn + 0.1, ySpawn + 0.1));
             return;
         case ZOMBIE:
-            state.mobs.add(new Zombie(xSpawn + 0.1, ySpawn + 0.1));
+            spawnMobIfNotCollidingWithAnother(new Zombie(xSpawn + 0.1, ySpawn + 0.1));
             return;
         } //<>//
     }
 }
 
+void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
+    if (!mobToSpawn.isCollidingWithAnotherMob()) {
+        state.mobs.add(mobToSpawn);
+    }
+}
+
 void resetObjectsDependingOnPixelsPerBlock() {
     settings.playerWidth = settings.pixelsPerBlock * 0.85;
-    settings.mobWidth = settings.pixelsPerBlock * 0.85;
+    settings.mobWidth = settings.pixelsPerBlock;
 }
 
 void placeBlockWithMouse() {
@@ -481,4 +488,32 @@ char getBlockChar(ItemID blockID) {
 
 ItemID getBlockName(char blockChar) {
     return settings.blockCharsToIDs.get(blockChar);
+}
+
+public boolean mobsAreColliding(Mob m1, Mob m2) {
+    if (m1 == m2) {
+        return false;    
+    }
+    
+    float w = 1;
+    float x1 = m1.coords.x;
+    float y1 = m1.coords.y;
+    float x2 = m2.coords.x;
+    float y2 = m2.coords.y;
+    
+    float rectOneRight = x1 + w;
+    float rectOneLeft = x1;
+    float rectOneBottom = y1 + w;
+    float rectOneTop = y1;
+    
+    float rectTwoRight = x2 + w;
+    float rectTwoLeft = x2;
+    float rectTwoBottom = y2 + w;
+    float rectTwoTop = y2;
+
+    return 
+   (rectOneRight > rectTwoLeft && 
+    rectOneLeft < rectTwoRight && 
+    rectOneBottom > rectTwoTop && 
+    rectOneTop < rectTwoBottom);
 }

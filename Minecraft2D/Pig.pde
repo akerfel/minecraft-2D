@@ -23,6 +23,7 @@ public class Pig extends Mob {
             slightlyShiftDirection();
 
             invertDirectionIfCollideWithWallOrWater(xPrevious, yPrevious);
+            revertStepIfWalkedIntoMob(xPrevious, yPrevious);
         } else {
             maybeStartMoving();
         }
