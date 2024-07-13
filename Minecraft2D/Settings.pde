@@ -48,13 +48,17 @@ public class Settings {
     float chanceRiver;
     
     // Mobs
-    float mobSpawnChance;          // Chance each frame, so should be pretty low
     int maxMobs;
     int mobSpawnRange;             // In blocks
     int mobDespawnRange;           // In blocks
     
-    // Pig
+    // Mob spawn chance each frame, so should be pretty low
+    float pigSpawnChance;
+    float zombieSpawnChance;
+    
+    // Mob speeds
     float pigSpeedFactor = 0.1;
+    float zombieSpeedFactor = 0.05;
     
     // Tools
     int woodToolMiningMultiplier;
@@ -105,10 +109,19 @@ public class Settings {
         this.chanceRiver = 0.00004;
         
         // Mobs
-        this.mobSpawnChance = 0.01;
         this.maxMobs = 30;
         this.mobSpawnRange = 50;
         this.mobDespawnRange = 100;
+        
+        // Mobs
+        
+        // Mob spawn chance
+        this.pigSpawnChance = 0.01;
+        this.zombieSpawnChance = 0.05;
+        
+        // Mob speeds
+        this.pigSpeedFactor = 0.1;
+        this.zombieSpeedFactor = 0.05;
         
         // Tools
         this.woodToolMiningMultiplier = 2;

@@ -16,25 +16,25 @@ public class Pig extends Mob {
             maybeStopMoving();
             float xPrevious = coords.x;
             float yPrevious = coords.y;
-            // Change coords
+            
             coords.x += direction.x * speedFactor;
             coords.y += direction.y * speedFactor;
+            
             slightlyShiftDirection();
 
-            float mobWidthInBlocks = settings.mobWidth / settings.pixelsPerBlock; // How much the state.player width is in blocks (ex 0.5 blocks)
-            if (getBlock(int(coords.x), int(coords.y)).isWallOrWater()
-                || getBlock(int(coords.x + mobWidthInBlocks), int(coords.y)).isWallOrWater()
-                || getBlock(int(coords.x), int(coords.y + mobWidthInBlocks)).isWallOrWater()
-                || getBlock(int(coords.x + mobWidthInBlocks), int(coords.y + mobWidthInBlocks)).isWallOrWater())
-            {
-                coords.x = xPrevious;
-                coords.y = yPrevious;
-                direction.x *= -1;
-                direction.y *= -1;
-            }
+            invertDirectionIfCollideWithWallOrWater(xPrevious, yPrevious);
         } else {
             maybeStartMoving();
         }
+    }
+    
+    void invertDirectionIfCollideWithWallOrWater(float xPrevious, float yPrevious) {
+        if (isCollidingWithWallOrWater()) {
+            coords.x = xPrevious;
+            coords.y = yPrevious;
+            direction.x *= -1;
+            direction.y *= -1;
+        }    
     }
 
     void slightlyShiftDirection() {

@@ -12,10 +12,10 @@ void setup() {
 
     cheats = new Cheats();
     cheats.intialize();
-    
+
     settings = new Settings();
     settings.initialize();
-    
+
     state = new State();
     state.intialize();
 }
@@ -65,7 +65,7 @@ void keyPressed() {
         state.craftingMenuIsOpen = false;
         state.inventoryIsOpen = !state.inventoryIsOpen;
     }
-    
+
     if (key == 'c') {
         state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
         printPlayerCraftableItemsInConsole();
@@ -186,7 +186,7 @@ void updateBlocks() {
 }
 
 void updateMobs() {
-    maybeSpawnMob();
+    maybeSpawnMobs();
     removeFarMobs();
     updateMobsPos();
 }
@@ -195,7 +195,7 @@ void placeOrMineBlock() {
     if (!state.inventoryIsOpen) {
         placeBlockWithMouse();
         mineBlockWithMouse();
-    }    
+    }
 }
 
 void makeViewDistanceFitZoomLevel() {
@@ -267,17 +267,29 @@ void removeFarMobs() {
     }
 }
 
-void maybeSpawnMob() {
-    if (state.mobs.size() < settings.maxMobs && random(0, 1) < settings.mobSpawnChance) {
-        spawnMob();
+void maybeSpawnMobs() {
+    if (state.mobs.size() < settings.maxMobs) {
+        if (random(0, 1) < settings.pigSpawnChance) {
+            spawnMob(MobType.PIG);
+        }
+        if (random(0, 1) < settings.zombieSpawnChance) {
+            spawnMob(MobType.ZOMBIE);
+        }
     }
 }
 
-void spawnMob() {
+void spawnMob(MobType mobType) {
     float xSpawn = int(state.player.coords.x + random(-settings.mobSpawnRange, settings.mobSpawnRange));
     float ySpawn = int(state.player.coords.y + random(-settings.mobSpawnRange, settings.mobSpawnRange));
     if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
-        state.mobs.add(new Pig(xSpawn + 0.1, ySpawn + 0.1));    // + 0.1 so it does not spawn at exact corner of block (looks weird)
+        switch(mobType) {
+        case PIG:
+            state.mobs.add(new Pig(xSpawn + 0.1, ySpawn + 0.1));
+            return;
+        case ZOMBIE:
+            state.mobs.add(new Zombie(xSpawn + 0.1, ySpawn + 0.1));
+            return;
+        } //<>//
     }
 }
 
@@ -289,11 +301,11 @@ void resetObjectsDependingOnPixelsPerBlock() {
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
         ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>//
-        if (slot.item.itemType == ItemType.BLOCK) { //<>//
+        if (slot.item.itemType == ItemType.BLOCK) {
             Block block = (Block) slot.item;
             if (slot.getCount() != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach && 
-                    (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) && 
+                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
+                    (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) &&
                     setMouseBlock((Block) createItem(block.itemID))) {
                     slot.count--;
                 }

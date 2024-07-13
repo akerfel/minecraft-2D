@@ -1,6 +1,11 @@
 import java.util.HashSet;
 import java.util.Set;
 
+enum MobType {
+    PIG,
+    ZOMBIE 
+}
+
 enum ToolType {
     SWORD,
     PICKAXE,
