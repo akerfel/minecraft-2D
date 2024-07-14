@@ -3,7 +3,7 @@ public class Player {
     CraftingMenu craftingMenu;
     PVector coords;
     int reach;
-    float speed;
+    float baseSpeed;
     boolean isRunning;
     boolean isRunningSuperSpeed;
     float runningFactor;                    // 1.5 gives 50% speed increase when running
@@ -13,7 +13,7 @@ public class Player {
         inventory = new Inventory();
         craftingMenu = new CraftingMenu();
         coords = new PVector(x, y);
-        speed = 0.1;
+        baseSpeed = 0.1;
         reach = 7;
         isRunning = false;
         isRunningSuperSpeed = false;
@@ -51,29 +51,38 @@ public class Player {
 
     
     void move() {
-        float v = speed;
-        if (isRunning) {
-            v *= runningFactor;
-        }
-        if (isRunningSuperSpeed) {
-            v *= superSpeedFactor;
-        }
-        if (getPlayerBlock().itemID == ItemID.WATER) {
-            v *= 0.5;
-        }
-
-        // Save previous coords
         float xPrevious = coords.x;
         float yPrevious = coords.y;
 
-        // Change coords
-        coords.x += v*(int(state.D_IsPressed) - int(state.A_isPressed));
-        coords.y += v*(int(state.S_isPressed)  - int(state.W_isPressed));
+        float speed = determineSpeed();
+        coords.add(getMovementDiff(speed));
         
-        // If new coords are inside wall, go back to old coords
         if (!cheats.canWalkThroughWalls) {
             revertStepIfWalkedIntoWall(xPrevious, yPrevious);
         }
+    }
+    
+    private float determineSpeed() {
+        float speed = baseSpeed;
+        if (isRunning) {
+            speed *= runningFactor;
+        }
+        if (isRunningSuperSpeed) {
+            speed *= superSpeedFactor;
+        }
+        if (getPlayerBlock().itemID == ItemID.WATER) {
+            speed *= 0.5;
+        }
+        return speed;
+    }
+    
+    private PVector getMovementDiff(float speed) {
+        int xMovement = int(state.D_IsPressed) - int(state.A_isPressed);
+        int yMovement = int(state.S_isPressed)  - int(state.W_isPressed);
+        PVector movementDiff = new PVector(xMovement, yMovement);
+        movementDiff.normalize();
+        movementDiff.mult(speed);
+        return movementDiff;
     }
     
     void revertStepIfWalkedIntoWall(float xPrevious, float yPrevious) {

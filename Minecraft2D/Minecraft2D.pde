@@ -36,7 +36,6 @@ void drawEverything() {
     background(0);
     drawWorld();
     drawUI();
-    println("mobs: " + state.mobs.size());
 }
 
 void keyPressed() {
@@ -289,8 +288,8 @@ void spawnMob(MobType mobType) {
         case ZOMBIE:
             spawnMobIfNotCollidingWithAnother(new Zombie(xSpawn + 0.1, ySpawn + 0.1));
             return;
-        } //<>// //<>//
-    }
+        } //<>//
+    } //<>//
 }
 
 void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
@@ -301,8 +300,8 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
 
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
-        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>// //<>//
-        if (slot.item.itemType == ItemType.BLOCK) {
+        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>//
+        if (slot.item.itemType == ItemType.BLOCK) { //<>//
             Block block = (Block) slot.item;
             if (slot.getCount() != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
