@@ -7,10 +7,11 @@ public class Settings {
     // Dynamic
     int viewDistance;
     
-    // Entity size
+    // Size
     float playerWidthInBlocks;
     float pigWidthInBlocks;
     float zombieWidthInBlocks;
+    float bulletDiameterInBlocks;
     
     // General
     int blocksPerChunk;            // blocks per side of chunk;
@@ -66,6 +67,7 @@ public class Settings {
     float playerSpeedFactor;
     float pigSpeedFactor;
     float zombieSpeedFactor;
+    float bulletSpeedFactor;
     
     // Tools
     int woodToolMiningMultiplier;
@@ -89,10 +91,11 @@ public class Settings {
         // Dynamic
         this.viewDistance = 250;
         
-        // Entity size
+        // size
         this.playerWidthInBlocks = 0.8;
         this.pigWidthInBlocks = 0.8;
         this.zombieWidthInBlocks = 0.8;
+        this.bulletDiameterInBlocks = 0.3;
         
         // General 
         this.blocksPerChunk = 64;
@@ -131,12 +134,13 @@ public class Settings {
         
         // Mob spawn chance
         this.pigSpawnChance = 0.05;
-        this.zombieSpawnChance = 0.05;
+        this.zombieSpawnChance = 15;
         
         // Speed
-        this.playerSpeedFactor = 0.1;
-        this.pigSpeedFactor = 0.002;
-        this.zombieSpeedFactor = 0.05;
+        this.playerSpeedFactor = 0.05;
+        this.pigSpeedFactor = 0.02;
+        this.zombieSpeedFactor = 0.03;
+        this.bulletSpeedFactor = 0.15;
         
         // Tools
         this.woodToolMiningMultiplier = 2;

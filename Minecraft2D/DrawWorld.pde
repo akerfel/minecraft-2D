@@ -1,6 +1,7 @@
 void drawWorld() {
     drawVisibleBlocks();
     drawBodies();
+    drawBullets();
 }
 
 void drawVisibleBlocks() {
@@ -58,6 +59,12 @@ void drawBodies() {
     }
 }
 
+void drawBullets() {
+    for (Bullet bullet : state.bullets) {
+        drawBullet(bullet);
+    }
+}
+
 void drawBody(Body body) {
     if (body instanceof Player) {
         float playerWidthInPixels = settings.playerWidthInBlocks * settings.pixelsPerBlock;
@@ -67,7 +74,7 @@ void drawBody(Body body) {
         ellipseMode(CENTER);
     }
     else {
-        float bodyWidthInPixels = body.widthInBlocks * settings.pixelsPerBlock;
+        float bodyWidthInPixels = body.diameterInBlocks * settings.pixelsPerBlock;
         float xBlocksToPlayer = body.coords.x - state.player.coords.x;
         float yBlocksToPlayer = body.coords.y - state.player.coords.y;
         float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
@@ -78,4 +85,16 @@ void drawBody(Body body) {
         ellipseMode(CENTER);
         
     }
+}
+
+void drawBullet(Bullet bullet) {
+    float bodyWidthInPixels = settings.bulletDiameterInBlocks * settings.pixelsPerBlock;
+    float xBlocksToPlayer = bullet.coords.x - state.player.coords.x;
+    float yBlocksToPlayer = bullet.coords.y - state.player.coords.y;
+    float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
+    float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
+    fill(10);
+    ellipseMode(CORNER);
+    circle(x, y, bodyWidthInPixels);
+    ellipseMode(CENTER);
 }

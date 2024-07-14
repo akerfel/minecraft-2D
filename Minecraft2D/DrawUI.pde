@@ -110,6 +110,9 @@ void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
         case TOOL:
             drawToolInItemSlot(itemSlot, xPixel, yPixel);
             break;
+        case GUN:
+            drawGunInItemSlot(itemSlot, xPixel, yPixel);
+            break;
         }
     }
     rectMode(CORNER);
@@ -150,5 +153,20 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     fill(255, 255, 255);
     String toolName = tool.toString().substring(tool.toString().lastIndexOf("_") + 1);
     text(toolName, xPixel, yPixel + settings.pixelsPerItemSlot / 2);
+    rectMode(CORNER);
+}
+
+void drawGunInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    rectMode(CENTER);
+    MachineGun gun = (MachineGun) itemSlot.item;
+
+    fill(gun.c);
+    rect(xPixel, yPixel, settings.pixelsPerItemSlot / 2, settings.pixelsPerItemSlot / 4);
+
+    textSize(10);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    String gunName = gun.toString();
+    text(gunName, xPixel, yPixel + settings.pixelsPerItemSlot / 2);
     rectMode(CORNER);
 }

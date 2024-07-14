@@ -1,4 +1,4 @@
-import java.util.Iterator; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import java.util.Iterator; //<>//
 
 // Global variables
 Settings settings;
@@ -24,7 +24,71 @@ void draw() {
 
 void updateState() {
     updateBodies();
-    updateBlocks();
+    updateBullets();
+    handleMouseClicks();
+    removeBlockDamageIfNotMining();
+    loadVisibleBlocks();
+}
+
+void handleMouseClicks() {
+    handleLeftClick();
+    handleRightClick();
+}
+
+void handleLeftClick() {
+    if (state.leftMouseButtonDown) {
+        if (playerIsHoldingItemWhichCanMine()) {
+            mineBlockWithMouse();
+        }
+        if (playerIsHoldingGun()) {
+            shootPlayerGun();    
+        }
+    }
+}
+
+void shootPlayerGun() {
+    state.bullets.add(createPlayerBullet());
+}
+
+Bullet createPlayerBullet() {
+    PVector startCoords = state.player.coords.copy();
+    PVector direction = determineDirectionOfPlayerBullet();
+    println("direction: " + direction);
+    return new Bullet(startCoords, direction, settings.bulletDiameterInBlocks);
+}
+
+PVector determineDirectionOfPlayerBullet() {
+    return getVector_BlocksFromPlayerToMouse().normalize();
+}
+
+PVector getCoordsWhichMouseHovers() {
+    PVector distancePlayerToMouse = getVector_BlocksFromMouseToPlayer();
+    PVector playerCoordsCopy = state.player.coords.copy();
+    return playerCoordsCopy.add(distancePlayerToMouse);
+}
+
+boolean playerIsHoldingGun() {
+    return getSelectedItemSlot().item.itemType == ItemType.GUN;
+}
+
+boolean playerIsHoldingItemWhichCanMine() {
+    return playerHasNotSelectedAnItem() || playerIsHoldingTool();
+}
+
+boolean playerIsHoldingTool() {
+    return getSelectedItemSlot().item.itemType == ItemType.TOOL;
+}
+
+boolean playerHasNotSelectedAnItem() {
+    return getSelectedItemSlot().isEmpty();
+}
+
+void handleRightClick() {
+    if (!state.inventoryIsOpen) {
+        if (state.rightMouseButtonDown) {
+            placeBlockWithMouse();
+        }
+    }
 }
 
 void drawState() {
@@ -33,22 +97,37 @@ void drawState() {
     drawUI();
 }
 
-void updateBlocks() {
-    loadVisibleBlocks();
-    placeOrMineBlock();
-    removeBlockDamageIfNotMining();
-}
 
 void updateBodies() {
     maybeSpawnMobs();
+    removeDeadMobs();
     removeFarMobs();
     updateBodyPositions();
 }
 
-void placeOrMineBlock() {
-    if (!state.inventoryIsOpen) {
-        placeBlockWithMouse();
-        mineBlockWithMouse();
+void removeDeadMobs() {
+    Iterator<Body> it = state.bodies.iterator();
+    while (it.hasNext()) {
+        Body body = it.next();
+        if (!(body instanceof Player) && body.isDead()) {
+            it.remove();
+        }
+    }
+}
+
+void updateBullets() {
+    for (Bullet bullet : state.bullets) {
+        bullet.update();    
+    }
+    removeDeadBullets();
+}
+
+void removeDeadBullets() {
+    Iterator<Bullet> it = state.bullets.iterator();
+    while (it.hasNext()) {
+        if (it.next().isDead()) {
+            it.remove();
+        }
     }
 }
 
@@ -155,38 +234,43 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
 }
  
 void placeBlockWithMouse() { 
-    if (state.rightMouseButtonDown) {
-        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);   
-        if (slot.item.itemType == ItemType.BLOCK) {   
-            Block block = (Block) slot.item;
-            if (slot.getCount() != 0) {
-                if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
-                    (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) &&
-                    setMouseBlock((Block) createItem(block.itemID))) {
-                    slot.count--;
-                }
+    if (selectedItemIsBlock()) {   
+        ItemSlot slot = getSelectedItemSlot();   
+        Block block = (Block) slot.item;
+        if (slot.getCount() != 0) {
+            if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
+                (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) &&
+                setMouseBlock((Block) createItem(block.itemID))) {
+                slot.count--;
             }
         }
     }
 }
 
+boolean selectedItemIsBlock() {
+    ItemSlot slot = getSelectedItemSlot();   
+    return slot.item.itemType == ItemType.BLOCK;
+}
+
+ItemSlot getSelectedItemSlot() {
+    return state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
+}
+
 void mineBlockWithMouse() {
-    if (state.leftMouseButtonDown) {
-        Block mouseBlock = getMouseBlock();
-        if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < state.player.reach) {
-            if (mouseBlock.prcntBroken >= 1) {
-                state.player.inventory.addItem(mouseBlock);
-                setMouseBlock((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
-            } else {
-                mouseBlock.mineBlock();
-                state.damagedBlocks.add(mouseBlock);
-            }
+    Block mouseBlock = getMouseBlock();
+    if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < state.player.reach) {
+        if (mouseBlock.prcntBroken >= 1) {
+            state.player.inventory.addItem(mouseBlock);
+            setMouseBlock((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
+        } else {
+            mouseBlock.mineBlock();
+            state.damagedBlocks.add(mouseBlock);
         }
     }
 }
 
 Block getMouseBlock() {
-    PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
+    PVector distancePlayerToMouse = getVector_BlocksFromMouseToPlayer();
     return getBlock(int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
 }
 
@@ -209,11 +293,15 @@ ItemSlot getInventorySlotWhichMouseHovers() {
 }
 
 boolean setMouseBlock(Block block) {
-    PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
+    PVector distancePlayerToMouse = getVector_BlocksFromMouseToPlayer();
     return setBlock(block, int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
 }
 
 PVector getVector_BlocksFromPlayerToMouse() {
+    return getVector_BlocksFromMouseToPlayer().mult(-1);
+}
+
+PVector getVector_BlocksFromMouseToPlayer() {
     float xPixelsFromPlayerToMouse = width / 2 - mouseX;
     float yPixelsFromPlayerToMouse = height / 2 - mouseY;
     float xBlocksFromPlayerToMouse = xPixelsFromPlayerToMouse / settings.pixelsPerBlock;
@@ -223,7 +311,7 @@ PVector getVector_BlocksFromPlayerToMouse() {
 
 // Returns a float, total distance (in block lengths) from mouse to state.player
 float getDistance_BlocksFromPlayerToMouse() {
-    PVector distancePlayerToMouse = getVector_BlocksFromPlayerToMouse();
+    PVector distancePlayerToMouse = getVector_BlocksFromMouseToPlayer();
     return distancePlayerToMouse.dist(new PVector(0, 0));    // simply pyth. theorem
 }
 
@@ -385,7 +473,7 @@ public boolean bodiesAreColliding(Body b1, Body b2) {
         return false;    
     }
     
-    return circlesAreColliding(b1.coords, b2.coords, b1.widthInBlocks, b2.widthInBlocks);
+    return circlesAreColliding(b1.coords, b2.coords, b1.diameterInBlocks, b2.diameterInBlocks);
 }
 
 boolean squareIsCollidingWithWall(PVector coords, float widthInBlocks) {

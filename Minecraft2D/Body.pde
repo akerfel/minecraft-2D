@@ -3,14 +3,16 @@ public abstract class Body {
     float speedFactor;
     color c;
     PVector direction;
-    float widthInBlocks;
+    float diameterInBlocks;
+    int hp;
 
     public Body(float x, float y, float speedFactor, float widthInBlocks, color c) {
         coords = new PVector(x, y);
         this.speedFactor = speedFactor;
         this.direction = new PVector(0, 0);
-        this.widthInBlocks = widthInBlocks;
+        this.diameterInBlocks = widthInBlocks;
         this.c = c;
+        this.hp = 1;
     }
 
     void update() {
@@ -27,16 +29,24 @@ public abstract class Body {
         revertStepIfWalkedIntoBody(xPrevious, yPrevious);
     }
     
+    void damage(int damage) {
+        hp -= damage;    
+    }
+    
+    boolean isDead() {
+        return hp <= 0;    
+    }
+    
     abstract float determineSpeed();
     
     abstract void determineDirection();
     
     public boolean isCollidingWithWall() {
-        return squareIsCollidingWithWall(coords, widthInBlocks);
+        return squareIsCollidingWithWall(coords, diameterInBlocks);
     }
     
     public boolean isCollidingWithWallOrWater() {
-        return squareIsCollidingWithWallOrWater(coords, widthInBlocks);
+        return squareIsCollidingWithWallOrWater(coords, diameterInBlocks);
     }
     
     public boolean isCollidingWithAnotherBody() {

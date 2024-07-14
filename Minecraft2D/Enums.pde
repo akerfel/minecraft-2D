@@ -12,6 +12,7 @@ enum ToolType {
     SHOVEL,
     AXE,
     HOE,
+    GUN,
     NOTYPE
 }
 
@@ -26,6 +27,7 @@ enum ToolMaterial {
 enum ItemType {
     BLOCK,
     TOOL,
+    GUN,
     OTHER
 }
 
@@ -43,32 +45,34 @@ public enum ItemID {
     WORKBENCH,
     
     WOOD_SWORD,
-    WOOD_PICKAXE,
-    WOOD_SHOVEL,
-    WOOD_AXE,
-    WOOD_HOE,
-    
     STONE_SWORD,
-    STONE_PICKAXE,
-    STONE_SHOVEL,
-    STONE_AXE,
-    STONE_HOE,
-    
     IRON_SWORD,
-    IRON_PICKAXE,
-    IRON_SHOVEL,
-    IRON_AXE,
-    IRON_HOE,
-    
     GOLD_SWORD,
-    GOLD_PICKAXE,
-    GOLD_SHOVEL,
-    GOLD_AXE,
-    GOLD_HOE,
-    
     DIAMOND_SWORD,
+    
+    WOOD_PICKAXE,
+    STONE_PICKAXE,
+    IRON_PICKAXE,
+    GOLD_PICKAXE,
     DIAMOND_PICKAXE,
+    
+    WOOD_SHOVEL,
+    STONE_SHOVEL,
+    IRON_SHOVEL,
+    GOLD_SHOVEL,
     DIAMOND_SHOVEL,
+    
+    WOOD_AXE,
+    STONE_AXE,
+    IRON_AXE,
+    GOLD_AXE,
     DIAMOND_AXE,
-    DIAMOND_HOE
+    
+    WOOD_HOE,
+    STONE_HOE,
+    IRON_HOE,
+    GOLD_HOE,
+    DIAMOND_HOE,
+    
+    MACHINE_GUN
 }
