@@ -40,13 +40,22 @@ void handleLeftClick() {
         if (playerIsHoldingItemWhichCanMine()) {
             mineBlockWithMouse();
         }
-        if (playerIsHoldingGun()) {
+        if (playerIsHoldingGun() && heldGunIsReadyToShoot()) {
             shootPlayerGun();    
         }
     }
 }
 
+MachineGun getHeldGun() {
+    return (MachineGun) getSelectedItemSlot().item;
+}
+
+boolean heldGunIsReadyToShoot() {
+    return getHeldGun().isReadyToShoot();
+}
+
 void shootPlayerGun() {
+    getHeldGun().startReloadTimer();
     state.bullets.add(createPlayerBullet());
 }
 
