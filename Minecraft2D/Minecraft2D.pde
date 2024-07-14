@@ -229,7 +229,6 @@ void zoom(int changeInPixelsPerBlock) {
     }
     if (oldPixelsPerBlock != settings.pixelsPerBlock) {
         println("Pixels per block: " + settings.pixelsPerBlock + "x" + settings.pixelsPerBlock);
-        resetObjectsDependingOnPixelsPerBlock();
         makeViewDistanceFitZoomLevel();
     }
 }
@@ -298,11 +297,6 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
     if (!mobToSpawn.isCollidingWithAnotherMob()) {
         state.mobs.add(mobToSpawn);
     }
-}
-
-void resetObjectsDependingOnPixelsPerBlock() {
-    settings.playerWidth = settings.pixelsPerBlock * 0.85;
-    settings.mobWidth = settings.pixelsPerBlock;
 }
 
 void placeBlockWithMouse() {
@@ -490,12 +484,16 @@ ItemID getBlockName(char blockChar) {
     return settings.blockCharsToIDs.get(blockChar);
 }
 
+public float getMobWidthInPixel() {
+    return settings.mobWidthInBlocks * settings.pixelsPerBlock;    
+}
+
 public boolean mobsAreColliding(Mob m1, Mob m2) {
     if (m1 == m2) {
         return false;    
     }
     
-    float w = 1;
+    float w = settings.mobWidthInBlocks;
     float x1 = m1.coords.x;
     float y1 = m1.coords.y;
     float x2 = m2.coords.x;

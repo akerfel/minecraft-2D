@@ -60,15 +60,17 @@ void drawMobs() {
 }
 
 void drawMob(Mob mob) {
+    float mobWidthInPixels = settings.mobWidthInBlocks * settings.pixelsPerBlock;
     float xBlocksToPlayer = mob.coords.x - state.player.coords.x;
     float yBlocksToPlayer = mob.coords.y - state.player.coords.y;
     float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
     float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
     fill(mob.c);
-    square(x, y, settings.mobWidth);
+    square(x, y, mobWidthInPixels);
 }
 
 void drawPlayer() {
+    float playerWidthInPixels = settings.playerWidthInBlocks * settings.pixelsPerBlock;
     fill(216, 127, 51);
-    square(width/2, height/2, settings.playerWidth);
+    square(width/2, height/2, playerWidthInPixels);
 }

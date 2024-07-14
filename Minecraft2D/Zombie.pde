@@ -43,7 +43,6 @@ public class Zombie extends Mob {
     void determineDirection() {
         direction = state.player.coords.copy();
         direction.sub(this.coords);
-        direction.x = constrain(direction.x, -1, 1);
-        direction.y = constrain(direction.y, -1, 1);
+        direction.normalize();
     }
 }

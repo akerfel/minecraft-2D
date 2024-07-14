@@ -4,12 +4,12 @@ import static java.util.Map.entry;
 
 public class Settings {
     
-    // Will change depending on zoom level (not initialized in this class)
-    float playerWidth;
-    float mobWidth;
-    
     // Dynamic
     int viewDistance;
+    
+    // Entity size
+    float playerWidthInBlocks;
+    float mobWidthInBlocks;
     
     // General
     int blocksPerChunk;            // blocks per side of chunk;
@@ -82,6 +82,10 @@ public class Settings {
         // Dynamic
         this.viewDistance = 250;
         
+        // Entity size
+        this.playerWidthInBlocks = 0.85;
+        this.mobWidthInBlocks = 0.85;
+        
         // General 
         this.blocksPerChunk = 64;
         this.maxStackCount = 64;
@@ -91,7 +95,6 @@ public class Settings {
         this.pixelsPerBlock = 25;
         this.noStrokeMode = true;
         setNoStrokeModeDependingOnSetting();
-        resetObjectsDependingOnPixelsPerBlock();
         this.drawInnerSquaresInBlocks = false;
         this.offsetInnerSquare = 0.1;
         
@@ -115,7 +118,7 @@ public class Settings {
         
         // Mob spawn chance
         this.pigSpawnChance = 0.05;
-        this.zombieSpawnChance = 0.05;
+        this.zombieSpawnChance = 0.25;
         
         // Mob speeds
         this.pigSpeedFactor = 0.1;
