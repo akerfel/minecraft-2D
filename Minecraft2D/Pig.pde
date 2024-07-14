@@ -56,6 +56,7 @@ public class Pig extends Mob {
 
     void maybeStopMoving() {
         if (random(0, 1) < chanceStopMoving) {
+            direction = new PVector(0, 0);
             isMoving = false;
         }
     }
@@ -68,6 +69,6 @@ public class Pig extends Mob {
 
     void startMovingSequence() {
         isMoving = true;
-        direction = new PVector(random(-1, 1), random(-1, 1));
+        direction = new PVector(random(-1, 1), random(-1, 1)).normalize();
     }
 }
