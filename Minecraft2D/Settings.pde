@@ -17,6 +17,8 @@ public class Settings {
     int blocksPerChunk;            // blocks per side of chunk;
     int maxStackCount;
     int craftingDistance;          // Minimum distance (in blocks) to crafting table in order to use it
+    PVector spawnPoint;
+    int playerMaxHP;
     
     // Visuals
     int pixelsPerBlock;            // pixels per side of block
@@ -58,6 +60,9 @@ public class Settings {
     int maxMobs;
     int mobSpawnRange;             // In blocks
     int mobDespawnRange;           // In blocks
+    
+    // Mob reach
+    float zombieReachInBlocks;
     
     // Mob spawn chance each frame, so should be pretty low
     float pigSpawnChance;
@@ -101,6 +106,8 @@ public class Settings {
         this.blocksPerChunk = 64;
         this.maxStackCount = 64;
         this.craftingDistance = 5;
+        this.spawnPoint = new PVector(11111, 11111);
+        this.playerMaxHP = 1;
         
         // Visuals
         this.pixelsPerBlock = 25;
@@ -132,9 +139,12 @@ public class Settings {
         this.mobSpawnRange = 50;
         this.mobDespawnRange = 100;
         
+        // Mob reach
+        this.zombieReachInBlocks = 1;
+        
         // Mob spawn chance
         this.pigSpawnChance = 0.05;
-        this.zombieSpawnChance = 15;
+        this.zombieSpawnChance = 0.03;
         
         // Speed
         this.playerSpeedFactor = 0.05;

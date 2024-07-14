@@ -25,9 +25,40 @@ void draw() {
 void updateState() {
     updateBodies();
     updateBullets();
+    checkIfPlayerIsAttacked();
     handleMouseClicks();
     removeBlockDamageIfNotMining();
     loadVisibleBlocks();
+    respawnIfPlayerIsDead();
+}
+
+void respawnIfPlayerIsDead() {
+    if (state.player.isDead()) {
+        state.player.hp = settings.playerMaxHP;
+        state.player.inventory.setInventoryEmpty();
+        state.player.coords = settings.spawnPoint.copy();
+        removeAllMobs();
+    }
+}
+
+void removeAllMobs() {
+    state.bodies.clear();
+    state.bodies.add(state.player);
+}
+
+void checkIfPlayerIsAttacked() {
+    for (Body body : state.bodies) {
+        if (body instanceof Zombie) {
+            if (getDistancesBetweenBodiesInBlocks(state.player, (Zombie) body) < settings.zombieReachInBlocks) {
+                state.player.damage(1);    
+            }
+        }
+    }
+}
+
+float getDistancesBetweenBodiesInBlocks(Body b1, Body b2) {
+    PVector b1copy = b1.coords.copy();
+    return b1copy.sub(b2.coords).mag();
 }
 
 void handleMouseClicks() {
@@ -77,7 +108,7 @@ PVector getCoordsWhichMouseHovers() {
 }
 
 boolean playerIsHoldingGun() {
-    return getSelectedItemSlot().item.itemType == ItemType.GUN;
+    return !getSelectedItemSlot().isEmpty() && getSelectedItemSlot().item.itemType == ItemType.GUN;
 }
 
 boolean playerIsHoldingItemWhichCanMine() {
@@ -85,7 +116,7 @@ boolean playerIsHoldingItemWhichCanMine() {
 }
 
 boolean playerIsHoldingTool() {
-    return getSelectedItemSlot().item.itemType == ItemType.TOOL;
+    return !getSelectedItemSlot().isEmpty() && getSelectedItemSlot().item.itemType == ItemType.TOOL;
 }
 
 boolean playerHasNotSelectedAnItem() {

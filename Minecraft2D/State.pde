@@ -20,7 +20,7 @@ public class State {
         // Will be stored in the game save
         this.worldSeed = int(random(0, 100000000));
         this.generatedChunks = new HashMap<>();
-        this.player = new Player(11111, 11111);
+        this.player = new Player(settings.spawnPoint.x, settings.spawnPoint.y);
         this.bodies = new ArrayList<>();
         this.bullets = new ArrayList<>();
         bodies.add(player);
@@ -42,8 +42,7 @@ public class State {
         this.player.inventory.addItem(createItem(ItemID.STONE_SHOVEL));
         this.player.inventory.addItem(createItem(ItemID.DIAMOND_AXE));
         this.player.inventory.addItem(createItem(ItemID.MACHINE_GUN));
-        this.player.inventory.addItem(createItem(ItemID.PLANKS), 128);
+        this.player.inventory.addItem(createItem(ItemID.PLANKS), 64);
         this.player.inventory.addItem(createItem(ItemID.WORKBENCH), 5);
-        this.player.inventory.addItem(createItem(ItemID.WOOD_PICKAXE));
     }
 }
