@@ -1,7 +1,6 @@
-import java.util.Iterator;
+import java.util.Iterator; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
 // Global variables
-Cheats cheats;
 Settings settings;
 State state;            // Game state
 
@@ -9,9 +8,6 @@ State state;            // Game state
 void setup() {
     //fullScreen();
     size(1200, 1200);
-
-    cheats = new Cheats();
-    cheats.intialize();
 
     settings = new Settings();
     settings.initialize();
@@ -22,161 +18,19 @@ void setup() {
 
 // This is the main game loop (called ~60 times per second)
 void draw() {
-    updateLogic();
-    drawEverything();
+    updateState();
+    drawState();
 }
 
-void updateLogic() {
-    state.player.move();
+void updateState() {
+    updateBodies();
     updateBlocks();
-    updateMobs();
 }
 
-void drawEverything() {
+void drawState() {
     background(0);
     drawWorld();
     drawUI();
-}
-
-void keyPressed() {
-    if (key == 'x') {
-        for (int i = 0; i < 5; i++) {
-            state.player.inventory.addItem(createItem(ItemID.STONE));
-        }
-    }
-
-    state.player.setMove(keyCode, true);
-
-    int numberKeyClicked = int(key) - 49;
-    if (numberKeyClicked >= 0 && numberKeyClicked <= 8) {
-        state.player.inventory.hotbarIndexSelected = numberKeyClicked;
-    }
-
-    if (key == '+') {
-        zoom(1);
-    } else if (key == '-') {
-        zoom(-1);
-    }
-
-    if (key == 'e') {
-        if (state.inventoryIsOpen) {
-            state.player.inventory.returnMouseGrabbedItemToInventory();
-        }
-        state.craftingMenuIsOpen = false;
-        state.inventoryIsOpen = !state.inventoryIsOpen;
-    }
-
-    if (key == 'c') {
-        state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
-        printPlayerCraftableItemsInConsole();
-    }
-
-    if (key == '.') {
-        setViewDistance(settings.viewDistance - 2);
-    }
-
-    if (key == 'f') {
-        state.rightMouseButtonDown = true;
-    }
-
-    if (key == 't') {
-        saveGeneratedChunksToFile();
-    }
-
-    if (key == 'h') {
-        cheats.canWalkThroughWalls = !cheats.canWalkThroughWalls;
-        if (cheats.canWalkThroughWalls) {
-            println("Player can walk through walls");
-        } else {
-            println("Player can not walk through walls");
-        }
-    }
-
-    if (key == CODED) {
-        if (keyCode == SHIFT) {
-            state.player.isRunning = true;
-        }
-        //if (keyCode == ALT) {
-        //    state.player.isRunningSuperSpeed = true;
-        //}
-        // F3 has keycode 114
-        if (keyCode == 114) {
-            state.debugScreenIsShowing = !state.debugScreenIsShowing;
-        }
-    }
-}
-
-void keyReleased() {
-    state.player.setMove(keyCode, false);
-
-    if (key == 'f') {
-        state.rightMouseButtonDown = false;
-    }
-
-    if (key == CODED) {
-        if (keyCode == SHIFT) {
-            state.player.isRunning = false;
-        }
-        if (keyCode == ALT) {
-            state.player.isRunningSuperSpeed = false;
-        }
-    }
-}
-
-void mousePressed() {
-    if (mouseButton == RIGHT) {
-        state.rightMouseButtonDown = true;
-    } else if (mouseButton == LEFT) {
-        state.leftMouseButtonDown = true;
-        if (state.inventoryIsOpen) {
-            ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
-            if (clickedItemSlot != null) {
-                ItemSlot currentMouseHeldItemSlot = state.player.inventory.mouseHeldItemSlot;
-                int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
-                int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
-                state.player.inventory.grabbedXindex = inventoryXindex;
-                state.player.inventory.grabbedYindex = inventoryYindex;
-                state.player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
-                state.player.inventory.mouseHeldItemSlot = clickedItemSlot;
-            }
-        }
-    }
-}
-
-void mouseReleased() {
-    if (mouseButton == RIGHT) {
-        state.rightMouseButtonDown = false;
-    } else if (mouseButton == LEFT) {
-        state.leftMouseButtonDown = false;
-    }
-}
-
-void mouseWheel(MouseEvent event) {
-    if (keyPressed && key == 't') {
-        // Scroll up
-        if (event.getCount() > 0) {
-            zoom(-1);
-        }
-        // Scroll down
-        else {
-            zoom(1);
-        }
-    } else {
-        // Scroll up
-        if (event.getCount() > 0) {
-            state.player.inventory.hotbarIndexSelected++;
-            if (state.player.inventory.hotbarIndexSelected >= settings.inventoryWidth) {
-                state.player.inventory.hotbarIndexSelected = 0;
-            }
-        }
-        // Scroll down
-        else {
-            state.player.inventory.hotbarIndexSelected--;
-            if (state.player.inventory.hotbarIndexSelected < 0) {
-                state.player.inventory.hotbarIndexSelected = settings.inventoryWidth - 1;
-            }
-        }
-    }
 }
 
 void updateBlocks() {
@@ -185,10 +39,10 @@ void updateBlocks() {
     removeBlockDamageIfNotMining();
 }
 
-void updateMobs() {
+void updateBodies() {
     maybeSpawnMobs();
     removeFarMobs();
-    updateMobsPos();
+    updateBodyPositions();
 }
 
 void placeOrMineBlock() {
@@ -227,7 +81,7 @@ void zoom(int changeInPixelsPerBlock) {
         settings.pixelsPerBlock = 1;
     }
     if (oldPixelsPerBlock != settings.pixelsPerBlock) {
-        println("Pixels per block: " + settings.pixelsPerBlock + "x" + settings.pixelsPerBlock);
+        //println("Pixels per block: " + settings.pixelsPerBlock + "x" + settings.pixelsPerBlock);
         makeViewDistanceFitZoomLevel();
     }
 }
@@ -236,13 +90,13 @@ void setViewDistance(int newViewDistance) {
     if (newViewDistance > 3) {
         settings.viewDistance = newViewDistance;
         state.visibleBlocks = new Block[settings.viewDistance][settings.viewDistance];
-        println("Blocks rendered: " + settings.viewDistance + "x" + settings.viewDistance + " = " + (settings.viewDistance * settings.viewDistance));
+        //println("Blocks rendered: " + settings.viewDistance + "x" + settings.viewDistance + " = " + (settings.viewDistance * settings.viewDistance));
     }
 }
 
-void updateMobsPos() {
-    for (Mob mob : state.mobs) {
-        mob.update();
+void updateBodyPositions() {
+    for (Body body : state.bodies) {
+        body.update();
     }
 }
 
@@ -257,17 +111,19 @@ void removeBlockDamageIfNotMining() {
 }
 
 void removeFarMobs() {
-    Iterator<Mob> it = state.mobs.iterator();
+    Iterator<Body> it = state.bodies.iterator();
     while (it.hasNext()) {
-        Mob mob = it.next();
-        if (state.player.coords.dist(mob.coords) > settings.mobDespawnRange) {
-            it.remove();
+        Body body = it.next();
+        if (body instanceof Mob) {
+            if (state.player.coords.dist(((Mob) body).coords) > settings.mobDespawnRange) {
+                it.remove();
+            }
         }
     }
 }
 
 void maybeSpawnMobs() {
-    if (state.mobs.size() < settings.maxMobs) {
+    if (state.bodies.size() < settings.maxMobs) {
         if (random(0, 1) < settings.pigSpawnChance) {
             spawnMob(MobType.PIG);
         }
@@ -285,23 +141,23 @@ void spawnMob(MobType mobType) {
         case PIG:
             spawnMobIfNotCollidingWithAnother(new Pig(xSpawn + 0.1, ySpawn + 0.1));
             return;
-        case ZOMBIE:
-            spawnMobIfNotCollidingWithAnother(new Zombie(xSpawn + 0.1, ySpawn + 0.1));
+        case ZOMBIE: 
+            spawnMobIfNotCollidingWithAnother(new Zombie(xSpawn + 0.1, ySpawn + 0.1)); 
             return;
-        } //<>// //<>// //<>//
-    } //<>// //<>// //<>//
+        }   
+    }   
 }
 
 void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
-    if (!mobToSpawn.isCollidingWithAnotherMob()) {
-        state.mobs.add(mobToSpawn);
+    if (!mobToSpawn.isCollidingWithAnotherBody()) {
+        state.bodies.add(mobToSpawn);
     }
 }
-
-void placeBlockWithMouse() {
+ 
+void placeBlockWithMouse() { 
     if (state.rightMouseButtonDown) {
-        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>// //<>// //<>//
-        if (slot.item.itemType == ItemType.BLOCK) { //<>// //<>// //<>//
+        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);   
+        if (slot.item.itemType == ItemType.BLOCK) {   
             Block block = (Block) slot.item;
             if (slot.getCount() != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
@@ -345,7 +201,7 @@ ItemSlot getInventorySlotWhichMouseHovers() {
             return null;
         }
         if (state.player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
-            System.out.println("Grabbed item: " + (state.player.inventory.grid[inventoryXindex][inventoryYindex].item));
+            //println("Grabbed item: " + (state.player.inventory.grid[inventoryXindex][inventoryYindex].item));
         }
         return state.player.inventory.grid[inventoryXindex][inventoryYindex];
     }
@@ -404,7 +260,7 @@ Chunk getChunk(PVector coords) {
     // Create chunk if does not exist
     if (!state.generatedChunks.containsKey(chunkCoords)) {
         state.generatedChunks.put(chunkCoords, new Chunk(chunkCoords));
-        println("Generated chunks: " + state.generatedChunks.size());
+        //println("Generated chunks: " + state.generatedChunks.size());
         //println(state.generatedChunks.keySet());
     }
     return state.generatedChunks.get(chunkCoords);
@@ -483,9 +339,6 @@ ItemID getBlockName(char blockChar) {
     return settings.blockCharsToIDs.get(blockChar);
 }
 
-public float getMobWidthInPixel() {
-    return settings.mobWidthInBlocks * settings.pixelsPerBlock;    
-}
 
 public boolean squaresAreColliding(PVector coords1, PVector coords2, float width1, float width2) {
     float x1 = coords1.x;
@@ -510,17 +363,14 @@ public boolean squaresAreColliding(PVector coords1, PVector coords2, float width
     rectOneTop < rectTwoBottom);
 }
 
-public boolean mobsAreColliding(Mob m1, Mob m2) {
-    if (m1 == m2) {
+public boolean bodiesAreColliding(Body b1, Body b2) {
+    if (b1 == b2) {
         return false;    
     }
     
-    return squaresAreColliding(m1.coords, m2.coords, settings.mobWidthInBlocks, settings.mobWidthInBlocks);
+    return squaresAreColliding(b1.coords, b2.coords, b1.widthInBlocks, b2.widthInBlocks);
 }
 
-public boolean playerIsCollidingWithThisMob(Mob mob) {
-    return squaresAreColliding(state.player.coords, mob.coords, settings.playerWidthInBlocks, settings.mobWidthInBlocks);
-}
 
 boolean squareIsCollidingWithWall(PVector coords, float widthInBlocks) {
     int left = int(coords.x);

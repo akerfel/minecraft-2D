@@ -22,12 +22,17 @@ public class Settings {
     boolean drawInnerSquaresInBlocks;
     float offsetInnerSquare;       // How far from the corner of the block the inner square should start, between 0 - 1. Default 0.1
     
-    // Colors
+    // Tool Colors
     color colorWoodTool;
     color colorStoneTool;
     color colorIronTool;
     color colorGoldTool;
     color colorDiamondTool;
+    
+    // Body colors
+    color playerColor;
+    color pigColor;
+    color zombieColor;
     
     // Default/base chunk 
     float baseChanceStone;
@@ -56,9 +61,10 @@ public class Settings {
     float pigSpawnChance;
     float zombieSpawnChance;
     
-    // Mob speeds
-    float pigSpeedFactor = 0.001;
-    float zombieSpeedFactor = 0.05;
+    // Speed
+    float playerSpeedFactor;
+    float pigSpeedFactor;
+    float zombieSpeedFactor;
     
     // Tools
     int woodToolMiningMultiplier;
@@ -83,8 +89,8 @@ public class Settings {
         this.viewDistance = 250;
         
         // Entity size
-        this.playerWidthInBlocks = 0.85;
-        this.mobWidthInBlocks = 0.85;
+        this.playerWidthInBlocks = 0.8;
+        this.mobWidthInBlocks = 0.8;
         
         // General 
         this.blocksPerChunk = 64;
@@ -98,12 +104,17 @@ public class Settings {
         this.drawInnerSquaresInBlocks = false;
         this.offsetInnerSquare = 0.1;
         
-        // colors
+        // Tool colors
         this.colorWoodTool = color(143, 119, 72);
         this.colorStoneTool = color(112, 112, 112);
         this.colorIronTool = color(167, 167, 167);
         this.colorGoldTool = color(250, 238, 77);
         this.colorDiamondTool = color(92, 219, 213);
+        
+        // Tool colors
+        this.playerColor = color(216, 127, 51);
+        this.zombieColor = color(102, 0, 0);
+        this.pigColor = color(255, 192, 203);
         
         // Block chances
         this.chanceStone = 0.38;
@@ -120,8 +131,9 @@ public class Settings {
         this.pigSpawnChance = 0.05;
         this.zombieSpawnChance = 0.05;
         
-        // Mob speeds
-        this.pigSpeedFactor = 0.03;
+        // Speed
+        this.playerSpeedFactor = 0.1;
+        this.pigSpeedFactor = 0.002;
         this.zombieSpeedFactor = 0.05;
         
         // Tools
@@ -142,8 +154,6 @@ public class Settings {
         mapBlockNamesToCharacters();
     }    
 }
-
-
 
 private void mapBlockNamesToCharacters() {// Maps block names to block chars.
     // E.g. "wood" could map to "w".

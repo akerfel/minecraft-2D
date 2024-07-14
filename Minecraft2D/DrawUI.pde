@@ -45,8 +45,8 @@ void drawCraftingMenuIfOpen() {
 }
 
 public void printPlayerCraftableItemsInConsole() {
-    println("");
-    println("Craftable items:");
+    //println("");
+    //println("Craftable items:");
     for (ItemCount itemCount : state.player.getHandCraftableItems()) {
         println(itemCount.item + " * " + itemCount.count);
     }    

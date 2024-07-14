@@ -1,7 +1,6 @@
 void drawWorld() {
     drawVisibleBlocks();
-    drawMobs();
-    drawPlayer();
+    drawBodies();
 }
 
 void drawVisibleBlocks() {
@@ -53,28 +52,30 @@ void drawBlockBreakingTexture(Block block, float xPixel, float yPixel) {
     circle(xPixel + settings.pixelsPerBlock/2, yPixel + settings.pixelsPerBlock/2, (block.prcntBroken * settings.pixelsPerBlock));
 }
 
-void drawMobs() {
-    for (Mob mob : state.mobs) {
-        drawMob(mob);
+void drawBodies() {
+    for (Body body : state.bodies) {
+        drawBody(body);
     }
 }
 
-void drawMob(Mob mob) {
-    float mobWidthInPixels = settings.mobWidthInBlocks * settings.pixelsPerBlock;
-    float xBlocksToPlayer = mob.coords.x - state.player.coords.x;
-    float yBlocksToPlayer = mob.coords.y - state.player.coords.y;
-    float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
-    float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
-    fill(mob.c);
-    ellipseMode(CORNER);
-    circle(x, y, mobWidthInPixels);
-    ellipseMode(CENTER);
-}
-
-void drawPlayer() {
-    float playerWidthInPixels = settings.playerWidthInBlocks * settings.pixelsPerBlock;
-    fill(216, 127, 51);
-    ellipseMode(CORNER);
-    circle(width/2, height/2, playerWidthInPixels);
-    ellipseMode(CENTER);
+void drawBody(Body body) {
+    if (body instanceof Player) {
+        float playerWidthInPixels = settings.playerWidthInBlocks * settings.pixelsPerBlock;
+        fill(216, 127, 51);
+        ellipseMode(CORNER);
+        circle(width/2, height/2, playerWidthInPixels);
+        ellipseMode(CENTER);
+    }
+    else {
+        float bodyWidthInPixels = body.widthInBlocks * settings.pixelsPerBlock;
+        float xBlocksToPlayer = body.coords.x - state.player.coords.x;
+        float yBlocksToPlayer = body.coords.y - state.player.coords.y;
+        float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
+        float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
+        fill(body.c);
+        ellipseMode(CORNER);
+        circle(x, y, bodyWidthInPixels);
+        ellipseMode(CENTER);
+        
+    }
 }
