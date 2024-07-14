@@ -5,7 +5,7 @@ public class MachineGun extends Item {
     public MachineGun(ItemID itemID) {
        super(itemID, ItemType.GUN, false); 
        this.c = color(31, 38, 42);
-       this.reloadTime = 800;
+       this.reloadTime = 400;
        this.lastTimeShot = -10000;
     }
     

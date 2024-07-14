@@ -144,7 +144,7 @@ public class Settings {
         
         // Mob spawn chance
         this.pigSpawnChance = 0.05;
-        this.zombieSpawnChance = 0.03;
+        this.zombieSpawnChance = 0.15;
         
         // Speed
         this.playerSpeedFactor = 0.05;
