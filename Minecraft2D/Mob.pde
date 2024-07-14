@@ -1,13 +1,14 @@
 public abstract class Mob {
-    public PVector coords;
-    PVector direction;          // Both x and y are always between -1 and 1
+    PVector coords;
     float speedFactor;
-    public color c;
+    color c;
+    boolean isMoving;
+    PVector direction;
 
     public Mob(float x, float y, float speedFactor) {
         coords = new PVector(x, y);
         this.speedFactor = speedFactor;
-        direction = new PVector(0, 0);
+        this.direction = new PVector(0, 0);
     }
 
     abstract void update();

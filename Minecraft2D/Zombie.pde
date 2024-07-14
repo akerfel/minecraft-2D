@@ -33,6 +33,9 @@ public class Zombie extends Mob {
         if (isCollidingWithWallOrWater()) {
             coords.x = xPrevious;
         }
+        else {
+            return;
+        }
         
         coords.y = yCollide;
         if (isCollidingWithWallOrWater()) {

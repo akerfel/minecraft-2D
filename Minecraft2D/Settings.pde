@@ -57,7 +57,7 @@ public class Settings {
     float zombieSpawnChance;
     
     // Mob speeds
-    float pigSpeedFactor = 0.1;
+    float pigSpeedFactor = 0.001;
     float zombieSpeedFactor = 0.05;
     
     // Tools
@@ -118,10 +118,10 @@ public class Settings {
         
         // Mob spawn chance
         this.pigSpawnChance = 0.05;
-        this.zombieSpawnChance = 0.25;
+        this.zombieSpawnChance = 0.05;
         
         // Mob speeds
-        this.pigSpeedFactor = 0.1;
+        this.pigSpeedFactor = 0.03;
         this.zombieSpeedFactor = 0.05;
         
         // Tools

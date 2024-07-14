@@ -99,6 +99,9 @@ public class Player {
         if (isCollidingWithWall()) {
             coords.x = xPrevious;
         }
+        else {
+            return;
+        }
 
         coords.y = yCollide;
         if (isCollidingWithWall()) {
