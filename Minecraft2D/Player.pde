@@ -1,19 +1,17 @@
-public class Player {
+public class Player extends Body {
     Inventory inventory;
     CraftingMenu craftingMenu;
-    PVector coords;
     int reach;
-    float baseSpeed;
     boolean isRunning;
     boolean isRunningSuperSpeed;
     float runningFactor;                    // 1.5 gives 50% speed increase when running
     float superSpeedFactor;
 
     public Player(float x, float y) {
+        super(x, y, settings.playerSpeedFactor, settings.playerWidthInBlocks, settings.playerColor);
         inventory = new Inventory();
         craftingMenu = new CraftingMenu();
         coords = new PVector(x, y);
-        baseSpeed = 0.1;
         reach = 7;
         isRunning = false;
         isRunningSuperSpeed = false;
@@ -49,21 +47,8 @@ public class Player {
         return false;
     }
 
-
-    void move() {
-        float xPrevious = coords.x;
-        float yPrevious = coords.y;
-
-        float speed = determineSpeed();
-        coords.add(getPositionDiff(speed));
-
-        if (!cheats.canWalkThroughWalls) {
-            revertStepIfWalkedIntoWall(xPrevious, yPrevious);
-        }
-    }
-
-    private float determineSpeed() {
-        float speed = baseSpeed;
+    float determineSpeed() {
+        float speed = speedFactor;
         if (isRunning) {
             speed *= runningFactor;
         }
@@ -76,41 +61,10 @@ public class Player {
         return speed;
     }
 
-    private PVector getPositionDiff(float speed) {
-        return getDirection().mult(speed);
-    }
-    
-    private PVector getDirection() {
+    void determineDirection() {
         int xMovement = int(state.D_IsPressed) - int(state.A_isPressed);
         int yMovement = int(state.S_isPressed) - int(state.W_isPressed);
-        return new PVector(xMovement, yMovement).normalize();
-    }
-
-    void revertStepIfWalkedIntoWall(float xPrevious, float yPrevious) {
-        float xCollide = coords.x;
-        float yCollide = coords.y;
-
-        if (isCollidingWithWall()) {
-            coords.x = xPrevious;
-            coords.y = yPrevious;
-        }
-
-        coords.x = xCollide;
-        if (isCollidingWithWall()) {
-            coords.x = xPrevious;
-        }
-        else {
-            return;
-        }
-
-        coords.y = yCollide;
-        if (isCollidingWithWall()) {
-            coords.y = yPrevious;
-        }
-    }
-
-    boolean isCollidingWithWall() {
-        return squareIsCollidingWithWall(coords, settings.playerWidthInBlocks);
+        direction = new PVector(xMovement, yMovement).normalize();
     }
 
     void setMove(final int keyWhichWasPressed, final boolean bool) {

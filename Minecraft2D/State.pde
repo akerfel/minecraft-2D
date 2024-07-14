@@ -3,7 +3,7 @@ public class State {
     int worldSeed;
     HashMap<PVector, Chunk> generatedChunks;
     Player player;
-    ArrayList<Mob> mobs;
+    ArrayList<Body> bodies;
 
     // Will not be stored in the game save
     Block[][] visibleBlocks;
@@ -20,7 +20,8 @@ public class State {
         this.worldSeed = int(random(0, 100000000));
         this.generatedChunks = new HashMap<PVector, Chunk>();
         this.player = new Player(11111, 11111);
-        this.mobs = new ArrayList<Mob>();
+        this.bodies = new ArrayList<Body>();
+        bodies.add(player);
     
         // Will not be stored in the game save
         setViewDistance(settings.viewDistance);
