@@ -517,15 +517,25 @@ public boolean mobsAreColliding(Mob m1, Mob m2) {
 }
 
 boolean squareIsCollidingWithWall(PVector coords, float widthInBlocks) {
-    return getBlock(int(coords.x), int(coords.y)).isWall
-        || getBlock(int(coords.x + widthInBlocks), int(coords.y)).isWall
-        || getBlock(int(coords.x), int(coords.y + widthInBlocks)).isWall
-        || getBlock(int(coords.x + widthInBlocks), int(coords.y + widthInBlocks)).isWall;
+    int left = int(coords.x);
+    int right = int(coords.x + widthInBlocks);
+    int top = int(coords.y);
+    int bottom = int(coords.y + widthInBlocks);
+    
+    return getBlock(left, top).isWall
+        || getBlock(right, top).isWall
+        || getBlock(left, bottom).isWall
+        || getBlock(right, bottom).isWall;
 }
 
 boolean squareIsCollidingWithWallOrWater(PVector coords, float widthInBlocks) {
-    return getBlock(int(coords.x), int(coords.y)).isWallOrWater()
-        || getBlock(int(coords.x + widthInBlocks), int(coords.y)).isWallOrWater()
-        || getBlock(int(coords.x), int(coords.y + widthInBlocks)).isWallOrWater()
-        || getBlock(int(coords.x + widthInBlocks), int(coords.y + widthInBlocks)).isWallOrWater();
+    int left = int(coords.x);
+    int right = int(coords.x + widthInBlocks);
+    int top = int(coords.y);
+    int bottom = int(coords.y + widthInBlocks);
+    
+    return getBlock(left, top).isWallOrWater()
+        || getBlock(right, top).isWallOrWater()
+        || getBlock(left, bottom).isWallOrWater()
+        || getBlock(right, bottom).isWallOrWater();
 }
