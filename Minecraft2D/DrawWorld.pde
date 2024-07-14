@@ -66,11 +66,15 @@ void drawMob(Mob mob) {
     float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
     float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
     fill(mob.c);
-    square(x, y, mobWidthInPixels);
+    ellipseMode(CORNER);
+    circle(x, y, mobWidthInPixels);
+    ellipseMode(CENTER);
 }
 
 void drawPlayer() {
     float playerWidthInPixels = settings.playerWidthInBlocks * settings.pixelsPerBlock;
     fill(216, 127, 51);
-    square(width/2, height/2, playerWidthInPixels);
+    ellipseMode(CORNER);
+    circle(width/2, height/2, playerWidthInPixels);
+    ellipseMode(CENTER);
 }

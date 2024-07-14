@@ -71,15 +71,36 @@ public class Player {
         coords.y += v*(int(state.S_isPressed)  - int(state.W_isPressed));
         
         // If new coords are inside wall, go back to old coords
-        if (!cheats.canWalkThroughWalls
-            && (getBlock(coords.x, coords.y).isWall
-            || getBlock(coords.x + settings.playerWidthInBlocks, coords.y).isWall
-            || getBlock(coords.x, coords.y + settings.playerWidthInBlocks).isWall
-            || getBlock(coords.x + settings.playerWidthInBlocks, coords.y + settings.playerWidthInBlocks).isWall))
-        {
+        if (!cheats.canWalkThroughWalls) {
+            revertStepIfWalkedIntoWall(xPrevious, yPrevious);
+        }
+    }
+    
+    void revertStepIfWalkedIntoWall(float xPrevious, float yPrevious) {
+        float xCollide = coords.x;
+        float yCollide = coords.y;
+        
+        if (isCollidingWithWall()) {
             coords.x = xPrevious;
             coords.y = yPrevious;
         }
+        
+        coords.x = xCollide;
+        if (isCollidingWithWall()) {
+            coords.x = xPrevious;
+        }
+        
+        coords.y = yCollide;
+        if (isCollidingWithWall()) {
+            coords.y = yPrevious;
+        }
+    }
+    
+    boolean isCollidingWithWall() {
+        return getBlock(int(coords.x), int(coords.y)).isWall
+            || getBlock(int(coords.x + settings.mobWidthInBlocks), int(coords.y)).isWall
+            || getBlock(int(coords.x), int(coords.y + settings.mobWidthInBlocks)).isWall
+            || getBlock(int(coords.x + settings.mobWidthInBlocks), int(coords.y + settings.mobWidthInBlocks)).isWall;
     }
 
     void setMove(final int keyWhichWasPressed, final boolean bool) {
