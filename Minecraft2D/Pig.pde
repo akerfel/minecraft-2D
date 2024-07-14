@@ -4,7 +4,7 @@ public class Pig extends Mob {
     float chanceStopMoving;     // chance each frame when 
 
     public Pig(float x, float y) {
-        super(x, y, settings.pigSpeedFactor, settings.pigColor);
+        super(x, y, settings.pigSpeedFactor, settings.pigWidthInBlocks, settings.pigColor);
         isMoving = false;
         chanceStartMoving = 0.006;
         chanceStopMoving = 0.006;

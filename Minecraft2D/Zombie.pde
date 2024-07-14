@@ -1,7 +1,7 @@
 public class Zombie extends Mob {
 
     public Zombie(float x, float y) {
-        super(x, y, settings.zombieSpeedFactor, settings.zombieColor);
+        super(x, y, settings.zombieSpeedFactor, settings.zombieWidthInBlocks, settings.zombieColor);
         c = color(102, 0, 0);
     }
 

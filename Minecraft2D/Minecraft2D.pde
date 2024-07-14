@@ -363,14 +363,30 @@ public boolean squaresAreColliding(PVector coords1, PVector coords2, float width
     rectOneTop < rectTwoBottom);
 }
 
+public boolean circlesAreColliding(PVector coords1, PVector coords2, float diameter1, float diameter2) {
+    
+    float r1 =  diameter1 / 2;
+    float r2 =  diameter2 / 2;
+    
+    float x1 = coords1.x + r1;
+    float y1 = coords1.y + r1;
+    float x2 = coords2.x + r2;
+    float y2 = coords2.y + r2;
+    
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+    float distance = (float) Math.sqrt(dx * dx + dy * dy);
+    
+    return distance < (r1 + r2);
+}
+
 public boolean bodiesAreColliding(Body b1, Body b2) {
     if (b1 == b2) {
         return false;    
     }
     
-    return squaresAreColliding(b1.coords, b2.coords, b1.widthInBlocks, b2.widthInBlocks);
+    return circlesAreColliding(b1.coords, b2.coords, b1.widthInBlocks, b2.widthInBlocks);
 }
-
 
 boolean squareIsCollidingWithWall(PVector coords, float widthInBlocks) {
     int left = int(coords.x);

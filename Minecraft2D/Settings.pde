@@ -9,7 +9,8 @@ public class Settings {
     
     // Entity size
     float playerWidthInBlocks;
-    float mobWidthInBlocks;
+    float pigWidthInBlocks;
+    float zombieWidthInBlocks;
     
     // General
     int blocksPerChunk;            // blocks per side of chunk;
@@ -90,7 +91,8 @@ public class Settings {
         
         // Entity size
         this.playerWidthInBlocks = 0.8;
-        this.mobWidthInBlocks = 0.8;
+        this.pigWidthInBlocks = 0.8;
+        this.zombieWidthInBlocks = 0.8;
         
         // General 
         this.blocksPerChunk = 64;
