@@ -27,14 +27,6 @@ public class Pig extends Mob {
         direction.normalize();
     }
 
-    void invertDirectionIfCollideWithWallOrWater(float xPrevious, float yPrevious) {
-        if (isCollidingWithWallOrWater()) {
-            coords.x = xPrevious;
-            coords.y = yPrevious;
-            direction.mult(-1);
-        }
-    }
-
     void maybeStopMoving() {
         if (random(0, 1) < chanceStopMoving) {
             direction = new PVector(0, 0);

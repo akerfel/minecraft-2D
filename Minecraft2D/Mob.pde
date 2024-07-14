@@ -2,7 +2,6 @@ public abstract class Mob {
     PVector coords;
     float speedFactor;
     color c;
-    boolean isMoving;
     PVector direction;
 
     public Mob(float x, float y, float speedFactor) {
