@@ -97,12 +97,9 @@ public class Player {
     }
     
     boolean isCollidingWithWall() {
-        return getBlock(int(coords.x), int(coords.y)).isWall
-            || getBlock(int(coords.x + settings.mobWidthInBlocks), int(coords.y)).isWall
-            || getBlock(int(coords.x), int(coords.y + settings.mobWidthInBlocks)).isWall
-            || getBlock(int(coords.x + settings.mobWidthInBlocks), int(coords.y + settings.mobWidthInBlocks)).isWall;
+        return squareIsCollidingWithWall(coords, settings.playerWidthInBlocks);
     }
-
+    
     void setMove(final int keyWhichWasPressed, final boolean bool) {
         switch (keyWhichWasPressed) {
         case 'W':

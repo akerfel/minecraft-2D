@@ -13,10 +13,7 @@ public abstract class Mob {
     abstract void update();
     
     public boolean isCollidingWithWallOrWater() {
-        return getBlock(int(coords.x), int(coords.y)).isWallOrWater()
-            || getBlock(int(coords.x + settings.mobWidthInBlocks), int(coords.y)).isWallOrWater()
-            || getBlock(int(coords.x), int(coords.y + settings.mobWidthInBlocks)).isWallOrWater()
-            || getBlock(int(coords.x + settings.mobWidthInBlocks), int(coords.y + settings.mobWidthInBlocks)).isWallOrWater();
+        return squareIsCollidingWithWallOrWater(coords, settings.mobWidthInBlocks);
     }
     
     public boolean isCollidingWithAnotherMob() {

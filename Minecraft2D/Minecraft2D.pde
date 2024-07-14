@@ -289,7 +289,7 @@ void spawnMob(MobType mobType) {
         case ZOMBIE:
             spawnMobIfNotCollidingWithAnother(new Zombie(xSpawn + 0.1, ySpawn + 0.1));
             return;
-        } //<>//
+        } //<>// //<>//
     }
 }
 
@@ -301,7 +301,7 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
 
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
-        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>//
+        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>// //<>//
         if (slot.item.itemType == ItemType.BLOCK) {
             Block block = (Block) slot.item;
             if (slot.getCount() != 0) {
@@ -514,4 +514,18 @@ public boolean mobsAreColliding(Mob m1, Mob m2) {
     rectOneLeft < rectTwoRight && 
     rectOneBottom > rectTwoTop && 
     rectOneTop < rectTwoBottom);
+}
+
+boolean squareIsCollidingWithWall(PVector coords, float widthInBlocks) {
+    return getBlock(int(coords.x), int(coords.y)).isWall
+        || getBlock(int(coords.x + widthInBlocks), int(coords.y)).isWall
+        || getBlock(int(coords.x), int(coords.y + widthInBlocks)).isWall
+        || getBlock(int(coords.x + widthInBlocks), int(coords.y + widthInBlocks)).isWall;
+}
+
+boolean squareIsCollidingWithWallOrWater(PVector coords, float widthInBlocks) {
+    return getBlock(int(coords.x), int(coords.y)).isWallOrWater()
+        || getBlock(int(coords.x + widthInBlocks), int(coords.y)).isWallOrWater()
+        || getBlock(int(coords.x), int(coords.y + widthInBlocks)).isWallOrWater()
+        || getBlock(int(coords.x + widthInBlocks), int(coords.y + widthInBlocks)).isWallOrWater();
 }
