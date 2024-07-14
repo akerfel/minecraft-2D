@@ -59,6 +59,7 @@ public class Player {
 
         if (!cheats.canWalkThroughWalls) {
             revertStepIfWalkedIntoWall(xPrevious, yPrevious);
+            revertStepIfWalkedIntoMob(xPrevious, yPrevious);
         }
     }
 
@@ -137,6 +138,36 @@ public class Player {
 
         default:
             return;
+        }
+    }
+    
+    
+    public boolean isCollidingWithSomeMob() {
+        for (Mob otherMob : state.mobs) {
+            if (playerIsCollidingWithThisMob(otherMob)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    void revertStepIfWalkedIntoMob(float xPrevious, float yPrevious) {
+        float xCollide = coords.x;
+        float yCollide = coords.y;
+        
+        if (isCollidingWithSomeMob()) {
+            coords.x = xPrevious;
+            coords.y = yPrevious;
+        }
+        
+        coords.x = xCollide;
+        if (isCollidingWithSomeMob()) {
+            coords.x = xPrevious;
+        }
+        
+        coords.y = yCollide;
+        if (isCollidingWithSomeMob()) {
+            coords.y = yPrevious;
         }
     }
 }

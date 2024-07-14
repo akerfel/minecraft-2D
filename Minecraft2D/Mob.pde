@@ -11,7 +11,25 @@ public abstract class Mob {
         this.direction = new PVector(0, 0);
     }
 
-    abstract void update();
+    void update() {
+        determineDirection();
+        
+        float xPrevious = coords.x;
+        float yPrevious = coords.y;
+        
+        coords.x += direction.x * speedFactor;
+        coords.y += direction.y * speedFactor;
+        
+        revertStepIfWalkedIntoWall(xPrevious, yPrevious);
+        revertStepIfWalkedIntoMob(xPrevious, yPrevious);
+        
+    }
+    
+    abstract void determineDirection();
+    
+    public boolean isCollidingWithWall() {
+        return squareIsCollidingWithWall(coords, settings.mobWidthInBlocks);
+    }
     
     public boolean isCollidingWithWallOrWater() {
         return squareIsCollidingWithWallOrWater(coords, settings.mobWidthInBlocks);
@@ -24,6 +42,29 @@ public abstract class Mob {
             }
         }
         return false;
+    }
+    
+    void revertStepIfWalkedIntoWall(float xPrevious, float yPrevious) {
+        float xCollide = coords.x;
+        float yCollide = coords.y;
+        
+        if (isCollidingWithWall()) {
+            coords.x = xPrevious;
+            coords.y = yPrevious;
+        }
+        
+        coords.x = xCollide;
+        if (isCollidingWithWall()) {
+            coords.x = xPrevious;
+        }
+        else {
+            return;
+        }
+        
+        coords.y = yCollide;
+        if (isCollidingWithWallOrWater()) {
+            coords.y = yPrevious;
+        }
     }
     
     void revertStepIfWalkedIntoMob(float xPrevious, float yPrevious) {

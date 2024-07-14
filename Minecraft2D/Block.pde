@@ -23,7 +23,7 @@ public class Block extends Item {
     boolean isHoldingCorrectToolType() {
         Item heldItem = state.player.inventory.getHeldItem();
         Tool tool = (Tool) heldItem;
-        return (toolTypeForMining == tool.toolType); //<>// //<>// //<>// //<>//
+        return (toolTypeForMining == tool.toolType); //<>// //<>// //<>//
     }
 
     public void mineBlock() {

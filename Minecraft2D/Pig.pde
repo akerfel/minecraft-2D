@@ -6,44 +6,25 @@ public class Pig extends Mob {
     public Pig(float x, float y) {
         super(x, y, settings.pigSpeedFactor);
         isMoving = false;
-        chanceStartMoving = 0.003;
+        chanceStartMoving = 0.006;
         chanceStopMoving = 0.006;
         c = color(255, 192, 203);
     }
-
-    void update() {
+    
+    void determineDirection() {
         if (isMoving) {
-            move();
             maybeStopMoving();
+            if (random(0, 1) < 0.7) {
+                direction.x += random(-0.25, 0.25);
+            }
+            if (random(0, 1) < 0.7) {
+                direction.y += random(-0.25, 0.25);
+            }
         } else {
             maybeStartMoving();
         }
-    }
-    
-    void move() {
-        float xPrevious = coords.x;
-        float yPrevious = coords.y;
-
-        updateDirection();
-        PVector positionDiff = getPositionDiff(speedFactor);
-        coords.add(positionDiff);
         
-        invertDirectionIfCollideWithWallOrWater(xPrevious, yPrevious);
-        revertStepIfWalkedIntoMob(xPrevious, yPrevious);
-    }
-    
-    private PVector getPositionDiff(float speed) {
-        return direction.copy().mult(speed);
-    }
-    
-    PVector updateDirection() {
-        if (random(0, 1) < 0.7) {
-            direction.x += random(-0.15, 0.15);
-        }
-        if (random(0, 1) < 0.7) {
-            direction.y += random(-0.15, 0.15);
-        }
-        return direction.normalize();
+        direction.normalize();
     }
 
     void invertDirectionIfCollideWithWallOrWater(float xPrevious, float yPrevious) {

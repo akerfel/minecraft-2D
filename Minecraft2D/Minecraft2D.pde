@@ -288,8 +288,8 @@ void spawnMob(MobType mobType) {
         case ZOMBIE:
             spawnMobIfNotCollidingWithAnother(new Zombie(xSpawn + 0.1, ySpawn + 0.1));
             return;
-        } //<>// //<>//
-    } //<>// //<>//
+        } //<>// //<>// //<>//
+    } //<>// //<>// //<>//
 }
 
 void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
@@ -300,8 +300,8 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
 
 void placeBlockWithMouse() {
     if (state.rightMouseButtonDown) {
-        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>// //<>//
-        if (slot.item.itemType == ItemType.BLOCK) { //<>// //<>//
+        ItemSlot slot = state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected); //<>// //<>// //<>//
+        if (slot.item.itemType == ItemType.BLOCK) { //<>// //<>// //<>//
             Block block = (Block) slot.item;
             if (slot.getCount() != 0) {
                 if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
@@ -487,25 +487,20 @@ public float getMobWidthInPixel() {
     return settings.mobWidthInBlocks * settings.pixelsPerBlock;    
 }
 
-public boolean mobsAreColliding(Mob m1, Mob m2) {
-    if (m1 == m2) {
-        return false;    
-    }
+public boolean squaresAreColliding(PVector coords1, PVector coords2, float width1, float width2) {
+    float x1 = coords1.x;
+    float y1 = coords1.y;
+    float x2 = coords2.x;
+    float y2 = coords2.y;
     
-    float w = settings.mobWidthInBlocks;
-    float x1 = m1.coords.x;
-    float y1 = m1.coords.y;
-    float x2 = m2.coords.x;
-    float y2 = m2.coords.y;
-    
-    float rectOneRight = x1 + w;
+    float rectOneRight = x1 + width1;
     float rectOneLeft = x1;
-    float rectOneBottom = y1 + w;
+    float rectOneBottom = y1 + width1;
     float rectOneTop = y1;
     
-    float rectTwoRight = x2 + w;
+    float rectTwoRight = x2 + width2;
     float rectTwoLeft = x2;
-    float rectTwoBottom = y2 + w;
+    float rectTwoBottom = y2 + width2;
     float rectTwoTop = y2;
 
     return 
@@ -513,6 +508,18 @@ public boolean mobsAreColliding(Mob m1, Mob m2) {
     rectOneLeft < rectTwoRight && 
     rectOneBottom > rectTwoTop && 
     rectOneTop < rectTwoBottom);
+}
+
+public boolean mobsAreColliding(Mob m1, Mob m2) {
+    if (m1 == m2) {
+        return false;    
+    }
+    
+    return squaresAreColliding(m1.coords, m2.coords, settings.mobWidthInBlocks, settings.mobWidthInBlocks);
+}
+
+public boolean playerIsCollidingWithThisMob(Mob mob) {
+    return squaresAreColliding(state.player.coords, mob.coords, settings.playerWidthInBlocks, settings.mobWidthInBlocks);
 }
 
 boolean squareIsCollidingWithWall(PVector coords, float widthInBlocks) {
