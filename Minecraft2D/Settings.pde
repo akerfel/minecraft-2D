@@ -141,7 +141,7 @@ public class Settings {
         
         // Mobs
         this.maxMobs = 1000;
-        this.mobLineOfSightRange = 24;    
+        this.mobLineOfSightRange = 40;    
         
         // Spawn ranges (in blocks)
         this.mobMinSpawnRange = 24;
