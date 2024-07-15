@@ -153,14 +153,14 @@ public class Settings {
         
         // Mob spawn chance
         this.pigSpawnChance = 0.35;
-        this.zombieSpawnChance = 0.35;
+        this.zombieSpawnChance = 0.85;
         
         // Speed
         this.waterSlowdownFactor = 0.6;
         this.playerBaseSpeed = 0.05;
         this.pigBaseSpeed = 0.02;
         this.zombieBaseSpeed = 0.03;
-        this.bulletBaseSpeed = 0.15;
+        this.bulletBaseSpeed = 0.65;
         
         // Tools
         this.woodToolMiningMultiplier = 2;
