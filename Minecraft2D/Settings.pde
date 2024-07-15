@@ -149,8 +149,8 @@ public class Settings {
         this.zombieReachInBlocks = 1;
         
         // Mob spawn chance
-        this.pigSpawnChance = 0.05;
-        this.zombieSpawnChance = 0.05;
+        this.pigSpawnChance = 0.35;
+        this.zombieSpawnChance = 0.35;
         
         // Speed
         this.playerSpeedFactor = 0.05;
