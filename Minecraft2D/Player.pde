@@ -8,7 +8,7 @@ public class Player extends Body {
     float superSpeedFactor;
 
     public Player(float x, float y) {
-        super(x, y, settings.playerSpeedFactor, settings.playerWidthInBlocks, settings.playerColor);
+        super(x, y, settings.playerBaseSpeed, settings.playerWidthInBlocks, settings.playerColor);
         inventory = new Inventory();
         craftingMenu = new CraftingMenu();
         coords = new PVector(x, y);
@@ -48,7 +48,7 @@ public class Player extends Body {
     }
 
     float determineSpeed() {
-        float speed = speedFactor;
+        float speed = baseSpeed;
         if (isRunning) {
             speed *= runningFactor;
         }

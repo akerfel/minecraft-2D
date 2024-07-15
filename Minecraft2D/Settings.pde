@@ -72,10 +72,10 @@ public class Settings {
     float zombieSpawnChance;
     
     // Speed
-    float playerSpeedFactor;
-    float pigSpeedFactor;
-    float zombieSpeedFactor;
-    float bulletSpeedFactor;
+    float playerBaseSpeed;
+    float pigBaseSpeed;
+    float zombieBaseSpeed;
+    float bulletBaseSpeed;
     
     // Tools
     int woodToolMiningMultiplier;
@@ -153,10 +153,10 @@ public class Settings {
         this.zombieSpawnChance = 0.35;
         
         // Speed
-        this.playerSpeedFactor = 0.05;
-        this.pigSpeedFactor = 0.02;
-        this.zombieSpeedFactor = 0.03;
-        this.bulletSpeedFactor = 0.15;
+        this.playerBaseSpeed = 0.05;
+        this.pigBaseSpeed = 0.02;
+        this.zombieBaseSpeed = 0.03;
+        this.bulletBaseSpeed = 0.15;
         
         // Tools
         this.woodToolMiningMultiplier = 2;

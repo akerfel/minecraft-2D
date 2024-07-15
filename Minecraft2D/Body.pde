@@ -1,14 +1,14 @@
 public abstract class Body {
     PVector coords;
-    float speedFactor;
+    float baseSpeed;
     color c;
     PVector direction;
     float diameterInBlocks;
     int hp;
 
-    public Body(float x, float y, float speedFactor, float widthInBlocks, color c) {
+    public Body(float x, float y, float baseSpeed, float widthInBlocks, color c) {
         coords = new PVector(x, y);
-        this.speedFactor = speedFactor;
+        this.baseSpeed = baseSpeed;
         this.direction = new PVector(0, 0);
         this.diameterInBlocks = widthInBlocks;
         this.c = c;

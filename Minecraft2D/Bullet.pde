@@ -1,6 +1,6 @@
 class Bullet {
     PVector coords;
-    float speedFactor;
+    float baseSpeed;
     PVector direction;
     float diameterInBlocks;
     int hp; // bullet will be removed if hp is 0
@@ -9,15 +9,15 @@ class Bullet {
     Bullet(PVector coords, PVector direction, float diameterInBlocks) {
         this.coords = coords;
         this.direction = direction;
-        this.speedFactor = settings.bulletSpeedFactor;
+        this.baseSpeed = settings.bulletBaseSpeed;
         this.diameterInBlocks = diameterInBlocks;
         this.hp = 1;
         this.damage = 1;
     }
     
     void update() {
-        coords.x += direction.x * speedFactor;
-        coords.y += direction.y * speedFactor;
+        coords.x += direction.x * baseSpeed;
+        coords.y += direction.y * baseSpeed;
         
         if (isCollidingWithWall()) {
             hp = 0;  
