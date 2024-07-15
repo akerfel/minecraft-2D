@@ -65,36 +65,28 @@ void drawBullets() {
     }
 }
 
+PVector coordsToPixelPosition(PVector coords) {
+    float xBlocksToPlayer = coords.x - state.player.coords.x;
+    float yBlocksToPlayer = coords.y - state.player.coords.y;
+    float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
+    float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
+    return new PVector(x, y);
+}
+
 void drawBody(Body body) {
-    if (body instanceof Player) {
-        float playerWidthInPixels = settings.playerWidthInBlocks * settings.pixelsPerBlock;
-        fill(216, 127, 51);
-        ellipseMode(CORNER);
-        circle(width/2, height/2, playerWidthInPixels);
-        ellipseMode(CENTER);
-    }
-    else {
-        float bodyWidthInPixels = body.diameterInBlocks * settings.pixelsPerBlock;
-        float xBlocksToPlayer = body.coords.x - state.player.coords.x;
-        float yBlocksToPlayer = body.coords.y - state.player.coords.y;
-        float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
-        float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
-        fill(body.c);
-        ellipseMode(CORNER);
-        circle(x, y, bodyWidthInPixels);
-        ellipseMode(CENTER);
-        
-    }
+    fill(body.c);
+    drawCircle(body.coords, body.diameterInBlocks);
 }
 
 void drawBullet(Bullet bullet) {
-    float bodyWidthInPixels = settings.bulletDiameterInBlocks * settings.pixelsPerBlock;
-    float xBlocksToPlayer = bullet.coords.x - state.player.coords.x;
-    float yBlocksToPlayer = bullet.coords.y - state.player.coords.y;
-    float x = width/2 + xBlocksToPlayer * settings.pixelsPerBlock;
-    float y = height/2 + yBlocksToPlayer * settings.pixelsPerBlock;
     fill(10);
+    drawCircle(bullet.coords, bullet.diameterInBlocks);
+}
+
+void drawCircle(PVector coords, float diameterInBlocks) {
+    PVector pixelPosition = coordsToPixelPosition(coords);
+    float widthInPixels = diameterInBlocks * settings.pixelsPerBlock;
     ellipseMode(CORNER);
-    circle(x, y, bodyWidthInPixels);
+    circle(pixelPosition.x, pixelPosition.y, widthInPixels);
     ellipseMode(CENTER);
 }
