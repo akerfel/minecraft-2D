@@ -8,7 +8,6 @@ public abstract class Mob extends Body {
         float speed = baseSpeed;
         if (getBlock(this.coords).isWater()) {
             speed *= settings.waterSlowdownFactor;
-            println("WATER speed: " + speed);
         }
         return speed;
     }

@@ -278,13 +278,17 @@ PVector getSpawnCoordsForNewMob() {
     randomDirection.normalize();
     float distanceToPlayer = random(settings.mobMinSpawnRange, settings.mobMaxSpawnRange);
     PVector diffToPlayer = randomDirection.mult(distanceToPlayer);
-    floorPVector(diffToPlayer);
-    return state.player.coords.copy().add(diffToPlayer);
+    return floorVector(state.player.coords.copy().add(diffToPlayer));
 }
 
-void floorPVector(PVector v) {
+
+// Modifies and return parameter vector.
+// example input: (2.4, 4.3)
+// output:        (2.0, 4.0)
+PVector floorVector(PVector v) {
     v.x = floor(v.x);
     v.y = floor(v.y);
+    return v;
 }
 
 void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
