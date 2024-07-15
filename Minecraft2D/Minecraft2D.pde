@@ -261,7 +261,7 @@ void maybeSpawnMobs() {
 void spawnMob(MobType mobType) {
     PVector spawnCoords = getSpawnCoordsForNewMob();
     
-    if (!getBlock(spawnCoords.x, spawnCoords.y).isWallOrWater()) {
+    if (!getBlock(spawnCoords).isWallOrWater()) {
         switch(mobType) {
         case PIG:
             spawnMobIfNotCollidingWithAnother(new Pig(spawnCoords.x, spawnCoords.y));
@@ -416,6 +416,10 @@ Chunk getChunk(PVector coords) {
 
 PVector calcChunkCoords(PVector coords) {
     return new PVector(int(coords.x / settings.blocksPerChunk), int(coords.y / settings.blocksPerChunk));
+}
+
+Block getBlock(PVector vec) {
+    return getBlock(vec.x, vec.y);
 }
 
 Block getBlock(float x, float y) {

@@ -72,6 +72,7 @@ public class Settings {
     float zombieSpawnChance;
     
     // Speed
+    float waterSlowdownFactor;
     float playerBaseSpeed;
     float pigBaseSpeed;
     float zombieBaseSpeed;
@@ -153,6 +154,7 @@ public class Settings {
         this.zombieSpawnChance = 0.35;
         
         // Speed
+        this.waterSlowdownFactor = 0.6;
         this.playerBaseSpeed = 0.05;
         this.pigBaseSpeed = 0.02;
         this.zombieBaseSpeed = 0.03;

@@ -55,8 +55,8 @@ public class Player extends Body {
         if (isRunningSuperSpeed) {
             speed *= superSpeedFactor;
         }
-        if (getPlayerBlock().itemID == ItemID.WATER) {
-            speed *= 0.5;
+        if (getPlayerBlock().isWater()) {
+            speed *= settings.waterSlowdownFactor;
         }
         return speed;
     }

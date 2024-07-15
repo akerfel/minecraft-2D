@@ -15,9 +15,13 @@ public class Block extends Item {
         this.toolTypeForMining = toolTypeForMining;
         this.isMineable = isMineable;
     }
+    
+    boolean isWater() {
+        return itemID == ItemID.WATER;    
+    }
 
     boolean isWallOrWater() {
-        return (isWall || itemID == ItemID.WATER);
+        return isWall || isWater();
     }
 
     boolean isHoldingCorrectToolType() {
