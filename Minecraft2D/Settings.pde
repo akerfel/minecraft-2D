@@ -58,6 +58,7 @@ public class Settings {
     
     // Mobs
     int maxMobs;
+    float mobLineOfSightRange;
     
     // Spawn ranges (in blocks)
     float mobMinSpawnRange;             // Mobs can not spawn closer to the player than this 
@@ -140,6 +141,7 @@ public class Settings {
         
         // Mobs
         this.maxMobs = 1000;
+        this.mobLineOfSightRange = 24;    
         
         // Spawn ranges (in blocks)
         this.mobMinSpawnRange = 24;

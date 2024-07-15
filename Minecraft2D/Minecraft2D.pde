@@ -281,7 +281,6 @@ PVector getSpawnCoordsForNewMob() {
     return floorVector(state.player.coords.copy().add(diffToPlayer));
 }
 
-
 // Modifies and return parameter vector.
 // example input: (2.4, 4.3)
 // output:        (2.0, 4.0)

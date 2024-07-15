@@ -46,6 +46,10 @@ public class Zombie extends Mob {
     }
     
     boolean canSeePlayer() {
+        if (getDistancesBetweenBodiesInBlocks(this, state.player) > settings.mobLineOfSightRange) {
+            return false;
+        }
+        
         float x0 = Math.round(coords.x);
         float y0 = Math.round(coords.y);
         float x1 = Math.round(state.player.coords.x);
