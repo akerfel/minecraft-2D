@@ -75,15 +75,15 @@ PVector coordsToPixelPosition(PVector coords) {
 
 void drawBody(Body body) {
     fill(body.c);
-    drawCircle(body.coords, body.diameterInBlocks);
+    drawCircleWithTopLeftCornerAt(body.coords, body.diameterInBlocks);
 }
 
 void drawBullet(Bullet bullet) {
     fill(10);
-    drawCircle(bullet.coords, bullet.diameterInBlocks);
+    drawCircleWithTopLeftCornerAt(bullet.coords, bullet.diameterInBlocks);
 }
 
-void drawCircle(PVector coords, float diameterInBlocks) {
+void drawCircleWithTopLeftCornerAt(PVector coords, float diameterInBlocks) {
     PVector pixelPosition = coordsToPixelPosition(coords);
     float widthInPixels = diameterInBlocks * settings.pixelsPerBlock;
     ellipseMode(CORNER);

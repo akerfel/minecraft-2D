@@ -91,10 +91,16 @@ void shootPlayerGun() {
 }
 
 Bullet createPlayerBullet() {
-    PVector startCoords = state.player.coords.copy();
+    PVector startCoords = getCenterOfPlayerCoords();
+    PVector bulletVectorCornerToCenter = new PVector(settings.bulletDiameterInBlocks/2, settings.bulletDiameterInBlocks/2);
+    startCoords.sub(bulletVectorCornerToCenter);
     PVector direction = determineDirectionOfPlayerBullet();
-    println("direction: " + direction);
     return new Bullet(startCoords, direction, settings.bulletDiameterInBlocks);
+}
+
+PVector getCenterOfPlayerCoords() {
+    PVector vectorCornerToCenter = new PVector(settings.playerWidthInBlocks/2, settings.playerWidthInBlocks/2);
+    return state.player.coords.copy().add(vectorCornerToCenter); 
 }
 
 PVector determineDirectionOfPlayerBullet() {
