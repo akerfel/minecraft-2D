@@ -259,18 +259,25 @@ void maybeSpawnMobs() {
 }
 
 void spawnMob(MobType mobType) {
-    float xSpawn = int(state.player.coords.x + random(-settings.mobSpawnRange, settings.mobSpawnRange));
-    float ySpawn = int(state.player.coords.y + random(-settings.mobSpawnRange, settings.mobSpawnRange));
-    if (!getBlock(xSpawn, ySpawn).isWallOrWater()) {
+    PVector spawnCoords = getSpawnCoordsForNewMob();
+    
+    if (!getBlock(spawnCoords.x, spawnCoords.y).isWallOrWater()) {
         switch(mobType) {
         case PIG:
-            spawnMobIfNotCollidingWithAnother(new Pig(xSpawn + 0.1, ySpawn + 0.1));
+            spawnMobIfNotCollidingWithAnother(new Pig(spawnCoords.x, spawnCoords.y));
             return;
         case ZOMBIE: 
-            spawnMobIfNotCollidingWithAnother(new Zombie(xSpawn + 0.1, ySpawn + 0.1)); 
+            spawnMobIfNotCollidingWithAnother(new Zombie(spawnCoords.x, spawnCoords.y)); 
             return;
         }   
     }   
+}
+
+PVector getSpawnCoordsForNewMob() {
+    PVector randomDirection = PVector.random2D();
+    randomDirection.normalize();
+    float distanceToPlayer = random(settings.mobMinSpawnRange, settings.mobMaxSpawnRange);
+    return state.player.coords.copy().add(randomDirection.mult(distanceToPlayer));
 }
 
 void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {

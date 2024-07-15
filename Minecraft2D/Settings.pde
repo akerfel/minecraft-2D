@@ -58,8 +58,11 @@ public class Settings {
     
     // Mobs
     int maxMobs;
-    int mobSpawnRange;             // In blocks
-    int mobDespawnRange;           // In blocks
+    
+    // Spawn ranges (in blocks)
+    float mobMinSpawnRange;             // Mobs can not spawn closer to the player than this 
+    float mobMaxSpawnRange;            
+    int mobDespawnRange;
     
     // Mob reach
     float zombieReachInBlocks;
@@ -136,7 +139,10 @@ public class Settings {
         
         // Mobs
         this.maxMobs = 1000;
-        this.mobSpawnRange = 50;
+        
+        // Spawn ranges (in blocks)
+        this.mobMinSpawnRange = 24;
+        this.mobMaxSpawnRange = 100;
         this.mobDespawnRange = 100;
         
         // Mob reach
