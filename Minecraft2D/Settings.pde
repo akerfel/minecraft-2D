@@ -157,7 +157,7 @@ public class Settings {
         
         // Speed
         this.waterSlowdownFactor = 0.6;
-        this.playerBaseSpeed = 0.8;
+        this.playerBaseSpeed = 0.08;
         this.pigBaseSpeed = 0.03;
         this.zombieBaseSpeed = 0.04;
         this.bulletBaseSpeed = 0.65;
