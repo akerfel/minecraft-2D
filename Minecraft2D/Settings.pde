@@ -140,26 +140,26 @@ public class Settings {
         this.chanceRiver = 0.00004;
         
         // Mobs
-        this.maxMobs = 1000;
+        this.maxMobs = 5000;
         this.mobLineOfSightRange = 40;    
         
         // Spawn ranges (in blocks)
-        this.mobMinSpawnRange = 24;
-        this.mobMaxSpawnRange = 100;
+        this.mobMinSpawnRange = 20;
+        this.mobMaxSpawnRange = 40;
         this.mobDespawnRange = 100;
+        
+        // Mob chance to spawn each frame (between 0 and 1)
+        this.pigSpawnChance = 0.35;
+        this.zombieSpawnChance = 1;
         
         // Mob reach
         this.zombieReachInBlocks = 1;
         
-        // Mob spawn chance
-        this.pigSpawnChance = 0.35;
-        this.zombieSpawnChance = 0.85;
-        
         // Speed
         this.waterSlowdownFactor = 0.6;
-        this.playerBaseSpeed = 0.05;
-        this.pigBaseSpeed = 0.02;
-        this.zombieBaseSpeed = 0.03;
+        this.playerBaseSpeed = 0.8;
+        this.pigBaseSpeed = 0.03;
+        this.zombieBaseSpeed = 0.04;
         this.bulletBaseSpeed = 0.65;
         
         // Tools

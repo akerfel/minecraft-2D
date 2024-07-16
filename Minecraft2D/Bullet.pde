@@ -7,8 +7,8 @@ class Bullet {
     int damage;
 
     Bullet(PVector coords, PVector direction, float diameterInBlocks) {
-        this.coords = coords;
-        this.direction = direction;
+        this.coords = coords.copy();
+        this.direction = direction.normalize();
         this.baseSpeed = settings.bulletBaseSpeed;
         this.diameterInBlocks = diameterInBlocks;
         this.hp = 1;
@@ -16,8 +16,7 @@ class Bullet {
     }
     
     void update() {
-        coords.x += direction.x * baseSpeed;
-        coords.y += direction.y * baseSpeed;
+        coords.add(direction.copy().normalize().mult(baseSpeed));
         
         if (isCollidingWithWall()) {
             hp = 0;  
@@ -28,11 +27,13 @@ class Bullet {
     }
     
     void handleMobCollision() {
-        for (Body body : state.bodies) {
-            if (!(body instanceof Player) && circlesAreColliding(this.coords, body.coords, this.diameterInBlocks, body.diameterInBlocks)) {
-                if (!body.isDead()) {
-                    body.damage(damage);
-                    hp--;
+        if (isAlive()) {
+            for (Body body : state.bodies) {
+                if (!(body instanceof Player) && circlesAreColliding(this.coords, body.coords, this.diameterInBlocks, body.diameterInBlocks)) {
+                    if (!body.isDead()) {
+                        body.damage(damage);
+                        hp--;
+                    }
                 }
             }
         }
@@ -44,5 +45,9 @@ class Bullet {
     
     boolean isDead() {
         return hp <= 0;    
+    }
+    
+    boolean isAlive() {
+        return !isDead();    
     }
 }

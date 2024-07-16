@@ -86,8 +86,15 @@ boolean heldGunIsReadyToShoot() {
 }
 
 void shootPlayerGun() {
-    getHeldGun().startReloadTimer();
-    state.bullets.add(createPlayerBullet());
+    MachineGun gun = getHeldGun();
+    gun.startReloadTimer();
+    
+    for (int i = - floor(gun.multiShotNumber / 2); i <= floor(gun.multiShotNumber / 2); i++) {
+        Bullet bullet = createPlayerBullet();
+        PVector offset = bullet.direction.copy().rotate(HALF_PI).normalize().mult(i);
+        bullet.coords.add(offset);
+        state.bullets.add(bullet);
+    }
 }
 
 Bullet createPlayerBullet() {
@@ -248,6 +255,7 @@ void removeFarMobs() {
 }
 
 void maybeSpawnMobs() {
+    println("bodies: " + state.bodies.size());
     if (state.bodies.size() < settings.maxMobs) {
         if (random(0, 1) < settings.pigSpawnChance) {
             spawnMob(MobType.PIG);
