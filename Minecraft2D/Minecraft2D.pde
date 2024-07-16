@@ -1,4 +1,4 @@
-import java.util.Iterator; //<>//
+import java.util.Iterator; //<>// //<>//
 
 // Global variables
 Settings settings;
@@ -88,12 +88,26 @@ boolean heldGunIsReadyToShoot() {
 void shootPlayerGun() {
     MachineGun gun = getHeldGun();
     gun.startReloadTimer();
-    
-    for (int i = - floor(gun.multiShotNumber / 2); i <= floor(gun.multiShotNumber / 2); i++) {
-        Bullet bullet = createPlayerBullet();
-        PVector offset = bullet.direction.copy().rotate(HALF_PI).normalize().mult(i);
-        bullet.coords.add(offset);
-        state.bullets.add(bullet);
+    addPlayerBullets();
+}
+
+void addPlayerBullets() {
+    int numBullets = getHeldGun().multiShotNumber;
+    if (numBullets % 2 == 1) {
+        for (int i = - floor(float(numBullets) / 2.0); i < floor(float(numBullets) / 2.0 + 1); i++) {
+            Bullet bullet = createPlayerBullet();
+            PVector offset = bullet.direction.copy().rotate(HALF_PI).normalize().mult(i);
+            bullet.coords.add(offset);
+            state.bullets.add(bullet);
+        }
+    }
+    else {
+        for (int i = - floor(float(numBullets) / 2.0); i < floor(float(numBullets) / 2.0); i++) {
+            Bullet bullet = createPlayerBullet();
+            PVector offset = bullet.direction.copy().rotate(HALF_PI).normalize().mult(i + 0.5);
+            bullet.coords.add(offset);
+            state.bullets.add(bullet);
+        }
     }
 }
 
