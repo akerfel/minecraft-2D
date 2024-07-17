@@ -137,14 +137,15 @@ void handleMouseClicks() {
 
 void handleLeftClick() {
     if (state.leftMouseButtonDown) {
-        if (playerIsHoldingItemWhichCanMine()) {
+        if (state.player.isHoldingItemWhichCanMine()) {
             mineBlockWithMouse();
         }
-        if (playerIsHoldingGun() && heldGunIsReadyToShoot()) {
+        if (state.player.isHoldingGun() && heldGunIsReadyToShoot()) {
             shootPlayerGun();    
         }
     }
 }
+    
 
 void handleRightClick() {
     if (!state.inventoryIsOpen) {
@@ -155,8 +156,8 @@ void handleRightClick() {
 }
 
 void placeBlockWithMouse() { 
-    if (selectedItemIsBlock()) {   
-        ItemSlot slot = getSelectedItemSlot();   
+    if (state.player.selectedItemIsBlock()) {   
+        ItemSlot slot = state.player.getSelectedItemSlot();   
         Block block = (Block) slot.item;
         if (slot.getCount() != 0) {
             if (state.player.getDistanceToMouse() < state.player.reach &&
@@ -176,4 +177,35 @@ PVector getCoordsWhichMouseHovers() {
 Block getMouseBlock() {
     PVector distancePlayerToMouse = state.player.getVectorFromMouse();
     return getBlock(int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
+}
+
+void mineBlockWithMouse() {
+    Block mouseBlock = getMouseBlock();
+    if (mouseBlock.isMineable && state.player.getDistanceToMouse() < state.player.reach) {
+        if (mouseBlock.prcntBroken >= 1) {
+            state.player.inventory.addItem(mouseBlock);
+            setMouseBlock((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
+        } else {
+            mouseBlock.mineBlock();
+            state.damagedBlocks.add(mouseBlock);
+        }
+    }
+}
+
+// Returns the inventory slot which the mouse currently hovers.
+// Note that this is not the same as state.player.mouseItemSlot
+ItemSlot getInventorySlotWhichMouseHovers() {
+    if (state.inventoryIsOpen) {
+        if (mouseX < settings.inventoryUpperLeftXPixel || mouseY < settings.inventoryUpperLeftYPixel) return null;
+        int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
+        int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
+        if (inventoryXindex < 0 || inventoryXindex >= settings.inventoryWidth || inventoryYindex < 0 || inventoryYindex >= settings.inventoryHeight) {
+            return null;
+        }
+        if (state.player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
+            //println("Grabbed item: " + (state.player.inventory.grid[inventoryXindex][inventoryYindex].item));
+        }
+        return state.player.inventory.grid[inventoryXindex][inventoryYindex];
+    }
+    return null;
 }

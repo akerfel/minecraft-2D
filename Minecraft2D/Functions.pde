@@ -17,10 +17,6 @@ void respawnIfPlayerIsDead() {
     }
 }
 
-void removeAllMobs() {
-    state.bodies.clear();
-    state.bodies.add(state.player);
-}
 
 void checkIfPlayerIsAttacked() {
     for (Body body : state.bodies) {
@@ -38,7 +34,7 @@ float getDistancesBetweenBodiesInBlocks(Body b1, Body b2) {
 }
 
 MachineGun getHeldGun() {
-    return (MachineGun) getSelectedItemSlot().item;
+    return (MachineGun) state.player.getSelectedItemSlot().item;
 }
 
 boolean heldGunIsReadyToShoot() {
@@ -86,37 +82,17 @@ PVector determineDirectionOfPlayerBullet() {
 }
 
 
-boolean playerIsHoldingGun() {
-    return !getSelectedItemSlot().isEmpty() && getSelectedItemSlot().item.itemType == ItemType.GUN;
-}
 
-boolean playerIsHoldingItemWhichCanMine() {
-    return playerHasNotSelectedAnItem() || playerIsHoldingTool();
-}
 
-boolean playerIsHoldingTool() {
-    return !getSelectedItemSlot().isEmpty() && getSelectedItemSlot().item.itemType == ItemType.TOOL;
-}
 
-boolean playerHasNotSelectedAnItem() {
-    return getSelectedItemSlot().isEmpty();
-}
+
+
 
 void updateBodies() {
     maybeSpawnMobs();
     removeDeadMobs();
     removeFarMobs();
     updateBodyPositions();
-}
-
-void removeDeadMobs() {
-    Iterator<Body> it = state.bodies.iterator();
-    while (it.hasNext()) {
-        Body body = it.next();
-        if (!(body instanceof Player) && body.isDead()) {
-            it.remove();
-        }
-    }
 }
 
 void updateBullets() {
@@ -193,53 +169,6 @@ void removeBlockDamageIfNotMining() {
     }
 }
 
-void removeFarMobs() {
-    Iterator<Body> it = state.bodies.iterator();
-    while (it.hasNext()) {
-        Body body = it.next();
-        if (body instanceof Mob) {
-            if (state.player.coords.dist(((Mob) body).coords) > settings.mobDespawnRange) {
-                it.remove();
-            }
-        }
-    }
-}
-
-void maybeSpawnMobs() {
-    println("bodies: " + state.bodies.size());
-    if (state.bodies.size() < settings.maxMobs) {
-        if (random(0, 1) < settings.pigSpawnChance) {
-            spawnMob(MobType.PIG);
-        }
-        if (random(0, 1) < settings.zombieSpawnChance) {
-            spawnMob(MobType.ZOMBIE);
-        }
-    }
-}
-
-void spawnMob(MobType mobType) {
-    PVector spawnCoords = getSpawnCoordsForNewMob();
-    
-    if (!getBlock(spawnCoords).isWallOrWater()) {
-        switch(mobType) {
-        case PIG:
-            spawnMobIfNotCollidingWithAnother(new Pig(spawnCoords.x, spawnCoords.y));
-            return;
-        case ZOMBIE: 
-            spawnMobIfNotCollidingWithAnother(new Zombie(spawnCoords.x, spawnCoords.y)); 
-            return;
-        }   
-    }   
-}
-
-PVector getSpawnCoordsForNewMob() {
-    PVector randomDirection = PVector.random2D();
-    randomDirection.normalize();
-    float distanceToPlayer = random(settings.mobMinSpawnRange, settings.mobMaxSpawnRange);
-    PVector diffToPlayer = randomDirection.mult(distanceToPlayer);
-    return floorVector(state.player.coords.copy().add(diffToPlayer));
-}
-
 // Modifies and return parameter vector.
 // example input: (2.4, 4.3)
 // output:        (2.0, 4.0)
@@ -256,45 +185,7 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
 }
 
 
-boolean selectedItemIsBlock() {
-    ItemSlot slot = getSelectedItemSlot();   
-    return slot.item.itemType == ItemType.BLOCK;
-}
 
-ItemSlot getSelectedItemSlot() {
-    return state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
-}
-
-void mineBlockWithMouse() {
-    Block mouseBlock = getMouseBlock();
-    if (mouseBlock.isMineable && state.player.getDistanceToMouse() < state.player.reach) {
-        if (mouseBlock.prcntBroken >= 1) {
-            state.player.inventory.addItem(mouseBlock);
-            setMouseBlock((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
-        } else {
-            mouseBlock.mineBlock();
-            state.damagedBlocks.add(mouseBlock);
-        }
-    }
-}
-
-// Returns the inventory slot which the mouse currently hovers.
-// Note that this is not the same as state.player.mouseItemSlot
-ItemSlot getInventorySlotWhichMouseHovers() {
-    if (state.inventoryIsOpen) {
-        if (mouseX < settings.inventoryUpperLeftXPixel || mouseY < settings.inventoryUpperLeftYPixel) return null;
-        int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
-        int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
-        if (inventoryXindex < 0 || inventoryXindex >= settings.inventoryWidth || inventoryYindex < 0 || inventoryYindex >= settings.inventoryHeight) {
-            return null;
-        }
-        if (state.player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
-            //println("Grabbed item: " + (state.player.inventory.grid[inventoryXindex][inventoryYindex].item));
-        }
-        return state.player.inventory.grid[inventoryXindex][inventoryYindex];
-    }
-    return null;
-}
 
 boolean setMouseBlock(Block block) {
     PVector distancePlayerToMouse = state.player.getVectorFromMouse();

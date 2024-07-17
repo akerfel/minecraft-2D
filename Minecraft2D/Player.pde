@@ -93,4 +93,29 @@ public class Player extends Body {
             return;
         }
     }
+    
+    boolean isHoldingGun() {
+        return !getSelectedItemSlot().isEmpty() && getSelectedItemSlot().item.itemType == ItemType.GUN;
+    }
+    
+    boolean isHoldingItemWhichCanMine() {
+        return hasNotSelectedAnItem() || isHoldingTool();
+    }
+    
+    boolean isHoldingTool() {
+        return !getSelectedItemSlot().isEmpty() && getSelectedItemSlot().item.itemType == ItemType.TOOL;
+    }
+    
+    boolean hasNotSelectedAnItem() {
+        return getSelectedItemSlot().isEmpty();
+    }
+    
+    boolean selectedItemIsBlock() {
+        ItemSlot slot = getSelectedItemSlot();   
+        return slot.item.itemType == ItemType.BLOCK;
+    }
+    
+    ItemSlot getSelectedItemSlot() {
+        return state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
+    }
 }
