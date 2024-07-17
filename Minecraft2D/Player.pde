@@ -118,4 +118,14 @@ public class Player extends Body {
     ItemSlot getSelectedItemSlot() {
         return state.player.inventory.getHotbarSlot(state.player.inventory.hotbarIndexSelected);
     }
+    
+    public void handleEnemyAttack() {
+        for (Body body : state.bodies) {
+            if (body instanceof Zombie) {
+                if (getDistancesBetweenBodiesInBlocks(state.player, (Zombie) body) < settings.zombieReachInBlocks) {
+                    damage(1);    
+                }
+            }
+        }
+    }
 }
