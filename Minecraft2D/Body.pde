@@ -139,4 +139,9 @@ public abstract class Body {
     Chunk getCurrentChunk() {
         return getChunk(coords);
     }
+    
+    PVector getCenterCoords() {
+        PVector vectorCornerToCenter = new PVector(diameterInBlocks/2, diameterInBlocks/2);
+        return coords.copy().add(vectorCornerToCenter); 
+    }
 }

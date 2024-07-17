@@ -167,3 +167,13 @@ void placeBlockWithMouse() {
         }
     }
 }
+
+PVector getCoordsWhichMouseHovers() {
+    PVector vectorPlayerToMouse = state.player.getVectorFromMouse();
+    return state.player.coords.copy().add(vectorPlayerToMouse);
+}
+
+Block getMouseBlock() {
+    PVector distancePlayerToMouse = state.player.getVectorFromMouse();
+    return getBlock(int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
+}

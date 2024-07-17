@@ -72,26 +72,19 @@ void addPlayerBullets() {
 }
 
 Bullet createPlayerBullet() {
-    PVector startCoords = getCenterOfPlayerCoords();
+    PVector startCoords = state.player.getCenterCoords();
     PVector bulletVectorCornerToCenter = new PVector(settings.bulletDiameterInBlocks/2, settings.bulletDiameterInBlocks/2);
     startCoords.sub(bulletVectorCornerToCenter);
     PVector direction = determineDirectionOfPlayerBullet();
     return new Bullet(startCoords, direction, settings.bulletDiameterInBlocks);
 }
 
-PVector getCenterOfPlayerCoords() {
-    PVector vectorCornerToCenter = new PVector(settings.playerWidthInBlocks/2, settings.playerWidthInBlocks/2);
-    return state.player.coords.copy().add(vectorCornerToCenter); 
-}
+
 
 PVector determineDirectionOfPlayerBullet() {
     return state.player.getVectorToMouse().normalize();
 }
 
-PVector getCoordsWhichMouseHovers() {
-    PVector vectorPlayerToMouse = state.player.getVectorFromMouse();
-    return state.player.coords.copy().add(vectorPlayerToMouse);
-}
 
 boolean playerIsHoldingGun() {
     return !getSelectedItemSlot().isEmpty() && getSelectedItemSlot().item.itemType == ItemType.GUN;
@@ -108,9 +101,6 @@ boolean playerIsHoldingTool() {
 boolean playerHasNotSelectedAnItem() {
     return getSelectedItemSlot().isEmpty();
 }
-
-
-
 
 void updateBodies() {
     maybeSpawnMobs();
@@ -286,11 +276,6 @@ void mineBlockWithMouse() {
             state.damagedBlocks.add(mouseBlock);
         }
     }
-}
-
-Block getMouseBlock() {
-    PVector distancePlayerToMouse = state.player.getVectorFromMouse();
-    return getBlock(int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
 }
 
 // Returns the inventory slot which the mouse currently hovers.
