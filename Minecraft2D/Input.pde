@@ -1,4 +1,3 @@
-
 void keyPressed() {
     if (key == 'x') {
         for (int i = 0; i < 5; i++) {
@@ -126,6 +125,45 @@ void mouseWheel(MouseEvent event) {
             state.player.inventory.hotbarIndexSelected--;
             if (state.player.inventory.hotbarIndexSelected < 0) {
                 state.player.inventory.hotbarIndexSelected = settings.inventoryWidth - 1;
+            }
+        }
+    }
+}
+
+void handleMouseClicks() {
+    handleLeftClick();
+    handleRightClick();
+}
+
+void handleLeftClick() {
+    if (state.leftMouseButtonDown) {
+        if (playerIsHoldingItemWhichCanMine()) {
+            mineBlockWithMouse();
+        }
+        if (playerIsHoldingGun() && heldGunIsReadyToShoot()) {
+            shootPlayerGun();    
+        }
+    }
+}
+
+void handleRightClick() {
+    if (!state.inventoryIsOpen) {
+        if (state.rightMouseButtonDown) {
+            placeBlockWithMouse();
+        }
+    }
+}
+
+ 
+void placeBlockWithMouse() { 
+    if (selectedItemIsBlock()) {   
+        ItemSlot slot = getSelectedItemSlot();   
+        Block block = (Block) slot.item;
+        if (slot.getCount() != 0) {
+            if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
+                (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) &&
+                setMouseBlock((Block) createItem(block.itemID))) {
+                slot.count--;
             }
         }
     }

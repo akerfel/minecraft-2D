@@ -38,7 +38,6 @@ public class State {
     
         // Add some items to inventory
         this.player.inventory.addItem(createItem(ItemID.MACHINE_GUN));
-        this.player.inventory.addItem(createItem(ItemID.IRON_SWORD));
         this.player.inventory.addItem(createItem(ItemID.DIAMOND_PICKAXE));
         this.player.inventory.addItem(createItem(ItemID.STONE_SHOVEL));
         this.player.inventory.addItem(createItem(ItemID.DIAMOND_AXE));

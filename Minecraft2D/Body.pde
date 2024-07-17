@@ -106,4 +106,16 @@ public abstract class Body {
             coords.y = yPrevious;
         }
     }
+    
+    PVector getVectorToMouse() {
+        return getVectorFromMouse().mult(-1);
+    }
+
+    PVector getVectorFromMouse() {
+        float xPixelsToMouse = width / 2 - mouseX;
+        float yPixelsToMouse = height / 2 - mouseY;
+        float xBlocksToMouse = xPixelsToMouse / settings.pixelsPerBlock;
+        float yBlocksToMouse = yPixelsToMouse / settings.pixelsPerBlock;
+        return new PVector(xBlocksToMouse, yBlocksToMouse);
+    }
 }
