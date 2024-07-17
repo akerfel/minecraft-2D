@@ -112,11 +112,9 @@ public abstract class Body {
     }
 
     PVector getVectorFromMouse() {
-        float xPixelsToMouse = width / 2 - mouseX;
-        float yPixelsToMouse = height / 2 - mouseY;
-        float xBlocksToMouse = xPixelsToMouse / settings.pixelsPerBlock;
-        float yBlocksToMouse = yPixelsToMouse / settings.pixelsPerBlock;
-        return new PVector(xBlocksToMouse, yBlocksToMouse);
+        float xPixelsFromMouse = width / 2 - mouseX;
+        float yPixelsFromMouse = height / 2 - mouseY;
+        return new PVector(xPixelsFromMouse / settings.pixelsPerBlock, yPixelsFromMouse / settings.pixelsPerBlock);
     }
     
     // Get distanne to mouse in blocks
