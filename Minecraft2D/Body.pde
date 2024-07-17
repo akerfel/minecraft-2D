@@ -119,9 +119,24 @@ public abstract class Body {
         return new PVector(xBlocksToMouse, yBlocksToMouse);
     }
     
-    
-    // Returns total distance (in block lengths) from mouse to state.player
+    // Get distanne to mouse in blocks
     float getDistanceToMouse() {
         return getVectorFromMouse().mag();
+    }
+    
+    void setBlockStandingOn(Block block) {
+        setBlock(block, coords.x, coords.y);
+    }
+    
+    Block getBlockStandingOn() {
+        return getBlock(coords.x, coords.y);
+    }
+    
+    Block getRelativeBlock(int xdiff, int ydiff) {
+        return getBlock(coords.x + xdiff, coords.y + ydiff);
+    }
+    
+    Chunk getCurrentChunk() {
+        return getChunk(coords);
     }
 }

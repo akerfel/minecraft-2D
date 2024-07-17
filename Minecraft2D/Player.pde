@@ -38,7 +38,7 @@ public class Player extends Body {
     private boolean canReachWorkbench() {
         for (int y = -settings.craftingDistance; y <= settings.craftingDistance; y++) {
             for (int x = -settings.craftingDistance; x <= settings.craftingDistance; x++) {
-                Block block = getBlockRelativeToPlayer(x, y);
+                Block block = state.player.getRelativeBlock(x, y);
                 if (block.itemID == ItemID.WORKBENCH) {
                     return true;
                 }
@@ -55,7 +55,7 @@ public class Player extends Body {
         if (isRunningSuperSpeed) {
             speed *= superSpeedFactor;
         }
-        if (getPlayerBlock().isWater()) {
+        if (state.player.getBlockStandingOn().isWater()) {
             speed *= settings.waterSlowdownFactor;
         }
         return speed;

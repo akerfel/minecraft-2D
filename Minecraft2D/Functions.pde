@@ -369,23 +369,6 @@ Block getBlock(float x, float y) {
     return chunk.blocks[int(x) % settings.blocksPerChunk][int(y) % settings.blocksPerChunk];
 }
 
-
-void setPlayerBlock(Block block) {
-    setBlock(block, state.player.coords.x, state.player.coords.y);
-}
-
-Block getPlayerBlock() {
-    return getBlock(state.player.coords.x, state.player.coords.y);
-}
-
-Block getBlockRelativeToPlayer(int xdiff, int ydiff) {
-    return getBlock(state.player.coords.x + xdiff, state.player.coords.y + ydiff);
-}
-
-Chunk getPlayerChunk() {
-    return getChunk(state.player.coords);
-}
-
 // Saves all generated chunks to a file. One row of blocks is saved as one line of characters.
 // Each block is represented by the their respective characters as defined in
 // the hashmap blockNamesToChars.

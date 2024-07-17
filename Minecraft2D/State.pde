@@ -32,7 +32,7 @@ public class State {
         this.damagedBlocks = new ArrayList<Block>();
         this.rightMouseButtonDown = false;
         this.leftMouseButtonDown = false;
-        setPlayerBlock((Block) createItem(ItemID.GRASS));
+        state.player.setBlockStandingOn((Block) createItem(ItemID.GRASS));
         this.inventoryIsOpen = false;
         this.debugScreenIsShowing = false;
     
