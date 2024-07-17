@@ -277,7 +277,7 @@ ItemSlot getSelectedItemSlot() {
 
 void mineBlockWithMouse() {
     Block mouseBlock = getMouseBlock();
-    if (mouseBlock.isMineable && getDistance_BlocksFromPlayerToMouse() < state.player.reach) {
+    if (mouseBlock.isMineable && state.player.getDistanceToMouse() < state.player.reach) {
         if (mouseBlock.prcntBroken >= 1) {
             state.player.inventory.addItem(mouseBlock);
             setMouseBlock((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
@@ -316,11 +316,6 @@ boolean setMouseBlock(Block block) {
     return setBlock(block, int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
 }
 
-// Returns a float, total distance (in block lengths) from mouse to state.player
-float getDistance_BlocksFromPlayerToMouse() {
-    PVector distancePlayerToMouse = state.player.getVectorFromMouse();
-    return distancePlayerToMouse.dist(new PVector(0, 0));    // simply pyth. theorem
-}
 
 // Returns true if actually changed the block.
 // Example: if you try to replace a stone block with stone, the block will not change, so function returns false

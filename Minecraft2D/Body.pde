@@ -118,4 +118,10 @@ public abstract class Body {
         float yBlocksToMouse = yPixelsToMouse / settings.pixelsPerBlock;
         return new PVector(xBlocksToMouse, yBlocksToMouse);
     }
+    
+    
+    // Returns total distance (in block lengths) from mouse to state.player
+    float getDistanceToMouse() {
+        return getVectorFromMouse().mag();
+    }
 }

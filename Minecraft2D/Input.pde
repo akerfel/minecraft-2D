@@ -154,13 +154,12 @@ void handleRightClick() {
     }
 }
 
- 
 void placeBlockWithMouse() { 
     if (selectedItemIsBlock()) {   
         ItemSlot slot = getSelectedItemSlot();   
         Block block = (Block) slot.item;
         if (slot.getCount() != 0) {
-            if (getDistance_BlocksFromPlayerToMouse() < state.player.reach &&
+            if (state.player.getDistanceToMouse() < state.player.reach &&
                 (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) &&
                 setMouseBlock((Block) createItem(block.itemID))) {
                 slot.count--;
