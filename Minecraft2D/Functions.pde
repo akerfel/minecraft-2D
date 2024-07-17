@@ -17,14 +17,10 @@ void respawnIfPlayerIsDead() {
     }
 }
 
-
-
-
 float getDistancesBetweenBodiesInBlocks(Body b1, Body b2) {
     PVector b1copy = b1.coords.copy();
     return b1copy.sub(b2.coords).mag();
 }
-
 
 void updateBodies() {
     maybeSpawnMobs();
@@ -32,8 +28,6 @@ void updateBodies() {
     removeFarMobs();
     updateBodyPositions();
 }
-
-
 
 void makeViewDistanceFitZoomLevel() {
     int numBlocksVisible = width / settings.pixelsPerBlock;
@@ -108,14 +102,10 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
     }
 }
 
-
-
-
 boolean setMouseBlock(Block block) {
     PVector distancePlayerToMouse = state.player.getVectorFromMouse();
     return setBlock(block, int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
 }
-
 
 // Returns true if actually changed the block.
 // Example: if you try to replace a stone block with stone, the block will not change, so function returns false
@@ -215,7 +205,6 @@ char getBlockChar(ItemID blockID) {
 ItemID getBlockName(char blockChar) {
     return settings.blockCharsToIDs.get(blockChar);
 }
-
 
 public boolean squaresAreColliding(PVector coords1, PVector coords2, float width1, float width2) {
     float x1 = coords1.x;
