@@ -16,7 +16,7 @@ class Bullet {
     }
     
     void update() {
-        coords.add(direction.copy().normalize().mult(baseSpeed));
+        coords.add(direction.copy().setMag(baseSpeed));
         
         if (isCollidingWithWall()) {
             hp = 0;  

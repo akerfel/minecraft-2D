@@ -96,7 +96,7 @@ void addPlayerBullets() {
     if (numBullets % 2 == 1) {
         for (int i = - floor(float(numBullets) / 2.0); i < floor(float(numBullets) / 2.0 + 1); i++) {
             Bullet bullet = createPlayerBullet();
-            PVector offset = bullet.direction.copy().rotate(HALF_PI).normalize().mult(i);
+            PVector offset = bullet.direction.copy().rotate(HALF_PI).setMag(i);
             bullet.coords.add(offset);
             state.bullets.add(bullet);
         }
@@ -104,7 +104,7 @@ void addPlayerBullets() {
     else {
         for (int i = - floor(float(numBullets) / 2.0); i < floor(float(numBullets) / 2.0); i++) {
             Bullet bullet = createPlayerBullet();
-            PVector offset = bullet.direction.copy().rotate(HALF_PI).normalize().mult(i + 0.5);
+            PVector offset = bullet.direction.copy().rotate(HALF_PI).setMag(i + 0.5);
             bullet.coords.add(offset);
             state.bullets.add(bullet);
         }
