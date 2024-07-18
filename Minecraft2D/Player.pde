@@ -27,7 +27,7 @@ public class Player extends Body {
         return craftableItems;
     }
 
-    public ArrayList<ItemCount> getCraftalbeItems() {
+    public ArrayList<ItemCount> getCraftableItems() {
         ArrayList<ItemCount> craftableItems = craftingMenu.getHandCraftableItems(inventory);
         if (canReachWorkbench()) {
             craftableItems.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));

@@ -1,4 +1,4 @@
-import java.util.Iterator; //<>// //<>// //<>//
+import java.util.Iterator; //<>//
 
 // Global variables
 Settings settings;
