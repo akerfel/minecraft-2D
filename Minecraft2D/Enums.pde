@@ -47,8 +47,6 @@ public enum ItemID {
    
     WORKBENCH,
     
-    IRON_BULLET,
-    
     WOOD_SWORD,
     STONE_SWORD,
     IRON_SWORD,
@@ -79,5 +77,7 @@ public enum ItemID {
     GOLD_HOE,
     DIAMOND_HOE,
     
-    MACHINE_GUN
+    MACHINE_GUN,
+    
+    IRON_BULLET
 }

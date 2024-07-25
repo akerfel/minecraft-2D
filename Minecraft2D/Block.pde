@@ -11,9 +11,19 @@ public class Block extends Item {
         this.c = c;
         this.isWall = isWall;
         this.prcntBroken = 0;
-        this.hardness = 1.5;
         this.toolTypeForMining = toolTypeForMining;
         this.isMineable = isMineable;
+        this.hardness = 2.5;
+    }
+    
+    public Block(ItemID ID, color c, boolean isWall, ToolType toolTypeForMining, boolean isMineable, float hardness) {
+        super(ID, ItemType.BLOCK, true);
+        this.c = c;
+        this.isWall = isWall;
+        this.prcntBroken = 0;
+        this.toolTypeForMining = toolTypeForMining;
+        this.isMineable = isMineable;
+        this.hardness = hardness;
     }
     
     boolean isWater() {

@@ -62,7 +62,7 @@ Item createItem(ItemID itemID) {
         case GRASS:
             return new Block(itemID, color(127, 178, 56) + color(random(-15, 15), random(-15, 15), random(-15, 15)), false, ToolType.SHOVEL, false);
         case LEAVES:
-            return new Block(itemID, color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, ToolType.AXE, true);
+            return new Block(itemID, color(0, 124, 0) + color(random(-30, 30), random(-0, 30), random(-30, 30)), true, ToolType.AXE, true, 0.5);
         case PLANKS:
             return new Block(itemID, color(194, 155, 115), true, ToolType.AXE, true);
         case SAND:
@@ -73,17 +73,15 @@ Item createItem(ItemID itemID) {
             return new Block(itemID, color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, ToolType.NOTYPE, false);
         case WOOD:
             return new Block(itemID, color(174, 125, 90), true, ToolType.AXE, true);
-        case WORKBENCH:
-            return new Block(itemID, color(217, 177, 140), true, ToolType.AXE, true);
         case IRON_ORE:
             return new Block(itemID, color(223, 223, 225), true, ToolType.PICKAXE, true);
         case GOLD_ORE:
             return new Block(itemID, settings.colorGoldTool, true, ToolType.PICKAXE, true);
         case DIAMOND_ORE:
             return new Block(itemID, settings.colorDiamondTool, true, ToolType.PICKAXE, true);
-            
-        case IRON_BULLET:
-            return new Item(itemID, ItemType.BULLET, true, settings.colorIronTool);
+
+        case WORKBENCH:
+            return new Block(itemID, color(217, 177, 140), true, ToolType.AXE, true);
 
         case WOOD_SWORD:
             return new Tool(itemID, ToolType.SWORD, ToolMaterial.WOOD, settings.woodToolMiningMultiplier, settings.colorWoodTool);
@@ -142,6 +140,8 @@ Item createItem(ItemID itemID) {
             
         case MACHINE_GUN:
             return new MachineGun(itemID);
+        case IRON_BULLET:
+            return new Item(itemID, ItemType.BULLET, true, settings.colorIronTool);
         default:
             throw new IllegalArgumentException("Invalid ItemID: " + itemID);
     }

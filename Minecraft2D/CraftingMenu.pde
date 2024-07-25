@@ -8,7 +8,6 @@ public class CraftingMenu {
         handRecipes.add(new Recipe(createItem(ItemID.WORKBENCH), 1).addCost(createItem(ItemID.PLANKS), 4));
         
         // Workbench recipes
-        
         workbenchRecipes.add(new Recipe(createItem(ItemID.WOOD_SWORD), 1).addCost(createItem(ItemID.PLANKS), 4));
         workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_SWORD), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 2));
         workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_SWORD), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.IRON_ORE), 2));
@@ -38,6 +37,9 @@ public class CraftingMenu {
         workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_HOE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.IRON_ORE), 2));
         workbenchRecipes.add(new Recipe(createItem(ItemID.GOLD_HOE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.GOLD_ORE), 2));
         workbenchRecipes.add(new Recipe(createItem(ItemID.DIAMOND_HOE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.DIAMOND_ORE), 2));
+        
+        workbenchRecipes.add(new Recipe(createItem(ItemID.MACHINE_GUN), 1).addCost(createItem(ItemID.IRON_ORE), 5).addCost(createItem(ItemID.GOLD_ORE), 5));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_BULLET), 16).addCost(createItem(ItemID.IRON_ORE), 1));
     }
     
     private ArrayList<Recipe> getAllRecipes() {
