@@ -25,7 +25,8 @@ public class Player extends Body {
         craftableItems = new ArrayList<>();
         ArrayList<ItemCount> craftableCounts = getCraftableItemCounts();
         for (int i = 0; i < craftableCounts.size(); i++) {
-            craftableItems.add(craftableCounts.get(i).toItemSlot(0, i * settings.pixelsPerItemSlot));
+            ItemSlot slot = craftableCounts.get(i).toItemSlot(0, i * settings.pixelsPerItemSlot);
+            craftableItems.add(slot.setAsCraftingSlot());
         }
         return craftableItems;
     }
@@ -130,5 +131,22 @@ public class Player extends Body {
                 }
             }
         }
+    }
+    
+    boolean canCraftItem(Item item) {
+        for (ItemSlot craftableItem : craftableItems) {
+            if (craftableItem.item.equals(item)) {
+                return true;    
+            }
+        }
+        return false;
+    }
+    
+    
+    public void craftItem(Item item) {
+        if (canCraftItem(item)) {
+            inventory.addItem(item);
+        }
+        updateCraftableItems();
     }
 }

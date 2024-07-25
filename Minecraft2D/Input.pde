@@ -223,14 +223,17 @@ ItemSlot getItemSlotWhichMouseHovers() {
         for (int y = 0; y < settings.inventoryHeight; y++) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
                 ItemSlot slot = state.player.inventory.grid[x][y];
-                if (mouseX >= slot.xPixel && mouseX <= slot.xPixel + settings.pixelsPerItemSlot &&
-                    mouseY >= slot.yPixel && mouseY <= slot.yPixel + settings.pixelsPerItemSlot) {
+                if (slot.mouseCurrentlyHovers()) {
                     return slot;
                 }
             }
         }
         
-        
+        for (ItemSlot craftableSlot : state.player.craftableItems) {
+            if (craftableSlot.mouseCurrentlyHovers()) {
+                state.player.craftItem(craftableSlot.item);
+            }
+        }
     }
     return null;
 }

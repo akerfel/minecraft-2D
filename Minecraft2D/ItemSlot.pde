@@ -3,12 +3,14 @@ public class ItemSlot {
     public int count;
     public int xPixel;
     public int yPixel;
+    public boolean isCraftingSlot;
 
     public ItemSlot(int xPixel, int yPixel) {
         this.item = null;
         this.count = 0;
         this.xPixel = xPixel;
         this.yPixel = yPixel;
+        this.isCraftingSlot = false;
     }
 
     public ItemSlot(Item item, int count, int xPixel, int yPixel) {
@@ -16,6 +18,12 @@ public class ItemSlot {
         this.count = count;
         this.xPixel = xPixel;
         this.yPixel = yPixel;
+        this.isCraftingSlot = false;
+    }
+    
+    public ItemSlot setAsCraftingSlot() {
+        isCraftingSlot = true;
+        return this;
     }
     
     public void setItem(Item item) {
@@ -59,6 +67,10 @@ public class ItemSlot {
         
         this.item = otherItem;
         this.count = otherCount;
-        
+    }
+    
+    boolean mouseCurrentlyHovers() {
+        return mouseX >= xPixel && mouseX <= xPixel + settings.pixelsPerItemSlot &&
+               mouseY >= yPixel && mouseY <= yPixel + settings.pixelsPerItemSlot;
     }
 }

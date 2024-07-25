@@ -1,5 +1,5 @@
 public abstract class Item {
-    public ItemID itemID;            // unique identifier   
+    public ItemID itemID;
     public ItemType itemType;
     color c;
     private boolean isStackable;
@@ -21,6 +21,24 @@ public abstract class Item {
     
     public String toString() {
         return itemID.toString();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Item other = (Item) obj;
+        if ((this.itemID == null) ? (other.itemID != null) : !this.itemID.equals(other.itemID)) {
+            return false;
+        }
+
+        return true;
     }
     
     public boolean isStackable() {

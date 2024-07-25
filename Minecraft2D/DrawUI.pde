@@ -47,7 +47,6 @@ void drawCraftingMenuIfOpen() {
 void drawHotbar() {
     stroke(0);
     for (int x = 0; x < settings.inventoryWidth; x++) {
-        int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
         ItemSlot itemSlot = state.player.inventory.getHotbarSlot(x);
         boolean highlightBackground = false;
         if (x == state.player.inventory.hotbarIndexSelected) {
