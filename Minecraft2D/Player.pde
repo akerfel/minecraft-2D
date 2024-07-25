@@ -146,10 +146,10 @@ public class Player extends Body {
         return craftingMenu.getCraftingCosts(item);
     }
     
-    public void craftItem(Item item) {
-        if (canCraftItem(item)) {
-            inventory.addItem(item);
-            inventory.removeItems(getCraftingCosts(item));
+    public void craftItem(ItemSlot item) {
+        if (canCraftItem(item.item)) {
+            inventory.removeItems(getCraftingCosts(item.item));
+            inventory.addItem(item.item, item.count);
         }
         updateCraftableItems();
     }

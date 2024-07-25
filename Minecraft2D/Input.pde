@@ -231,7 +231,7 @@ ItemSlot getItemSlotWhichMouseHovers() {
         
         for (ItemSlot craftableSlot : state.player.craftableItems) {
             if (craftableSlot.mouseCurrentlyHovers()) {
-                state.player.craftItem(craftableSlot.item);
+                state.player.craftItem(craftableSlot);
             }
         }
     }
