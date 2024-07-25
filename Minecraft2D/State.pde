@@ -24,6 +24,7 @@ public class State {
         this.bodies = new ArrayList<>();
         this.bullets = new ArrayList<>();
         bodies.add(player);
+        moveHotbarToBottomOfScreen();
     
         // Will not be stored in the game save
         setViewDistance(settings.viewDistance);

@@ -29,9 +29,7 @@ void drawInventoryIfOpen() {
         for (int y = 0; y < settings.inventoryHeight; y++) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
                 ItemSlot itemSlot = state.player.inventory.grid[x][y];
-                int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
-                int yPixel = settings.inventoryUpperLeftYPixel + y * settings.pixelsPerItemSlot;
-                drawItemSlot(itemSlot, xPixel, yPixel, false);
+                drawItemSlot(itemSlot, false);
             }
         }
         if (settings.noStrokeMode) {
@@ -56,7 +54,6 @@ public void printPlayerCraftableItemsInConsole() {
 // and the currently selected hotbar slot will be highlighted.
 void drawHotbar() {
     stroke(0);
-    int yPixel = height - settings.pixelsPerItemSlot;
     for (int x = 0; x < settings.inventoryWidth; x++) {
         int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
         ItemSlot itemSlot = state.player.inventory.getHotbarSlot(x);
@@ -64,7 +61,7 @@ void drawHotbar() {
         if (x == state.player.inventory.hotbarIndexSelected) {
             highlightBackground = true;
         }
-        drawItemSlot(itemSlot, xPixel, yPixel, highlightBackground);
+        drawItemSlot(itemSlot, highlightBackground);
     }
     if (settings.noStrokeMode) {
         noStroke();
@@ -82,7 +79,9 @@ void drawMouseItemSlot() {
 }
 
 // Draws an itemSlot with center at (xPixel, yPixel)
-void drawItemSlot(ItemSlot itemSlot, int xPixel, int yPixel, boolean highlightBackground) {
+void drawItemSlot(ItemSlot itemSlot, boolean highlightBackground) {
+    int xPixel = itemSlot.xPixel;
+    int yPixel = itemSlot.yPixel;
     drawItemSlotBackground(xPixel, yPixel, highlightBackground);
     // We will specifiy the center of each itemSlot
     int xPixelCenterOfItemSlot = xPixel + settings.pixelsPerItemSlot / 2;

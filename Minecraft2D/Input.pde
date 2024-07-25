@@ -19,11 +19,7 @@ void keyPressed() {
     }
 
     if (key == 'e') {
-        if (state.inventoryIsOpen) {
-            state.player.inventory.returnMouseGrabbedItemToInventory();
-        }
-        state.craftingMenuIsOpen = false;
-        state.inventoryIsOpen = !state.inventoryIsOpen;
+        openOrCloseInventory();
     }
 
     if (key == 'c') {
@@ -127,6 +123,31 @@ void mouseWheel(MouseEvent event) {
                 state.player.inventory.hotbarIndexSelected = settings.inventoryWidth - 1;
             }
         }
+    }
+}
+
+void openOrCloseInventory() {
+    state.inventoryIsOpen = !state.inventoryIsOpen;
+    if (state.inventoryIsOpen) {
+        state.player.inventory.returnMouseGrabbedItemToInventory();
+        moveHotbarToBottomOfInventory();
+    }
+    else {
+        moveHotbarToBottomOfScreen();
+    }
+}
+
+void moveHotbarToBottomOfScreen() {
+    for (int x = 0; x < settings.inventoryWidth; x++) {
+        ItemSlot slot = state.player.inventory.getHotbarSlot(x);
+        slot.yPixel = height - settings.pixelsPerItemSlot;
+    }
+}
+
+void moveHotbarToBottomOfInventory() {
+    for (int x = 0; x < settings.inventoryWidth; x++) {
+        ItemSlot slot = state.player.inventory.getHotbarSlot(x);
+        slot.yPixel = settings.inventoryUpperLeftYPixel + (settings.inventoryHeight - 1) * settings.pixelsPerItemSlot;
     }
 }
 

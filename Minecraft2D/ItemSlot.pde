@@ -1,8 +1,12 @@
 public class ItemSlot {
+    public int xPixel;
+    public int yPixel;
     private Item item;
     public int count;
 
-    public ItemSlot() {
+    public ItemSlot(int xPixel, int yPixel) {
+        this.xPixel = xPixel;
+        this.yPixel = yPixel;
         item = null;
         count = 0;
     }

@@ -9,7 +9,7 @@ public class Inventory {
         hotbarIndexSelected = 0;
         grid = new ItemSlot[settings.inventoryWidth][settings.inventoryHeight];
         setInventoryEmpty();
-        mouseHeldItemSlot = new ItemSlot();
+        mouseHeldItemSlot = new ItemSlot(mouseX, mouseY);
     }
     
     public Item getHeldItem() {
@@ -23,7 +23,7 @@ public class Inventory {
     public void returnMouseGrabbedItemToInventory() {
         if (mouseHeldItemSlot.count > 0) {
             grid[grabbedXindex][grabbedYindex] = mouseHeldItemSlot;
-            mouseHeldItemSlot = new ItemSlot();
+            mouseHeldItemSlot = new ItemSlot(mouseX, mouseY);
         }
     }
 
@@ -34,7 +34,9 @@ public class Inventory {
     private void setInventoryEmpty() {
         for (int y = 0; y < settings.inventoryHeight; y++) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
-                grid[x][y] = new ItemSlot();
+                int xPixel = settings.inventoryUpperLeftXPixel + x * settings.pixelsPerItemSlot;
+                int yPixel = settings.inventoryUpperLeftYPixel + y * settings.pixelsPerItemSlot;
+                grid[x][y] = new ItemSlot(xPixel, yPixel);
             }
         }
     }
