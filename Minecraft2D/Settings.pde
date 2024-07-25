@@ -149,8 +149,8 @@ public class Settings {
         this.mobDespawnRange = 100;
         
         // Mob chance to spawn each frame (between 0 and 1)
-        this.pigSpawnChance = 0.35;
-        this.zombieSpawnChance = 1;
+        this.pigSpawnChance = 0.015;
+        this.zombieSpawnChance = 0.015;
         
         // Mob reach
         this.zombieReachInBlocks = 1;
