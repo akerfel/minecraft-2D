@@ -14,6 +14,7 @@ void respawnIfPlayerIsDead() {
         state.player.inventory.setInventoryEmpty();
         state.player.coords = settings.spawnPoint.copy();
         removeAllMobs();
+        closeInventory();
     }
 }
 

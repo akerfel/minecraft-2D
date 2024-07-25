@@ -24,7 +24,6 @@ public class State {
         this.bodies = new ArrayList<>();
         this.bullets = new ArrayList<>();
         bodies.add(player);
-        moveHotbarToBottomOfScreen();
     
         // Will not be stored in the game save
         setViewDistance(settings.viewDistance);
@@ -36,6 +35,7 @@ public class State {
         state.player.setBlockStandingOn((Block) createItem(ItemID.GRASS));
         this.inventoryIsOpen = false;
         this.debugScreenIsShowing = false;
+        closeInventory();
     
         // Add some items to inventory
         this.player.inventory.addItem(createItem(ItemID.MACHINE_GUN));

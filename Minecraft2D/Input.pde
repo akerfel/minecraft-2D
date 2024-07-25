@@ -124,14 +124,23 @@ void mouseWheel(MouseEvent event) {
 }
 
 void openOrCloseInventory() {
-    state.inventoryIsOpen = !state.inventoryIsOpen;
     if (state.inventoryIsOpen) {
-        moveHotbarToBottomOfInventory();
+        closeInventory();
     }
     else {
-        state.player.inventory.returnMouseGrabbedItemToInventory();
-        moveHotbarToBottomOfScreen();
+        openInventory();
     }
+}
+
+void closeInventory() {
+    state.inventoryIsOpen = false;
+    moveHotbarToBottomOfScreen();    
+    state.player.inventory.returnMouseGrabbedItemToInventory();
+}
+
+void openInventory() {
+    state.inventoryIsOpen = true;
+    moveHotbarToBottomOfInventory();
 }
 
 void moveHotbarToBottomOfScreen() {
