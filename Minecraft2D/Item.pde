@@ -69,14 +69,18 @@ Item createItem(ItemID itemID) {
             return new Block(itemID, color(247, 233, 163), false, ToolType.SHOVEL, true);
         case STONE:
             return new Block(itemID, color(112, 112, 112) + color(random(-8, 8), random(-8, 8), random(-8, 8)), true, ToolType.PICKAXE, true);
-        case IRON_ORE:
-            return new Block(itemID, color(223, 223, 225), true, ToolType.PICKAXE, true);
         case WATER:
             return new Block(itemID, color(64, 64, 255) + color(random(-15, 15), random(-15, 15), 0), false, ToolType.NOTYPE, false);
         case WOOD:
             return new Block(itemID, color(174, 125, 90), true, ToolType.AXE, true);
         case WORKBENCH:
             return new Block(itemID, color(217, 177, 140), true, ToolType.AXE, true);
+        case IRON_ORE:
+            return new Block(itemID, color(223, 223, 225), true, ToolType.PICKAXE, true);
+        case GOLD_ORE:
+            return new Block(itemID, settings.colorGoldTool, true, ToolType.PICKAXE, true);
+        case DIAMOND_ORE:
+            return new Block(itemID, settings.colorDiamondTool, true, ToolType.PICKAXE, true);
             
         case IRON_BULLET:
             return new Item(itemID, ItemType.BULLET, true, settings.colorIronTool);

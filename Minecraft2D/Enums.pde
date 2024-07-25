@@ -39,9 +39,11 @@ public enum ItemID {
     PLANKS,
     SAND,
     STONE,
-    IRON_ORE,
     WATER,
     WOOD,
+    IRON_ORE,
+    GOLD_ORE,
+    DIAMOND_ORE,
    
     WORKBENCH,
     
