@@ -14,6 +14,10 @@ public class ItemSlot {
     public void setItem(Item item) {
         this.item = item;    
     }
+    
+    public void setCount(int count) {
+        this.count = count;    
+    }
 
     String toString() {
         if (item == null) {
@@ -32,5 +36,22 @@ public class ItemSlot {
     
     public boolean isEmpty() {
         return (count == 0 || item == null);    
+    }
+    
+    public void setToEmpty() {
+        item = null;
+        count = 0;
+    }
+    
+    public void swapWith(ItemSlot other) {
+        Item otherItem = other.item;
+        int otherCount = other.count;
+        
+        other.item = this.item;
+        other.count = this.count;
+        
+        this.item = otherItem;
+        this.count = otherCount;
+        
     }
 }

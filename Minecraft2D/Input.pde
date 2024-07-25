@@ -78,13 +78,10 @@ void mousePressed() {
         if (state.inventoryIsOpen) {
             ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
             if (clickedItemSlot != null) {
-                ItemSlot currentMouseHeldItemSlot = state.player.inventory.mouseHeldItemSlot;
                 int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
                 int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
-                state.player.inventory.grabbedXindex = inventoryXindex;
-                state.player.inventory.grabbedYindex = inventoryYindex;
-                state.player.inventory.grid[inventoryXindex][inventoryYindex] = currentMouseHeldItemSlot;
-                state.player.inventory.mouseHeldItemSlot = clickedItemSlot;
+                ItemSlot grabbedSlot = state.player.inventory.grid[inventoryXindex][inventoryYindex];
+                grabbedSlot.swapWith(state.player.inventory.mouseHeldItemSlot);
             }
         }
     }
@@ -129,10 +126,10 @@ void mouseWheel(MouseEvent event) {
 void openOrCloseInventory() {
     state.inventoryIsOpen = !state.inventoryIsOpen;
     if (state.inventoryIsOpen) {
-        state.player.inventory.returnMouseGrabbedItemToInventory();
         moveHotbarToBottomOfInventory();
     }
     else {
+        state.player.inventory.returnMouseGrabbedItemToInventory();
         moveHotbarToBottomOfScreen();
     }
 }
