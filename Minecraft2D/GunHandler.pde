@@ -3,7 +3,7 @@ MachineGun getHeldGun() {
 }
 
 boolean heldGunIsReadyToShoot() {
-    return !state.inventoryIsOpen && getHeldGun().isReadyToShoot();
+    return getHeldGun().isReadyToShoot();
 }
 
 void shootPlayerGun() {

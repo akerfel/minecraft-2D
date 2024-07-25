@@ -41,25 +41,14 @@ void drawInventoryIfOpen() {
 }
 
 void drawCraftingMenuIfOpen() {
-    if (state.inventoryIsOpen && state.craftingMenuIsOpen) {
-        stroke(0);
-        ArrayList<ItemSlot> craftable = state.player.getCraftableItems();
-        for (int i = 0; i < craftable.size(); i++) {
-            ItemSlot itemSlot = craftable.get(i);
-            int yPixel = i * settings.pixelsPerItemSlot;
-            drawItemSlot(itemSlot, 0, yPixel, false);
-        }
-        if (settings.noStrokeMode) {
-            noStroke();
-        }
-    }
+        
 }
 
 public void printPlayerCraftableItemsInConsole() {
     //println("");
     //println("Craftable items:");
-    for (ItemSlot itemSlot : state.player.getHandCraftableItems()) {
-        println(itemSlot.item + " * " + itemSlot.count);
+    for (ItemCount itemCount : state.player.getHandCraftableItems()) {
+        println(itemCount.item + " * " + itemCount.count);
     }    
 }
 

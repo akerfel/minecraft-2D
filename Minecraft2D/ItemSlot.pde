@@ -7,11 +7,6 @@ public class ItemSlot {
         count = 0;
     }
     
-    public ItemSlot(Item item, int count) {
-        this.item = item;
-        this.count = count;
-    }
-    
     public void setItem(Item item) {
         this.item = item;    
     }
@@ -23,7 +18,7 @@ public class ItemSlot {
         return item.toString();
     }
 
-    void incrementItemSlot() {
+    void incrementItemCount() {
         count++;
     }
     

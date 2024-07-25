@@ -13,13 +13,13 @@ public class CraftingMenu {
     }
     
     // Get list of items craftable by hand (i.e., while not using a workbench)
-    public ArrayList<ItemSlot> getHandCraftableItems(Inventory inventory) {
-        ArrayList<ItemSlot> craftable = new ArrayList<>();
+    public ArrayList<ItemCount> getHandCraftableItems(Inventory inventory) {
+        ArrayList<ItemCount> craftable = new ArrayList<>();
         for (Recipe recipe : handRecipes) {
             boolean canCraftItem = true;
-            for (ItemSlot itemSlot : recipe.getCosts()) {
+            for (ItemCount itemCount : recipe.getCosts()) {
                 
-                if (!inventory.hasItem(itemSlot)) {
+                if (!inventory.hasItem(itemCount)) {
                     canCraftItem = false;
                     break;
                 }
@@ -31,13 +31,13 @@ public class CraftingMenu {
         return craftable;
     }
     
-    public ArrayList<ItemSlot> getWorkbenchCraftableItems(Inventory inventory) {
-        ArrayList<ItemSlot> craftable = new ArrayList<>();
+    public ArrayList<ItemCount> getWorkbenchCraftableItems(Inventory inventory) {
+        ArrayList<ItemCount> craftable = new ArrayList<>();
         for (Recipe recipe : workbenchRecipes) {
             boolean canCraftItem = true;
-            for (ItemSlot itemSlot : recipe.getCosts()) {
+            for (ItemCount itemCount : recipe.getCosts()) {
                 
-                if (!inventory.hasItem(itemSlot)) {
+                if (!inventory.hasItem(itemCount)) {
                     canCraftItem = false;
                     break;
                 }

@@ -39,8 +39,8 @@ public class Inventory {
         }
     }
     
-    public boolean hasItem(ItemSlot itemSlot) {
-        return hasItem(itemSlot.item, itemSlot.count);    
+    public boolean hasItem(ItemCount itemCount) {
+        return hasItem(itemCount.item, itemCount.count);    
     }
     
     public boolean hasItem(Item item, int count) {
@@ -64,7 +64,7 @@ public class Inventory {
         for (int y = settings.inventoryHeight - 1; y > -1; y--) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
                 if (grid[x][y].item != null && grid[x][y].item.itemID == item.itemID && grid[x][y].count < 64) {
-                    grid[x][y].incrementItemSlot();
+                    grid[x][y].incrementItemCount();
                     return true;
                 }
             }

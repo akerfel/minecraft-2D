@@ -1,21 +1,21 @@
 public class Recipe {
-    private ArrayList<ItemSlot> costs = new ArrayList<>();
-    private ItemSlot result;
+    private ArrayList<ItemCount> costs = new ArrayList<>();
+    private ItemCount result;
     
     public Recipe(Item item, int count) {
-        this.result = new ItemSlot(item, count);
+        this.result = new ItemCount(item, count);
     }
     
     public Recipe addCost(Item item, int count) {
-        costs.add(new ItemSlot(item, count));
+        costs.add(new ItemCount(item, count));
         return this;
     }
     
-    public ArrayList<ItemSlot> getCosts() {
+    public ArrayList<ItemCount> getCosts() {
         return costs;    
     }
     
-    public ItemSlot getResult() {
+    public ItemCount getResult() {
         return result;    
     }
 }

@@ -19,16 +19,16 @@ public class Player extends Body {
         superSpeedFactor = 200;
     }
 
-    public ArrayList<ItemSlot> getHandCraftableItems() {
-        ArrayList<ItemSlot> craftableItems = craftingMenu.getHandCraftableItems(inventory);
+    public ArrayList<ItemCount> getHandCraftableItems() {
+        ArrayList<ItemCount> craftableItems = craftingMenu.getHandCraftableItems(inventory);
         if (canReachWorkbench()) {
             craftableItems.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));
         }
         return craftableItems;
     }
 
-    public ArrayList<ItemSlot> getCraftableItems() {
-        ArrayList<ItemSlot> craftableItems = craftingMenu.getHandCraftableItems(inventory);
+    public ArrayList<ItemCount> getCraftableItems() {
+        ArrayList<ItemCount> craftableItems = craftingMenu.getHandCraftableItems(inventory);
         if (canReachWorkbench()) {
             craftableItems.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));
         }
