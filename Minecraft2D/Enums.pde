@@ -28,6 +28,7 @@ enum ItemType {
     BLOCK,
     TOOL,
     GUN,
+    BULLET,
     OTHER
 }
 
@@ -43,6 +44,8 @@ public enum ItemID {
     WOOD,
    
     WORKBENCH,
+    
+    IRON_BULLET,
     
     WOOD_SWORD,
     STONE_SWORD,

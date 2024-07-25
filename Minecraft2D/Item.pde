@@ -1,4 +1,4 @@
-public abstract class Item {
+public class Item {
     public ItemID itemID;
     public ItemType itemType;
     color c;
@@ -12,6 +12,14 @@ public abstract class Item {
         this.itemType = itemType;
         this.isStackable = isStackable;
         this.c = color(255, 0, 0);
+        this.hasLeftClickAction = false;
+    }
+    
+    public Item(ItemID itemID, ItemType itemType, boolean isStackable, color c) {
+        this.itemID = itemID;
+        this.itemType = itemType;
+        this.isStackable = isStackable;
+        this.c = c;
         this.hasLeftClickAction = false;
     }
     
@@ -69,6 +77,9 @@ Item createItem(ItemID itemID) {
             return new Block(itemID, color(174, 125, 90), true, ToolType.AXE, true);
         case WORKBENCH:
             return new Block(itemID, color(217, 177, 140), true, ToolType.AXE, true);
+            
+        case IRON_BULLET:
+            return new Item(itemID, ItemType.BULLET, true, settings.colorIronTool);
 
         case WOOD_SWORD:
             return new Tool(itemID, ToolType.SWORD, ToolMaterial.WOOD, settings.woodToolMiningMultiplier, settings.colorWoodTool);

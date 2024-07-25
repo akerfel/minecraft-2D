@@ -165,7 +165,7 @@ void handleLeftClick() {
         if (state.player.isHoldingItemWhichCanMine()) {
             mineBlockWithMouse();
         }
-        if (state.player.isHoldingGun() && heldGunIsReadyToShoot()) {
+        if (state.player.isHoldingGun()) {
             shootPlayerGun();
         }
     }

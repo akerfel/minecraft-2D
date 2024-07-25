@@ -107,6 +107,9 @@ void drawItemInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
         case GUN:
             drawGunInItemSlot(itemSlot, xPixel, yPixel);
             break;
+        case BULLET:
+            drawBulletInItemSlot(itemSlot, xPixel, yPixel);
+            break;
         }
     }
     rectMode(CORNER);
@@ -147,6 +150,27 @@ void drawToolInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
     fill(255, 255, 255);
     String toolName = tool.toString().substring(tool.toString().lastIndexOf("_") + 1);
     text(toolName, xPixel, yPixel + settings.pixelsPerItemSlot / 2);
+    rectMode(CORNER);
+}
+
+void drawBulletInItemSlot(ItemSlot itemSlot, int xPixel, int yPixel) {
+    Item bullet = itemSlot.item;
+    rectMode(CENTER);
+
+    fill(bullet.c);
+    circle(xPixel, yPixel, settings.pixelsPerItemSlot / 5);
+
+    // Write amount
+    textSize(24);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    text(itemSlot.getCount(), xPixel, yPixel);
+    rectMode(CORNER);
+
+    textSize(15);
+    textAlign(CENTER, BOTTOM);
+    fill(255, 255, 255);
+    text("BULLET", xPixel, yPixel + settings.pixelsPerItemSlot / 2);
     rectMode(CORNER);
 }
 

@@ -116,6 +116,12 @@ public class Inventory {
         return false;
     }
     
+    public void removeItems(ItemCount itemCount) {
+        ArrayList<ItemCount> listToRemove = new ArrayList<>();
+        listToRemove.add(itemCount);
+        removeItems(listToRemove);
+    }
+    
     public void removeItems(ArrayList<ItemCount> itemCounts) {
         for (ItemCount itemCount : itemCounts) {
             for (int i = 0; i < itemCount.count; i++) {
@@ -123,5 +129,4 @@ public class Inventory {
             }
         }
     }
- 
 }

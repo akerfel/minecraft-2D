@@ -3,13 +3,30 @@ MachineGun getHeldGun() {
 }
 
 boolean heldGunIsReadyToShoot() {
+    if (!playerHasRequiredAmountOfBullets()) {
+        return false;
+    }
     return getHeldGun().isReadyToShoot();
 }
 
-void shootPlayerGun() {
+boolean playerHasRequiredAmountOfBullets() {
     MachineGun gun = getHeldGun();
-    gun.startReloadTimer();
-    addPlayerBullets();
+    Item requiredBullet = createItem(ItemID.IRON_BULLET);
+    return state.player.inventory.hasItem(requiredBullet, gun.multiShotNumber);
+}
+
+void shootPlayerGun() {
+    if (heldGunIsReadyToShoot()) {
+        MachineGun gun = getHeldGun();
+        gun.startReloadTimer();
+        addPlayerBullets();
+        consumePlayerBullets();
+    }
+}
+
+void consumePlayerBullets() {
+    ItemCount toRemove = new ItemCount(createItem(ItemID.IRON_BULLET), getHeldGun().multiShotNumber);
+    state.player.inventory.removeItems(toRemove);
 }
 
 void addPlayerBullets() {
