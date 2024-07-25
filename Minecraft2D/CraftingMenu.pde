@@ -8,10 +8,42 @@ public class CraftingMenu {
         handRecipes.add(new Recipe(createItem(ItemID.WORKBENCH), 1).addCost(createItem(ItemID.PLANKS), 4));
         
         // Workbench recipes
+        
+        workbenchRecipes.add(new Recipe(createItem(ItemID.WOOD_SWORD), 1).addCost(createItem(ItemID.PLANKS), 4));
         workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_SWORD), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 2));
-        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_PICKAXE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 3));
-        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_SHOVEL), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 1));
-        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_AXE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 3));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_SWORD), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.IRON_ORE), 2));
+        
+        workbenchRecipes.add(new Recipe(createItem(ItemID.WOOD_PICKAXE), 1).addCost(createItem(ItemID.PLANKS), 4));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_PICKAXE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 2));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_PICKAXE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.IRON_ORE), 2));
+        
+        workbenchRecipes.add(new Recipe(createItem(ItemID.WOOD_SHOVEL), 1).addCost(createItem(ItemID.PLANKS), 4));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_SHOVEL), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 2));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_SHOVEL), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.IRON_ORE), 2));
+        
+        workbenchRecipes.add(new Recipe(createItem(ItemID.WOOD_AXE), 1).addCost(createItem(ItemID.PLANKS), 4));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_AXE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 2));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_AXE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.IRON_ORE), 2));
+        
+        workbenchRecipes.add(new Recipe(createItem(ItemID.WOOD_HOE), 1).addCost(createItem(ItemID.PLANKS), 4));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.STONE_HOE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.STONE), 2));
+        workbenchRecipes.add(new Recipe(createItem(ItemID.IRON_HOE), 1).addCost(createItem(ItemID.PLANKS), 2).addCost(createItem(ItemID.IRON_ORE), 2));
+    }
+    
+    private ArrayList<Recipe> getAllRecipes() {
+        ArrayList<Recipe> allRecipes = new ArrayList<>();
+        allRecipes.addAll(handRecipes);
+        allRecipes.addAll(workbenchRecipes);
+        return allRecipes;
+    }
+    
+    public ArrayList<ItemCount> getCraftingCosts(Item item) {
+        for (Recipe recipe : getAllRecipes()) {
+            if (recipe.result.item.equals(item)) {
+                return recipe.costs;    
+            }
+        }
+        return null;
     }
     
     // Get list of items craftable by hand (i.e., while not using a workbench)

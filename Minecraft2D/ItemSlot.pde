@@ -45,6 +45,14 @@ public class ItemSlot {
         count++;
     }
     
+    
+    void decrementItemCount() {
+        count--;
+        if (count < 1) {
+            item = null;
+        }
+    }
+    
     public int getCount() {
         return count;    
     }

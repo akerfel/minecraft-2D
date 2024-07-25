@@ -141,11 +141,15 @@ public class Player extends Body {
         }
         return false;
     }
-    
+
+    ArrayList<ItemCount> getCraftingCosts(Item item) {
+        return craftingMenu.getCraftingCosts(item);
+    }
     
     public void craftItem(Item item) {
         if (canCraftItem(item)) {
             inventory.addItem(item);
+            inventory.removeItems(getCraftingCosts(item));
         }
         updateCraftableItems();
     }

@@ -102,4 +102,26 @@ public class Inventory {
         }
         return tryToAddUnstackableItem(item);
     }
+    
+    // Returns true if managed to remove specified item
+    public boolean removeItem(Item item) {
+        for (int y = settings.inventoryHeight - 1; y > -1; y--) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
+                if (grid[x][y].item != null && grid[x][y].item.equals(item)) {
+                    grid[x][y].decrementItemCount();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public void removeItems(ArrayList<ItemCount> itemCounts) {
+        for (ItemCount itemCount : itemCounts) {
+            for (int i = 0; i < itemCount.count; i++) {
+                removeItem(itemCount.item);    
+            }
+        }
+    }
+ 
 }
