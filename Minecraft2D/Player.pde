@@ -1,6 +1,7 @@
 public class Player extends Body {
     Inventory inventory;
     CraftingMenu craftingMenu;
+    ArrayList<ItemSlot> craftableItems;
     int reach;
     boolean isRunning;
     boolean isRunningSuperSpeed;
@@ -11,6 +12,7 @@ public class Player extends Body {
         super(x, y, settings.playerBaseSpeed, settings.playerWidthInBlocks, settings.playerColor);
         inventory = new Inventory();
         craftingMenu = new CraftingMenu();
+        craftableItems = new ArrayList<>();
         coords = new PVector(x, y);
         reach = 7;
         isRunning = false;
@@ -18,21 +20,22 @@ public class Player extends Body {
         runningFactor = 2;
         superSpeedFactor = 200;
     }
-
-    public ArrayList<ItemCount> getHandCraftableItems() {
-        ArrayList<ItemCount> craftableItems = craftingMenu.getHandCraftableItems(inventory);
-        if (canReachWorkbench()) {
-            craftableItems.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));
+    
+    ArrayList<ItemSlot> updateCraftableItems() {
+        craftableItems = new ArrayList<>();
+        ArrayList<ItemCount> craftableCounts = getCraftableItemCounts();
+        for (int i = 0; i < craftableCounts.size(); i++) {
+            craftableItems.add(craftableCounts.get(i).toItemSlot(0, i * settings.pixelsPerItemSlot));
         }
         return craftableItems;
     }
 
-    public ArrayList<ItemCount> getCraftableItems() {
-        ArrayList<ItemCount> craftableItems = craftingMenu.getHandCraftableItems(inventory);
+    private ArrayList<ItemCount> getCraftableItemCounts() {
+        ArrayList<ItemCount> items = craftingMenu.getHandCraftableItems(inventory);
         if (canReachWorkbench()) {
-            craftableItems.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));
+            items.addAll(craftingMenu.getWorkbenchCraftableItems(inventory));
         }
-        return craftableItems;
+        return items;
     }
 
     private boolean canReachWorkbench() {

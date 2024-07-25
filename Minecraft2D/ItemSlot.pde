@@ -1,14 +1,21 @@
 public class ItemSlot {
-    public int xPixel;
-    public int yPixel;
     private Item item;
     public int count;
+    public int xPixel;
+    public int yPixel;
 
     public ItemSlot(int xPixel, int yPixel) {
+        this.item = null;
+        this.count = 0;
         this.xPixel = xPixel;
         this.yPixel = yPixel;
-        item = null;
-        count = 0;
+    }
+
+    public ItemSlot(Item item, int count, int xPixel, int yPixel) {
+        this.item = item;
+        this.count = count;
+        this.xPixel = xPixel;
+        this.yPixel = yPixel;
     }
     
     public void setItem(Item item) {

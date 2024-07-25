@@ -6,4 +6,8 @@ public class ItemCount {
         this.item = item;
         this.count = count;
     }
+    
+    public ItemSlot toItemSlot(int xPixel, int yPixel) {
+        return new ItemSlot(item, count, xPixel, yPixel);
+    }
 }

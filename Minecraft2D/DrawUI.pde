@@ -25,29 +25,21 @@ void drawDebugMenuIfOpen() {
 
 void drawInventoryIfOpen() {
     if (state.inventoryIsOpen) {
-        stroke(0);
         for (int y = 0; y < settings.inventoryHeight; y++) {
             for (int x = 0; x < settings.inventoryWidth; x++) {
                 ItemSlot itemSlot = state.player.inventory.grid[x][y];
                 drawItemSlot(itemSlot, false);
             }
         }
-        if (settings.noStrokeMode) {
-            noStroke();
-        }
     }
 }
 
 void drawCraftingMenuIfOpen() {
-        
-}
-
-public void printPlayerCraftableItemsInConsole() {
-    //println("");
-    //println("Craftable items:");
-    for (ItemCount itemCount : state.player.getHandCraftableItems()) {
-        println(itemCount.item + " * " + itemCount.count);
-    }    
+    if (state.inventoryIsOpen) {
+       for (ItemSlot itemSlot : state.player.updateCraftableItems()) {
+           drawItemSlot(itemSlot, true);
+       }
+    }
 }
 
 // This function is similar to drawInventoryIfOpen, except the y coordinate is fixed,
@@ -80,6 +72,7 @@ void drawMouseItemSlot() {
 
 // Draws an itemSlot with center at (xPixel, yPixel)
 void drawItemSlot(ItemSlot itemSlot, boolean highlightBackground) {
+    stroke(0);
     int xPixel = itemSlot.xPixel;
     int yPixel = itemSlot.yPixel;
     drawItemSlotBackground(xPixel, yPixel, highlightBackground);
@@ -87,6 +80,9 @@ void drawItemSlot(ItemSlot itemSlot, boolean highlightBackground) {
     int xPixelCenterOfItemSlot = xPixel + settings.pixelsPerItemSlot / 2;
     int yPixelCenterOfItemSlot = yPixel + settings.pixelsPerItemSlot / 2;
     drawItemInItemSlot(itemSlot, xPixelCenterOfItemSlot, yPixelCenterOfItemSlot);
+    if (settings.noStrokeMode) {
+        noStroke();
+    }
 }
 
 void drawItemSlotBackground(int xPixel, int yPixel, boolean highlightBackground) {

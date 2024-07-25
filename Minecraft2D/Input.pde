@@ -24,7 +24,6 @@ void keyPressed() {
 
     if (key == 'c') {
         state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
-        printPlayerCraftableItemsInConsole();
     }
 
     if (key == '.') {
@@ -230,6 +229,8 @@ ItemSlot getItemSlotWhichMouseHovers() {
                 }
             }
         }
+        
+        
     }
     return null;
 }
