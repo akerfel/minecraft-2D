@@ -34,6 +34,7 @@ public class State {
         this.leftMouseButtonDown = false;
         state.player.setBlockStandingOn((Block) createItem(ItemID.GRASS));
         this.inventoryIsOpen = false;
+        this.craftingMenuIsOpen = true;
         this.debugScreenIsShowing = false;
     
         // Add some items to inventory

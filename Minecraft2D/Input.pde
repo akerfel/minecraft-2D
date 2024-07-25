@@ -22,13 +22,14 @@ void keyPressed() {
         if (state.inventoryIsOpen) {
             state.player.inventory.returnMouseGrabbedItemToInventory();
         }
-        state.craftingMenuIsOpen = false;
         state.inventoryIsOpen = !state.inventoryIsOpen;
     }
 
     if (key == 'c') {
-        state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
-        printPlayerCraftableItemsInConsole();
+        if (state.inventoryIsOpen) {
+            state.craftingMenuIsOpen = !state.craftingMenuIsOpen;
+            printPlayerCraftableItemsInConsole();
+        }
     }
 
     if (key == '.') {
