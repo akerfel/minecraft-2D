@@ -76,7 +76,7 @@ void mousePressed() {
     } else if (mouseButton == LEFT) {
         state.leftMouseButtonDown = true;
         if (state.inventoryIsOpen) {
-            ItemSlot clickedItemSlot = getInventorySlotWhichMouseHovers();
+            ItemSlot clickedItemSlot = getItemSlotWhichMouseHovers();
             if (clickedItemSlot != null) {
                 int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
                 int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
@@ -126,15 +126,14 @@ void mouseWheel(MouseEvent event) {
 void openOrCloseInventory() {
     if (state.inventoryIsOpen) {
         closeInventory();
-    }
-    else {
+    } else {
         openInventory();
     }
 }
 
 void closeInventory() {
     state.inventoryIsOpen = false;
-    moveHotbarToBottomOfScreen();    
+    moveHotbarToBottomOfScreen();
     state.player.inventory.returnMouseGrabbedItemToInventory();
 }
 
@@ -168,11 +167,11 @@ void handleLeftClick() {
             mineBlockWithMouse();
         }
         if (state.player.isHoldingGun() && heldGunIsReadyToShoot()) {
-            shootPlayerGun();    
+            shootPlayerGun();
         }
     }
 }
-    
+
 
 void handleRightClick() {
     if (!state.inventoryIsOpen) {
@@ -182,9 +181,9 @@ void handleRightClick() {
     }
 }
 
-void placeBlockWithMouse() { 
-    if (state.player.selectedItemIsBlock()) {   
-        ItemSlot slot = state.player.getSelectedItemSlot();   
+void placeBlockWithMouse() {
+    if (state.player.selectedItemIsBlock()) {
+        ItemSlot slot = state.player.getSelectedItemSlot();
         Block block = (Block) slot.item;
         if (slot.getCount() != 0) {
             if (state.player.getDistanceToMouse() < state.player.reach &&
@@ -219,20 +218,18 @@ void mineBlockWithMouse() {
     }
 }
 
-// Returns the inventory slot which the mouse currently hovers.
-// Note that this is not the same as state.player.mouseItemSlot
-ItemSlot getInventorySlotWhichMouseHovers() {
+// Returns the ItemSlot which the mouse currently hovers.
+ItemSlot getItemSlotWhichMouseHovers() {
     if (state.inventoryIsOpen) {
-        if (mouseX < settings.inventoryUpperLeftXPixel || mouseY < settings.inventoryUpperLeftYPixel) return null;
-        int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
-        int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
-        if (inventoryXindex < 0 || inventoryXindex >= settings.inventoryWidth || inventoryYindex < 0 || inventoryYindex >= settings.inventoryHeight) {
-            return null;
+        for (int y = 0; y < settings.inventoryHeight; y++) {
+            for (int x = 0; x < settings.inventoryWidth; x++) {
+                ItemSlot slot = state.player.inventory.grid[x][y];
+                if (mouseX >= slot.xPixel && mouseX <= slot.xPixel + settings.pixelsPerItemSlot &&
+                    mouseY >= slot.yPixel && mouseY <= slot.yPixel + settings.pixelsPerItemSlot) {
+                    return slot;
+                }
+            }
         }
-        if (state.player.inventory.grid[inventoryXindex][inventoryYindex].item != null) {
-            //println("Grabbed item: " + (state.player.inventory.grid[inventoryXindex][inventoryYindex].item));
-        }
-        return state.player.inventory.grid[inventoryXindex][inventoryYindex];
     }
     return null;
 }
