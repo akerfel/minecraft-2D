@@ -103,7 +103,7 @@ public class Player extends Body {
     }
     
     boolean isHoldingItemWhichCanMine() {
-        return hasNotSelectedAnItem() || isHoldingTool();
+        return !isHoldingGun();
     }
     
     boolean isHoldingTool() {
