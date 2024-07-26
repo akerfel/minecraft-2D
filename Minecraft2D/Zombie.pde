@@ -2,20 +2,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zombie extends Mob {
+    PVector lastSeenPlayerCoords;
 
     public Zombie(float x, float y) {
         super(x, y, settings.zombieBaseSpeed, settings.zombieWidthInBlocks, settings.zombieColor);
         c = color(102, 0, 0);
+        lastSeenPlayerCoords = null;
     }
 
     void determineDirection() {
         if (canSeePlayer()) {
-            direction = state.player.coords.copy();
-            direction.sub(this.coords);
-            direction.normalize();
-            return;
+            lastSeenPlayerCoords = state.player.coords.copy();
         }
-        direction = new PVector(0, 0);
+        if (lastSeenPlayerCoords != null) {
+            setDirectionTowards(lastSeenPlayerCoords);
+        }
+    }
+    
+    void setDirectionTowards(PVector target) {
+        direction = target.copy();
+        direction.sub(this.coords);
+        direction.normalize();
     }
     
     boolean canSeePlayer() {
