@@ -21,11 +21,6 @@ public class ItemSlot {
         this.isCraftingSlot = false;
     }
     
-    public ItemSlot setAsCraftingSlot() {
-        isCraftingSlot = true;
-        return this;
-    }
-    
     public void setItem(Item item) {
         this.item = item;    
     }

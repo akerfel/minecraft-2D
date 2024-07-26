@@ -25,8 +25,7 @@ public class Player extends Body {
         craftableItems = new ArrayList<>();
         ArrayList<ItemCount> craftableCounts = getCraftableItemCounts();
         for (int i = 0; i < craftableCounts.size(); i++) {
-            ItemSlot slot = craftableCounts.get(i).toItemSlot(0, i * settings.pixelsPerItemSlot);
-            craftableItems.add(slot.setAsCraftingSlot());
+            craftableItems.add(craftableCounts.get(i).toItemSlot(0, i * settings.pixelsPerItemSlot));
         }
         return craftableItems;
     }
