@@ -1,10 +1,11 @@
 void drawWorld() {
-    drawVisibleBlocks();
+    drawVisible2dBlocks();
     drawBodies();
     drawBullets();
+    drawVisible3dBlocks();
 }
 
-void drawVisibleBlocks() {
+void drawVisible2dBlocks() {
     // xPixels and yPixels store the top left corner pixel positions of each block
     float[] xPixels = new float[settings.viewDistance];
     float[] yPixels = new float[settings.viewDistance];
@@ -18,23 +19,114 @@ void drawVisibleBlocks() {
     }
 
     for (int y = 0; y < settings.viewDistance; y++) {
-        for (int x = 0; x < settings.viewDistance; x++) {
-            drawBlock(state.visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
+        for (int x = settings.viewDistance - 1; x > -1 ; x--) {
+            draw2dBlock(state.visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
         }
     }
 }
 
-void drawBlock(Block block, float xPixel, float yPixel) {
-    fill(block.c);
-    square(xPixel, yPixel, settings.pixelsPerBlock + 1);
-    
-    if (settings.drawInnerSquaresInBlocks) {
-        drawInnerSquareInBlock(block, xPixel, yPixel);
+void drawVisible3dBlocks() {
+    // xPixels and yPixels store the top left corner pixel positions of each block
+    float[] xPixels = new float[settings.viewDistance];
+    float[] yPixels = new float[settings.viewDistance];
+    float xPlayerPixelOffset = (state.player.coords.x % 1) * settings.pixelsPerBlock;
+    float yPlayerPixelOffset = (state.player.coords.y % 1) * settings.pixelsPerBlock;
+    for (float i = 0; i < settings.viewDistance; i++) {
+        float xPos = width/2 + (i - settings.viewDistance/2) * settings.pixelsPerBlock;
+        float yPos = height/2 + (i - settings.viewDistance/2) * settings.pixelsPerBlock;
+        xPixels[int(i)] = xPos - xPlayerPixelOffset;
+        yPixels[int(i)] = yPos - yPlayerPixelOffset;
     }
-    
-    if (block.prcntBroken > 0) {
-        drawBlockBreakingTexture(block, xPixel, yPixel);
+
+    for (int y = 0; y < settings.viewDistance; y++) {
+        for (int x = settings.viewDistance - 1; x > -1 ; x--) {
+            draw3dBlock(state.visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
+        }
     }
+}
+
+// x and y are pixel positions of the upper left corner of the block
+void draw2dBlock(Block block, float x, float y) {
+    if (!block.isWall) {
+        fill(block.c);
+        square(x, y, settings.pixelsPerBlock + 1);
+        if (settings.drawInnerSquaresInBlocks) {
+            drawInnerSquareInBlock(block, x, y);
+        }
+    }
+}
+
+// x and y are pixel positions of the upper left corner of the block
+void draw3dBlock(Block block, float x, float y) {
+    if (block.isWall) {
+        fill(block.c);
+        //square(x, y, settings.pixelsPerBlock);
+        
+        // 3d
+        float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
+        float x3d = x + offset3d;
+        float y3d = y - offset3d;
+        float perBlock = settings.pixelsPerBlock;
+        
+        // NW = North West corner pixel position
+        float xNW = x;
+        float xSW = x;
+        float xNE = x + perBlock;
+        float xSE = x + perBlock;
+        
+        float yNW = y;
+        float ySW = y + perBlock;
+        float yNE = y;
+        float ySE = y + perBlock;
+        
+        float x3dNW = x3d;
+        float x3dSW = x3d;
+        float x3dNE = x3d + perBlock;
+        float x3dSE = x3d + perBlock;
+        
+        float y3dNW = y3d;
+        float y3dSW = y3d + perBlock;
+        float y3dNE = y3d;
+        float y3dSE = y3d + perBlock;
+        
+        fill(darkenColor(block.c, 0.87));
+        stroke(darkenColor(block.c, 0.87));
+        quad(xNW , yNW, x3dNW, y3dNW, x3dSW, y3dSW, xSW, ySW);
+        
+        fill(darkenColor(block.c, 0.92));
+        stroke(darkenColor(block.c, 0.92));
+        quad(xSW, ySW, x3dSW, y3dSW, x3dSE, y3dSE, xSE, ySE);
+        
+        fill(block.c);
+        stroke(block.c);
+        rect(x3d, y3d, perBlock, perBlock);
+        
+        if (block.prcntBroken > 0) {
+            drawBlockBreakingTexture(block, x3d, y3d);
+        }
+        
+        if (settings.noStrokeMode) {
+            noStroke();
+        }
+    }
+}
+
+color darkenColor(color c, float factor) {
+  // Ensure the factor is between 0 and 1
+  factor = constrain(factor, 0, 1);
+  
+  // Get the RGB components of the color
+  float r = red(c);
+  float g = green(c);
+  float b = blue(c);
+  
+  // Decrease each component by the factor
+  r *= factor;
+  g *= factor;
+  b *= factor;
+  
+  // Return the new darker color
+  return color(r, g, b);
 }
 
 private void drawInnerSquareInBlock(Block block, float xPixel, float yPixel) {

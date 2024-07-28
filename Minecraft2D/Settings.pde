@@ -26,6 +26,9 @@ public class Settings {
     boolean drawInnerSquaresInBlocks;
     float offsetInnerSquare;       // How far from the corner of the block the inner square should start, between 0 - 1. Default 0.1
     
+    // 3d visuals
+    float offsetFactor3d;          // if set to 0.5, then the offset of the "3d layer block" will be 0.5 * pixelsPerBlock in both x and y direction
+    
     // Tool Colors
     color colorWoodTool;
     color colorStoneTool;
@@ -121,6 +124,9 @@ public class Settings {
         this.drawInnerSquaresInBlocks = false;
         this.offsetInnerSquare = 0.1;
         
+        // 3d visuals
+        this.offsetFactor3d = 0.5;
+        
         // Tool colors
         this.colorWoodTool = color(143, 119, 72);
         this.colorStoneTool = color(112, 112, 112);
@@ -149,8 +155,8 @@ public class Settings {
         this.mobDespawnRange = 100;
         
         // Mob chance to spawn each frame (between 0 and 1)
-        this.pigSpawnChance = 0.015;
-        this.zombieSpawnChance = 0.015;
+        this.pigSpawnChance = 0.0015;
+        this.zombieSpawnChance = 0.00;
         
         // Mob reach
         this.zombieReachInBlocks = 1;

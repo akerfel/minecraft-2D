@@ -75,14 +75,18 @@ void mousePressed() {
     } else if (mouseButton == LEFT) {
         state.leftMouseButtonDown = true;
         if (state.inventoryIsOpen) {
-            ItemSlot clickedItemSlot = getItemSlotWhichMouseHovers();
-            if (clickedItemSlot != null) {
-                int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
-                int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
-                ItemSlot grabbedSlot = state.player.inventory.grid[inventoryXindex][inventoryYindex];
-                grabbedSlot.swapWith(state.player.inventory.mouseHeldItemSlot);
-            }
+            handleInventoryClick();
         }
+    }
+}
+
+void handleInventoryClick() {
+    ItemSlot clickedItemSlot = getItemSlotWhichMouseHovers();
+    if (clickedItemSlot != null) {
+        int inventoryXindex = (mouseX - settings.inventoryUpperLeftXPixel) / settings.pixelsPerItemSlot;
+        int inventoryYindex = (mouseY - settings.inventoryUpperLeftYPixel) / settings.pixelsPerItemSlot;
+        ItemSlot grabbedSlot = state.player.inventory.grid[inventoryXindex][inventoryYindex];
+        grabbedSlot.swapWith(state.player.inventory.mouseHeldItemSlot);
     }
 }
 
@@ -201,7 +205,7 @@ PVector getCoordsWhichMouseHovers() {
 
 Block getMouseBlock() {
     PVector distancePlayerToMouse = state.player.getVectorFromMouse();
-    return getBlock(int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
+    return getBlock(int(state.player.coords.x - distancePlayerToMouse.x - settings.offsetFactor3d), int(state.player.coords.y - distancePlayerToMouse.y + settings.offsetFactor3d));
 }
 
 void mineBlockWithMouse() {
