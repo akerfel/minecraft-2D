@@ -60,7 +60,6 @@ void draw2dBlock(Block block, float x, float y) {
 void draw3dBlock(Block block, float x, float y) {
     if (block.isWall) {
         fill(block.c);
-        //square(x, y, settings.pixelsPerBlock);
         
         // 3d
         float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
@@ -89,12 +88,14 @@ void draw3dBlock(Block block, float x, float y) {
         float y3dNE = y3d;
         float y3dSE = y3d + perBlock;
         
-        fill(darkenColor(block.c, 0.87));
-        stroke(darkenColor(block.c, 0.87));
+        color c = darkenColor(block.c, 0.87);
+        fill(c);
+        stroke(c);
         quad(xNW , yNW, x3dNW, y3dNW, x3dSW, y3dSW, xSW, ySW);
         
-        fill(darkenColor(block.c, 0.92));
-        stroke(darkenColor(block.c, 0.92));
+        c = darkenColor(block.c, 0.92);
+        fill(c);
+        stroke(c);
         quad(xSW, ySW, x3dSW, y3dSW, x3dSE, y3dSE, xSE, ySE);
         
         fill(block.c);
