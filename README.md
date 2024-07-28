@@ -9,4 +9,12 @@ A top-down minecraft-esque game with an infinite world which is generated using 
 - Click the play button.
 
 ## Tips
-* Zoom with `+` and `-`
+- Items you can currently craft show up in the upper left corner when the inventory is open
+
+## Controls
+| Key    | Action         |
+|--------|----------------|
+| `E`    | Open inventory |
+| `SHIFT`| Run            |
+| `+`    | Zoom in        |
+| `-`    | Zoom out       |
