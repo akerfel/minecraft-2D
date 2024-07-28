@@ -8,9 +8,6 @@ A top-down minecraft-esque game with an infinite world which is generated using 
 - Clone this repository and open the folder Minecraft2D in the Processing IDE.
 - Click the play button.
 
-## Tips
-- Items you can currently craft show up in the upper left corner when the inventory is open
-
 ## Controls
 | Key    | Action         |
 |--------|----------------|
@@ -18,3 +15,6 @@ A top-down minecraft-esque game with an infinite world which is generated using 
 | `SHIFT`| Run            |
 | `+`    | Zoom in        |
 | `-`    | Zoom out       |
+
+## Tips
+- Currently craftable items show up in the upper left corner when the inventory is open.
