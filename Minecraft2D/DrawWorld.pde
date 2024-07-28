@@ -40,7 +40,16 @@ void drawVisible3dBlocks() {
 
     for (int y = 0; y < settings.viewDistance; y++) {
         for (int x = settings.viewDistance - 1; x > -1 ; x--) {
-            draw3dBlock(state.visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
+            Block block = state.visibleBlocks[int(x)][int(y)];
+            if (block.isWall) {
+                if (x > 0 && state.visibleBlocks[int(x) - 1][int(y)] != null && state.visibleBlocks[int(x) - 1][int(y)].isWall && 
+                    y < settings.viewDistance - 1 && state.visibleBlocks[int(x)][int(y) + 1] != null && state.visibleBlocks[int(x)][int(y) + 1].isWall) {
+                    drawTopOf3dBlock(block, xPixels[x], yPixels[y]);
+                }
+                else {
+                    draw3dBlock(block, xPixels[x], yPixels[y]);
+                }
+            }
         }
     }
 }
@@ -97,6 +106,31 @@ void draw3dBlock(Block block, float x, float y) {
         fill(c);
         stroke(c);
         quad(xSW, ySW, x3dSW, y3dSW, x3dSE, y3dSE, xSE, ySE);
+        
+        fill(block.c);
+        stroke(block.c);
+        rect(x3d, y3d, perBlock, perBlock);
+        
+        if (block.prcntBroken > 0) {
+            drawBlockBreakingTexture(block, x3d, y3d);
+        }
+        
+        if (settings.noStrokeMode) {
+            noStroke();
+        }
+    }
+}
+
+// x and y are pixel positions of the upper left corner of the block
+void drawTopOf3dBlock(Block block, float x, float y) {
+    if (block.isWall) {
+        fill(block.c);
+        
+        // 3d
+        float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
+        float x3d = x + offset3d;
+        float y3d = y - offset3d;
+        float perBlock = settings.pixelsPerBlock;
         
         fill(block.c);
         stroke(block.c);
