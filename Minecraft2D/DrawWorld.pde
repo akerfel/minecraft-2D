@@ -20,7 +20,10 @@ void drawVisible2dBlocks() {
 
     for (int y = 0; y < settings.viewDistance; y++) {
         for (int x = settings.viewDistance - 1; x > -1 ; x--) {
-            draw2dBlock(state.visibleBlocks[int(x)][int(y)], xPixels[x], yPixels[y]);
+            Block block = state.visibleBlocks[int(x)][int(y)];
+            if (!block.isWall) {
+                draw2dBlock(block, xPixels[x], yPixels[y]);
+            }
         }
     }
 }
@@ -42,125 +45,128 @@ void drawVisible3dBlocks() {
         for (int x = settings.viewDistance - 1; x > -1 ; x--) {
             Block block = state.visibleBlocks[int(x)][int(y)];
             if (block.isWall) {
-                if (x > 0 && state.visibleBlocks[int(x) - 1][int(y)] != null && state.visibleBlocks[int(x) - 1][int(y)].isWall && 
-                    y < settings.viewDistance - 1 && state.visibleBlocks[int(x)][int(y) + 1] != null && state.visibleBlocks[int(x)][int(y) + 1].isWall) {
-                    drawTopOf3dBlock(block, xPixels[x], yPixels[y]);
+                // Only draw the west and south wall if they are visible
+                if (x > 0 && !state.visibleBlocks[int(x) - 1][int(y)].isWall) {
+                    drawWestWallOf3dBlock(block, xPixels[x], yPixels[y]);
                 }
-                else {
-                    draw3dBlock(block, xPixels[x], yPixels[y]);
+                if (y < settings.viewDistance - 1 && !state.visibleBlocks[int(x)][int(y) + 1].isWall) {
+                    drawSouthWallOf3dBlock(block, xPixels[x], yPixels[y]);
                 }
+                drawTopOf3dBlock(block, xPixels[x], yPixels[y]);
             }
         }
     }
 }
 
+
+
 // x and y are pixel positions of the upper left corner of the block
 void draw2dBlock(Block block, float x, float y) {
-    if (!block.isWall) {
-        fill(block.c);
-        square(x, y, settings.pixelsPerBlock + 1);
-        if (settings.drawInnerSquaresInBlocks) {
-            drawInnerSquareInBlock(block, x, y);
-        }
+    fill(block.c);
+    square(x, y, settings.pixelsPerBlock + 1);
+    if (settings.drawInnerSquaresInBlocks) {
+        drawInnerSquareInBlock(block, x, y);
     }
 }
 
 // x and y are pixel positions of the upper left corner of the block
 void draw3dBlock(Block block, float x, float y) {
-    if (block.isWall) {
-        fill(block.c);
-        
-        // 3d
-        float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
-        float x3d = x + offset3d;
-        float y3d = y - offset3d;
-        float perBlock = settings.pixelsPerBlock;
-        
-        // NW = North West corner pixel position
-        float xNW = x;
-        float xSW = x;
-        float xNE = x + perBlock;
-        float xSE = x + perBlock;
-        
-        float yNW = y;
-        float ySW = y + perBlock;
-        float yNE = y;
-        float ySE = y + perBlock;
-        
-        float x3dNW = x3d;
-        float x3dSW = x3d;
-        float x3dNE = x3d + perBlock;
-        float x3dSE = x3d + perBlock;
-        
-        float y3dNW = y3d;
-        float y3dSW = y3d + perBlock;
-        float y3dNE = y3d;
-        float y3dSE = y3d + perBlock;
-        
-        color c = darkenColor(block.c, 0.87);
-        fill(c);
-        stroke(c);
-        quad(xNW , yNW, x3dNW, y3dNW, x3dSW, y3dSW, xSW, ySW);
-        
-        c = darkenColor(block.c, 0.92);
-        fill(c);
-        stroke(c);
-        quad(xSW, ySW, x3dSW, y3dSW, x3dSE, y3dSE, xSE, ySE);
-        
-        fill(block.c);
-        stroke(block.c);
-        rect(x3d, y3d, perBlock, perBlock);
-        
-        if (block.prcntBroken > 0) {
-            drawBlockBreakingTexture(block, x3d, y3d);
-        }
-        
-        if (settings.noStrokeMode) {
-            noStroke();
-        }
+    drawWestWallOf3dBlock(block, x, y);
+    drawSouthWallOf3dBlock(block, x, y);
+    drawTopOf3dBlock(block, x, y);
+}
+
+// x and y are pixel positions of the upper left corner of the block
+void drawSouthWallOf3dBlock(Block block, float x, float y) {
+    float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
+    float x3d = x + offset3d;
+    float y3d = y - offset3d;
+    float perBlock = settings.pixelsPerBlock;
+    
+    // NW = North West corner pixel position
+    float xSW = x;
+    float xSE = x + perBlock;
+    
+    float ySW = y + perBlock;
+    float ySE = y + perBlock;
+    
+    float x3dSW = x3d;
+    float x3dSE = x3d + perBlock;
+    
+    float y3dSW = y3d + perBlock;
+    float y3dSE = y3d + perBlock;
+    
+    color c = darkenColor(block.c, settings.southWallShadeFactor);
+    fill(c);
+    stroke(c);
+    quad(xSW, ySW, x3dSW, y3dSW, x3dSE, y3dSE, xSE, ySE);
+    
+    if (settings.noStrokeMode) {
+        noStroke();
+    }
+}
+
+// x and y are pixel positions of the upper left corner of the block
+void drawWestWallOf3dBlock(Block block, float x, float y) {
+    float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
+    float x3d = x + offset3d;
+    float y3d = y - offset3d;
+    float perBlock = settings.pixelsPerBlock;
+    
+    // NW = North West corner pixel position
+    float xNW = x;
+    float xSW = x;
+    
+    float yNW = y;
+    float ySW = y + perBlock;
+    
+    float x3dNW = x3d;
+    float x3dSW = x3d;
+    
+    float y3dNW = y3d;
+    float y3dSW = y3d + perBlock;
+    
+    color c = darkenColor(block.c, settings.westWallShadeFactor);
+    fill(c);
+    stroke(c);
+    quad(xNW , yNW, x3dNW, y3dNW, x3dSW, y3dSW, xSW, ySW);
+    
+    if (settings.noStrokeMode) {
+        noStroke();
     }
 }
 
 // x and y are pixel positions of the upper left corner of the block
 void drawTopOf3dBlock(Block block, float x, float y) {
-    if (block.isWall) {
-        fill(block.c);
-        
-        // 3d
-        float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
-        float x3d = x + offset3d;
-        float y3d = y - offset3d;
-        float perBlock = settings.pixelsPerBlock;
-        
-        fill(block.c);
-        stroke(block.c);
-        rect(x3d, y3d, perBlock, perBlock);
-        
-        if (block.prcntBroken > 0) {
-            drawBlockBreakingTexture(block, x3d, y3d);
-        }
-        
-        if (settings.noStrokeMode) {
-            noStroke();
-        }
+    float offset3d = settings.offsetFactor3d * settings.pixelsPerBlock;
+    float x3d = x + offset3d;
+    float y3d = y - offset3d;
+    float perBlock = settings.pixelsPerBlock;
+    
+    fill(block.c);
+    stroke(block.c);
+    rect(x3d, y3d, perBlock, perBlock);
+    
+    if (block.prcntBroken > 0) {
+        drawBlockBreakingTexture(block, x3d, y3d);
+    }
+    
+    if (settings.noStrokeMode) {
+        noStroke();
     }
 }
 
 color darkenColor(color c, float factor) {
-  // Ensure the factor is between 0 and 1
   factor = constrain(factor, 0, 1);
   
-  // Get the RGB components of the color
   float r = red(c);
   float g = green(c);
   float b = blue(c);
   
-  // Decrease each component by the factor
   r *= factor;
   g *= factor;
   b *= factor;
   
-  // Return the new darker color
   return color(r, g, b);
 }
 

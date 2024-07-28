@@ -28,6 +28,8 @@ public class Settings {
     
     // 3d visuals
     float offsetFactor3d;          // if set to 0.5, then the offset of the "3d layer block" will be 0.5 * pixelsPerBlock in both x and y direction
+    float westWallShadeFactor;     // Set between 0 and 1. Lower means darker.
+    float southWallShadeFactor;
     
     // Tool Colors
     color colorWoodTool;
@@ -126,6 +128,8 @@ public class Settings {
         
         // 3d visuals
         this.offsetFactor3d = 0.5;
+        this.westWallShadeFactor = 0.84;
+        this.southWallShadeFactor = 0.90;
         
         // Tool colors
         this.colorWoodTool = color(143, 119, 72);
