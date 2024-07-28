@@ -103,7 +103,12 @@ void spawnMobIfNotCollidingWithAnother(Mob mobToSpawn) {
     }
 }
 
-boolean setMouseBlock(Block block) {
+boolean setMouseBlock2d(Block block) {
+    PVector distancePlayerToMouse = state.player.getVectorFromMouse();
+    return setBlock(block, int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
+}
+
+boolean setMouseBlock3d(Block block) {
     PVector distancePlayerToMouse = state.player.getVectorFromMouse();
     return setBlock(block, int(state.player.coords.x - distancePlayerToMouse.x - settings.offsetFactor3d), int(state.player.coords.y - distancePlayerToMouse.y + settings.offsetFactor3d));
 }

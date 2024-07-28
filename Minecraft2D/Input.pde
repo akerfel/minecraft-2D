@@ -189,9 +189,8 @@ void placeBlockWithMouse() {
         ItemSlot slot = state.player.getSelectedItemSlot();
         Block block = (Block) slot.item;
         if (slot.getCount() != 0) {
-            if (state.player.getDistanceToMouse() < state.player.reach &&
-                (getMouseBlock().itemID == ItemID.GRASS || getMouseBlock().itemID == ItemID.WATER) &&
-                setMouseBlock((Block) createItem(block.itemID))) {
+            if (state.player.getDistanceToMouse() < state.player.reach &&! getMouseBlock2d().isWall &&
+                setMouseBlock2d((Block) createItem(block.itemID))) {
                 slot.count--;
             }
         }
@@ -203,17 +202,22 @@ PVector getCoordsWhichMouseHovers() {
     return state.player.coords.copy().add(vectorPlayerToMouse);
 }
 
-Block getMouseBlock() {
+Block getMouseBlock2d() {
+    PVector distancePlayerToMouse = state.player.getVectorFromMouse();
+    return getBlock(int(state.player.coords.x - distancePlayerToMouse.x), int(state.player.coords.y - distancePlayerToMouse.y));
+}
+
+Block getMouseBlock3d() {
     PVector distancePlayerToMouse = state.player.getVectorFromMouse();
     return getBlock(int(state.player.coords.x - distancePlayerToMouse.x - settings.offsetFactor3d), int(state.player.coords.y - distancePlayerToMouse.y + settings.offsetFactor3d));
 }
 
 void mineBlockWithMouse() {
-    Block mouseBlock = getMouseBlock();
+    Block mouseBlock = getMouseBlock3d();
     if (mouseBlock.isMineable && state.player.getDistanceToMouse() < state.player.reach) {
         if (mouseBlock.prcntBroken >= 1) {
             state.player.inventory.addItem(mouseBlock);
-            setMouseBlock((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
+            setMouseBlock3d((Block) createItem(ItemID.GRASS));    // Correct chunk grass color is handled inside function
         } else {
             mouseBlock.mineBlock();
             state.damagedBlocks.add(mouseBlock);
