@@ -123,7 +123,7 @@ public class Settings {
         this.pixelsPerBlock = 25;
         this.noStrokeMode = true;
         setNoStrokeModeDependingOnSetting();
-        this.drawInnerSquaresInBlocks = false;
+        this.drawInnerSquaresInBlocks = true;
         this.offsetInnerSquare = 0.1;
         
         // 3d visuals

@@ -147,6 +147,10 @@ void drawTopOf3dBlock(Block block, float x, float y) {
     stroke(block.c);
     rect(x3d, y3d, perBlock, perBlock);
     
+    if (settings.drawInnerSquaresInBlocks) {
+        drawInnerSquareInBlock(block, x3d, y3d);
+    }
+    
     if (block.prcntBroken > 0) {
         drawBlockBreakingTexture(block, x3d, y3d);
     }
