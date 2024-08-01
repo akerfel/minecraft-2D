@@ -3,12 +3,6 @@ A top-down minecraft-esque game with an infinite world which is generated using 
 
 ![java_pq2wJdhOIs](https://github.com/user-attachments/assets/a34c3bda-a454-4507-89da-119568284c68)
 
-
-## How to run this game
-- Download the [Processing IDE](https://processing.org/download).
-- Clone this repository and open the folder Minecraft2D in the Processing IDE.
-- Click the play button.
-
 ## Controls
 | Key    | Action         |
 |--------|----------------|
