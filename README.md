@@ -1,7 +1,7 @@
 # minecraft-2D
 A top-down minecraft-esque game with an infinite world which is generated using [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise). Made with Java/[Processing](https://processing.org/).
 
-![java_pq2wJdhOIs](https://github.com/user-attachments/assets/a34c3bda-a454-4507-89da-119568284c68)
+![java_yAlYFRHgNi](https://github.com/user-attachments/assets/d42e6e6f-4eb8-492f-b6f8-220a223f1d34)
 
 ## Controls
 | Key    | Action         |
