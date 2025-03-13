@@ -21,7 +21,7 @@ void removeFarMobs() {
 }
 
 void maybeSpawnMobs() {
-    println("bodies: " + state.bodies.size());
+    //println("bodies: " + state.bodies.size());
     if (state.bodies.size() < settings.maxMobs) {
         if (random(0, 1) < settings.pigSpawnChance) {
             spawnMob(MobType.PIG);

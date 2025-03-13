@@ -19,10 +19,10 @@ void setup() {
 // This is the main game loop (called ~60 times per second)
 void draw() {
     updateState();
-    drawState();
+    drawEverything();
 }
 
-void drawState() {
+void drawEverything() {
     background(0);
     drawWorld();
     drawUI();

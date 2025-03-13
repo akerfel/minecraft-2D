@@ -211,8 +211,27 @@ PVector coordsToPixelPosition(PVector coords) {
 }
 
 void drawBody(Body body) {
-    fill(body.c);
-    drawCircleWithTopLeftCornerAt(body.coords, body.diameterInBlocks);
+    fill(darkenColor(body.c, settings.westWallShadeFactor));
+    int numCircleToDraw = 5;
+    for (int i = 0; i < numCircleToDraw; i++) {
+        if (i == 0 || i == numCircleToDraw - 1) {
+            //stroke(0);
+        }
+        else {
+            if (settings.noStrokeMode) {
+                //noStroke();    
+            }
+        }
+        if (i == numCircleToDraw - 1) {
+            fill(body.c);
+        }
+        float prcntToTopCircle = float(i) / float(numCircleToDraw);
+        println("prcntToTopCircle: " + prcntToTopCircle);
+        float body3dHeight = 0.5;
+        drawCircleWithTopLeftCornerAt(new PVector(body.coords.x + body.diameterInBlocks * body3dHeight * prcntToTopCircle, 
+                                                  body.coords.y - body.diameterInBlocks * body3dHeight * prcntToTopCircle),
+                                      body.diameterInBlocks);
+    }
 }
 
 void drawBullet(Bullet bullet) {
