@@ -35,9 +35,6 @@ void makeViewDistanceFitZoomLevel() {
     setViewDistance(numBlocksVisible + 4);
 }
 
-// This function is called each frame.
-// I tried to only call this each time the state.player stepped on a new block, but it did not seem to improve the fps.
-// That also introduced other problems (block would not be mined until stepped new block), so I chose to keep it like this.
 void loadVisibleBlocks() {
     for (int x = 0; x < settings.viewDistance; x++) {
         for (int y = 0; y < settings.viewDistance; y++) {

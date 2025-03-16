@@ -115,7 +115,7 @@ public class Player extends Body {
     
     boolean selectedItemIsBlock() {
         ItemSlot slot = getSelectedItemSlot();   
-        return slot.item.itemType == ItemType.BLOCK;
+        return slot.item != null && slot.item.itemType == ItemType.BLOCK;
     }
     
     ItemSlot getSelectedItemSlot() {
