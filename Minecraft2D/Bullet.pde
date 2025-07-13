@@ -40,7 +40,7 @@ class Bullet {
     }
     
     boolean isCollidingWithWall() {
-        return squareIsCollidingWithWall(coords, settings.bulletDiameterInBlocks);
+        return squareIsCollidingWithWall(coords, this.diameterInBlocks);
     }
     
     boolean isDead() {

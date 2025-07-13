@@ -215,8 +215,25 @@ void drawBody(Body body) {
     drawCircleWithTopLeftCornerAt(body.coords, body.diameterInBlocks);
 }
 
+color randomFireColor() {
+  // Hue in range for red–orange–yellow (~0 to 60 degrees out of 360)
+  float h = random(0, 60); // red to yellow
+  float s = random(180, 255); // high saturation
+  float b = random(200, 255); // bright
+
+  // HSB mode simplfies this
+  colorMode(HSB, 360, 255, 255);
+  color c = color(h, s, b);
+  colorMode(RGB, 255);
+  return c;
+}
+
 void drawBullet(Bullet bullet) {
-    fill(10);
+    if (getHeldGun() instanceof FlameThrower) {
+        fill(randomFireColor());
+    } else {
+        fill(10);
+    }
     drawCircleWithTopLeftCornerAt(bullet.coords, bullet.diameterInBlocks);
 }
 

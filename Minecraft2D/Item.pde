@@ -140,6 +140,8 @@ Item createItem(ItemID itemID) {
             
         case MACHINE_GUN:
             return new MachineGun(itemID);
+        case FLAME_THROWER:
+            return new FlameThrower(itemID);
         case IRON_BULLET:
             return new Item(itemID, ItemType.BULLET, true, settings.colorIronTool);
         default:
