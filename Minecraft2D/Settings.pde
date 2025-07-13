@@ -84,6 +84,10 @@ public class Settings {
     float pigBaseSpeed;
     float zombieBaseSpeed;
     float bulletBaseSpeed;
+    float flameThrowerBulletSpeed;
+    
+    // Flame thrower
+    int flameThrowerBulletLiveTime;
     
     // Tools
     int woodToolMiningMultiplier;
@@ -111,7 +115,7 @@ public class Settings {
         this.playerWidthInBlocks = 0.8;
         this.pigWidthInBlocks = 0.8;
         this.zombieWidthInBlocks = 0.8;
-        this.bulletDiameterInBlocks = 0.3;
+        this.bulletDiameterInBlocks = 0.4;
         this.flameThrowerBulletDiameterInBlocks = 0.8;
         
         // General 
@@ -162,7 +166,7 @@ public class Settings {
         
         // Mob chance to spawn each frame (between 0 and 1)
         this.pigSpawnChance = 0.003;
-        this.zombieSpawnChance = 0.0045;
+        this.zombieSpawnChance = 0.005;
         
         // Mob reach
         this.zombieReachInBlocks = 1;
@@ -173,6 +177,10 @@ public class Settings {
         this.pigBaseSpeed = 0.03;
         this.zombieBaseSpeed = 0.04;
         this.bulletBaseSpeed = 0.65;
+        this.flameThrowerBulletSpeed = 0.265;
+        
+        // Flame thrower
+        this.flameThrowerBulletLiveTime = 700; // In milliseconds
         
         // Tools
         this.woodToolMiningMultiplier = 2;

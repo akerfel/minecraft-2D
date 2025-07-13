@@ -43,6 +43,7 @@ public class State {
         this.player.inventory.addItem(createItem(ItemID.DIAMOND_PICKAXE));
         this.player.inventory.addItem(createItem(ItemID.STONE_SHOVEL));
         this.player.inventory.addItem(createItem(ItemID.DIAMOND_AXE));
+        this.player.inventory.addItem(createItem(ItemID.FLAME_THROWER));
         this.player.inventory.addItem(createItem(ItemID.PLANKS), 64);
         this.player.inventory.addItem(createItem(ItemID.STONE), 64);
         this.player.inventory.addItem(createItem(ItemID.IRON_BULLET), 99999);
