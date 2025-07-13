@@ -12,6 +12,7 @@ public class Settings {
     float pigWidthInBlocks;
     float zombieWidthInBlocks;
     float bulletDiameterInBlocks;
+    float flameThrowerBulletDiameterInBlocks;
     
     // General
     int blocksPerChunk;            // blocks per side of chunk;
@@ -111,6 +112,7 @@ public class Settings {
         this.pigWidthInBlocks = 0.8;
         this.zombieWidthInBlocks = 0.8;
         this.bulletDiameterInBlocks = 0.3;
+        this.flameThrowerBulletDiameterInBlocks = 0.8;
         
         // General 
         this.blocksPerChunk = 64;

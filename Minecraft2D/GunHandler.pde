@@ -50,11 +50,27 @@ void addPlayerBullets() {
 }
 
 Bullet createPlayerBullet() {
+    float bulletDiameterInBlocks = getHeldGun().itemID == ItemID.FLAME_THROWER ? 
+        settings.flameThrowerBulletDiameterInBlocks : settings.bulletDiameterInBlocks;
+    
     PVector startCoords = state.player.getCenterCoords();
-    PVector bulletVectorCornerToCenter = new PVector(settings.bulletDiameterInBlocks/2, settings.bulletDiameterInBlocks/2);
+    PVector bulletVectorCornerToCenter = new PVector(bulletDiameterInBlocks/2, bulletDiameterInBlocks/2);
     startCoords.sub(bulletVectorCornerToCenter);
     PVector direction = determineDirectionOfPlayerBullet();
-    return new Bullet(startCoords, direction, settings.bulletDiameterInBlocks);
+    randomizeDirectionIfHoldingFlameThrower(direction);
+    
+    Bullet bullet = new Bullet(startCoords, direction, bulletDiameterInBlocks);
+    if (getHeldGun().itemID == ItemID.FLAME_THROWER) {
+        bullet.isOnFire = true;
+    }
+    return bullet;
+}
+
+void randomizeDirectionIfHoldingFlameThrower(PVector direction) {
+    if (getHeldGun().itemID == ItemID.FLAME_THROWER) {
+        float angle = random(-PI/4, PI/4);
+        direction.rotate(angle);
+    }
 }
 
 PVector determineDirectionOfPlayerBullet() {

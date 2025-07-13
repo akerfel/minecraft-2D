@@ -78,6 +78,7 @@ public enum ItemID {
     DIAMOND_HOE,
     
     MACHINE_GUN,
+    FLAME_THROWER,
     
     IRON_BULLET
 }

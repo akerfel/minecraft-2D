@@ -5,6 +5,7 @@ class Bullet {
     float diameterInBlocks;
     int hp; // bullet will be removed if hp is 0
     int damage;
+    boolean isOnFire;
 
     Bullet(PVector coords, PVector direction, float diameterInBlocks) {
         this.coords = coords.copy();
@@ -13,6 +14,7 @@ class Bullet {
         this.diameterInBlocks = diameterInBlocks;
         this.hp = 1;
         this.damage = 1;
+        this.isOnFire = false;
     }
     
     void update() {
@@ -40,7 +42,7 @@ class Bullet {
     }
     
     boolean isCollidingWithWall() {
-        return squareIsCollidingWithWall(coords, settings.bulletDiameterInBlocks);
+        return squareIsCollidingWithWall(coords, this.diameterInBlocks);
     }
     
     boolean isDead() {
