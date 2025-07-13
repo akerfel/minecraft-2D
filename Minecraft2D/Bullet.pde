@@ -6,21 +6,24 @@ class Bullet {
     int hp; // bullet will be removed if hp is 0
     int damage;
     boolean isOnFire;
+    int creationTime;
 
-    Bullet(PVector coords, PVector direction, float diameterInBlocks) {
+    Bullet(PVector coords, PVector direction, float diameterInBlocks, float baseSpeed) {
         this.coords = coords.copy();
         this.direction = direction.normalize();
-        this.baseSpeed = settings.bulletBaseSpeed;
+        this.baseSpeed = baseSpeed;
         this.diameterInBlocks = diameterInBlocks;
         this.hp = 1;
         this.damage = 1;
         this.isOnFire = false;
+        this.creationTime = millis();
     }
     
     void update() {
         coords.add(direction.copy().setMag(baseSpeed));
         
-        if (isCollidingWithWall()) {
+        if (isCollidingWithWall() ||
+            (isOnFire && millis() - creationTime > settings.flameThrowerBulletLiveTime)) {
             hp = 0;  
             return;
         }
