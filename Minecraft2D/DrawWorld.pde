@@ -229,7 +229,7 @@ color randomFireColor() {
 }
 
 void drawBullet(Bullet bullet) {
-    if (getHeldGun().itemID == ItemID.FLAME_THROWER) {
+    if (bullet.isOnFire) {
         fill(randomFireColor());
     } else {
         fill(10);

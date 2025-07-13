@@ -59,7 +59,11 @@ Bullet createPlayerBullet() {
     PVector direction = determineDirectionOfPlayerBullet();
     randomizeDirectionIfHoldingFlameThrower(direction);
     
-    return new Bullet(startCoords, direction, bulletDiameterInBlocks);
+    Bullet bullet = new Bullet(startCoords, direction, bulletDiameterInBlocks);
+    if (getHeldGun().itemID == ItemID.FLAME_THROWER) {
+        bullet.isOnFire = true;
+    }
+    return bullet;
 }
 
 void randomizeDirectionIfHoldingFlameThrower(PVector direction) {
